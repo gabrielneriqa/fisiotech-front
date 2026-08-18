@@ -20,7 +20,7 @@
     <p class="mensagens__error">{{ errorMessage() }}</p>
   }
 
-  <form class="mensagens__form" (ngSubmit)="enviar()">
+  <form class="mensagens__form" (submit)="enviar($event)">
     <textarea
       class="mensagens__input"
       rows="2"

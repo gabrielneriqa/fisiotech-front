@@ -42,7 +42,9 @@ export class MensagemThread implements OnInit {
     this.carregar();
   }
 
-  protected enviar(): void {
+  protected enviar(event: Event): void {
+    event.preventDefault();
+
     const conteudo = this.novaMensagemControl.value.trim();
     if (!conteudo) {
       return;
