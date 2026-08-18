@@ -12,17 +12,11 @@
   </main>
 
   <nav class="shell__nav">
-    <a class="shell__nav-item" routerLink="/home" routerLinkActive="shell__nav-item--active">
-      <span class="shell__nav-icon">🏠</span>
-      <span>Home</span>
-    </a>
-    <a class="shell__nav-item" routerLink="/pacientes" routerLinkActive="shell__nav-item--active">
-      <span class="shell__nav-icon">👥</span>
-      <span>Pacientes</span>
-    </a>
-    <a class="shell__nav-item" routerLink="/consultas" routerLinkActive="shell__nav-item--active">
-      <span class="shell__nav-icon">📅</span>
-      <span>Consultas</span>
-    </a>
+    @for (item of navItems(); track item.path) {
+      <a class="shell__nav-item" [routerLink]="item.path" routerLinkActive="shell__nav-item--active">
+        <span class="shell__nav-icon">{{ item.icon }}</span>
+        <span>{{ item.label }}</span>
+      </a>
+    }
   </nav>
 </div>

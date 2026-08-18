@@ -1,0 +1,40 @@
+<section class="perfil">
+  <h1 class="perfil__title">Meu Perfil</h1>
+
+  @if (loading()) {
+    <p class="perfil__state">Carregando...</p>
+  } @else {
+    @if (dataCriacao()) {
+      <p class="perfil__meta">Cadastrado em {{ dataCriacao() | date: 'dd/MM/yyyy' }}</p>
+    }
+
+    <form class="perfil__form" [formGroup]="form" (ngSubmit)="submit()">
+      <label class="field">
+        <span class="field__label">Nome</span>
+        <input class="field__input" type="text" formControlName="nome" />
+      </label>
+
+      <label class="field">
+        <span class="field__label">Email</span>
+        <input class="field__input" type="email" formControlName="email" />
+      </label>
+
+      <label class="field">
+        <span class="field__label">Nova senha</span>
+        <input class="field__input" type="password" formControlName="senha" autocomplete="new-password" />
+      </label>
+
+      @if (errorMessage()) {
+        <p class="perfil__error">{{ errorMessage() }}</p>
+      }
+
+      @if (successMessage()) {
+        <p class="perfil__success">{{ successMessage() }}</p>
+      }
+
+      <button class="perfil__submit" type="submit" [disabled]="saving()">
+        {{ saving() ? 'Salvando...' : 'Salvar' }}
+      </button>
+    </form>
+  }
+</section>

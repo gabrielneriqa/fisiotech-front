@@ -1,0 +1,88 @@
+.consulta-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &__title {
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+
+  &__state {
+    color: var(--color-text-secondary);
+    text-align: center;
+    padding: 32px 8px;
+
+    &--error {
+      color: var(--color-danger);
+    }
+  }
+
+  &__items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+.consulta-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  text-decoration: none;
+  color: var(--color-text);
+  box-shadow: var(--shadow-card);
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  &__data {
+    font-weight: 600;
+  }
+
+  &__convenio {
+    font-size: 0.82rem;
+    color: var(--color-text-secondary);
+  }
+
+  &__status {
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+    background: var(--color-border);
+    color: var(--color-text-secondary);
+
+    &--agendada {
+      background: rgba(139, 144, 240, 0.15);
+      color: var(--color-accent-dark);
+    }
+
+    &--confirmada {
+      background: rgba(31, 182, 196, 0.15);
+      color: var(--color-primary-dark);
+    }
+
+    &--realizada {
+      background: rgba(47, 191, 113, 0.15);
+      color: var(--color-success);
+    }
+
+    &--cancelada {
+      background: rgba(225, 92, 92, 0.15);
+      color: var(--color-danger);
+    }
+  }
+}

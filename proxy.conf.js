@@ -46,6 +46,11 @@ const PROXY_CONFIG = {
     changeOrigin: true,
     bypass: bypassPageNavigation,
   },
+  '/me': {
+    target: 'http://localhost:8080',
+    secure: false,
+    changeOrigin: true,
+  },
 };
 
 module.exports = PROXY_CONFIG;

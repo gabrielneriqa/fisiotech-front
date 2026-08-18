@@ -26,7 +26,7 @@
     gap: 12px;
   }
 
-  &__paciente {
+  &__titulo {
     font-size: 1.3rem;
     font-weight: 700;
   }
@@ -69,25 +69,6 @@
     color: var(--color-text-secondary);
   }
 
-  &__action {
-    display: block;
-    text-align: center;
-    text-decoration: none;
-    border: none;
-    border-radius: var(--radius-pill);
-    background: var(--color-primary);
-    color: var(--color-text-inverse);
-    font-weight: 600;
-    font-size: 0.95rem;
-    padding: 12px;
-    cursor: pointer;
-
-    &:disabled {
-      opacity: 0.6;
-      cursor: default;
-    }
-  }
-
   &__section {
     background: var(--color-surface);
     border-radius: var(--radius-md);
@@ -107,42 +88,46 @@
     }
   }
 
+  &__hint {
+    color: var(--color-text-secondary);
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+  }
+
   &__nota {
     color: #f5b301;
     font-size: 1.2rem;
     letter-spacing: 2px;
   }
 
-  &__hint {
-    color: var(--color-text-secondary);
-    font-size: 0.85rem;
-  }
-
   &__avaliacao-form {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    margin-top: 8px;
   }
 
-  &__error {
-    color: var(--color-danger);
-    font-size: 0.85rem;
-  }
-
-  &__delete {
-    border: 1px solid var(--color-danger);
+  &__action {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    border: none;
     border-radius: var(--radius-pill);
-    background: transparent;
-    color: var(--color-danger);
+    background: var(--color-primary);
+    color: var(--color-text-inverse);
     font-weight: 600;
     font-size: 0.95rem;
     padding: 12px;
     cursor: pointer;
 
-    &:hover {
-      background: rgba(225, 92, 92, 0.08);
+    &:disabled {
+      opacity: 0.6;
+      cursor: default;
     }
+  }
+
+  &__error {
+    color: var(--color-danger);
+    font-size: 0.85rem;
   }
 }
 

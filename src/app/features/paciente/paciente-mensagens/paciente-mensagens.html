@@ -1,0 +1,34 @@
+<section class="mensagens">
+  <h1 class="mensagens__title">Mensagens</h1>
+
+  @if (loading()) {
+    <p class="mensagens__state">Carregando...</p>
+  } @else if (mensagens().length === 0) {
+    <p class="mensagens__state">Nenhuma mensagem ainda.</p>
+  } @else {
+    <ul class="mensagens__list">
+      @for (mensagem of mensagens(); track mensagem.id) {
+        <li class="mensagem" [class.mensagem--minha]="mensagem.autor === 'PACIENTE'">
+          <p class="mensagem__conteudo">{{ mensagem.conteudo }}</p>
+          <span class="mensagem__data">{{ mensagem.dataEnvio | date: 'dd/MM HH:mm' }}</span>
+        </li>
+      }
+    </ul>
+  }
+
+  @if (errorMessage()) {
+    <p class="mensagens__error">{{ errorMessage() }}</p>
+  }
+
+  <form class="mensagens__form" (ngSubmit)="enviar()">
+    <textarea
+      class="mensagens__input"
+      rows="2"
+      placeholder="Escreva uma mensagem..."
+      [formControl]="novaMensagemControl"
+    ></textarea>
+    <button class="mensagens__submit" type="submit" [disabled]="sending()">
+      {{ sending() ? '...' : 'Enviar' }}
+    </button>
+  </form>
+</section>

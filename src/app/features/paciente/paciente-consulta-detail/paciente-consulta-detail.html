@@ -1,5 +1,5 @@
 <section class="consulta-detail">
-  <a class="consulta-detail__back" routerLink="/consultas">← Consultas</a>
+  <a class="consulta-detail__back" routerLink="/paciente/consultas">← Minhas Consultas</a>
 
   @if (loading()) {
     <p class="consulta-detail__state">Carregando...</p>
@@ -9,7 +9,7 @@
     @let c = consulta()!;
 
     <header class="consulta-detail__header">
-      <h1 class="consulta-detail__paciente">{{ c.pacienteNome }}</h1>
+      <h1 class="consulta-detail__titulo">Consulta</h1>
       <span class="consulta-detail__status" [class]="'consulta-detail__status--' + c.status.toLowerCase()">
         {{ c.status }}
       </span>
@@ -27,12 +27,6 @@
       }
     </div>
 
-    @if (c.status !== 'REALIZADA') {
-      <a class="consulta-detail__action" [routerLink]="['/consultas', c.id, 'wizard']">
-        Continuar preenchimento clínico
-      </a>
-    }
-
     @if (c.quadroClinico.queixaPrincipal || c.quadroClinico.historiaDoencaAtual || c.quadroClinico.medicamentos) {
       <section class="consulta-detail__section">
         <h2>Quadro Clínico</h2>
@@ -42,29 +36,9 @@
         @if (c.quadroClinico.historiaDoencaAtual) {
           <p><strong>História da doença atual:</strong> {{ c.quadroClinico.historiaDoencaAtual }}</p>
         }
-        @if (c.quadroClinico.historicoSaude) {
-          <p><strong>Histórico de saúde:</strong> {{ c.quadroClinico.historicoSaude }}</p>
-        }
-        @if (c.quadroClinico.lesoesAnteriores) {
-          <p><strong>Lesões anteriores:</strong> {{ c.quadroClinico.lesoesAnterioresDescricao }}</p>
-        }
         @if (c.quadroClinico.medicamentos) {
           <p><strong>Medicamentos:</strong> {{ c.quadroClinico.medicamentos }}</p>
         }
-      </section>
-    }
-
-    @if (c.habitosVida.atividadeFisica || c.habitosVida.rotinaTrabalho) {
-      <section class="consulta-detail__section">
-        <h2>Hábitos de Vida</h2>
-        @if (c.habitosVida.atividadeFisica) {
-          <p><strong>Atividade física:</strong> {{ c.habitosVida.atividadeFisica }}</p>
-        }
-        @if (c.habitosVida.rotinaTrabalho) {
-          <p><strong>Rotina de trabalho:</strong> {{ c.habitosVida.rotinaTrabalho }}</p>
-        }
-        <p><strong>Tabagismo:</strong> {{ c.habitosVida.tabagismo ? 'Sim' : 'Não' }}</p>
-        <p><strong>Consumo de álcool:</strong> {{ c.habitosVida.consumoAlcool ? 'Sim' : 'Não' }}</p>
       </section>
     }
 
@@ -100,14 +74,27 @@
 
     @if (c.status === 'REALIZADA' && avaliacaoBuscada()) {
       <section class="consulta-detail__section">
-        <h2>Avaliação do paciente</h2>
+        <h2>Sua Avaliação</h2>
         @if (avaliacao()) {
           <p class="consulta-detail__nota">{{ '★'.repeat(avaliacao()!.nota) }}{{ '☆'.repeat(5 - avaliacao()!.nota) }}</p>
           @if (avaliacao()!.comentario) {
             <p>{{ avaliacao()!.comentario }}</p>
           }
         } @else {
-          <p class="consulta-detail__hint">O paciente ainda não avaliou esta consulta.</p>
+          <p class="consulta-detail__hint">Como foi seu atendimento?</p>
+          <form class="consulta-detail__avaliacao-form" [formGroup]="avaliacaoForm" (ngSubmit)="enviarAvaliacao()">
+            <label class="field">
+              <span class="field__label">Nota (1 a 5)</span>
+              <input class="field__input" type="number" min="1" max="5" formControlName="nota" />
+            </label>
+            <label class="field">
+              <span class="field__label">Comentário</span>
+              <textarea class="field__input" rows="2" formControlName="comentario"></textarea>
+            </label>
+            <button class="consulta-detail__action" type="submit" [disabled]="avaliacaoLoading()">
+              {{ avaliacaoLoading() ? 'Enviando...' : 'Enviar avaliação' }}
+            </button>
+          </form>
         }
       </section>
     }
@@ -115,7 +102,5 @@
     @if (errorMessage()) {
       <p class="consulta-detail__error">{{ errorMessage() }}</p>
     }
-
-    <button class="consulta-detail__delete" type="button" (click)="excluir()">Excluir Consulta</button>
   }
 </section>

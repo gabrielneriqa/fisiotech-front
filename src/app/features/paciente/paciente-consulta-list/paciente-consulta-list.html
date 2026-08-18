@@ -1,0 +1,31 @@
+<section class="consulta-list">
+  <h1 class="consulta-list__title">Minhas Consultas</h1>
+
+  @if (loading()) {
+    <p class="consulta-list__state">Carregando...</p>
+  } @else if (errorMessage()) {
+    <p class="consulta-list__state consulta-list__state--error">{{ errorMessage() }}</p>
+  } @else if (consultas().length === 0) {
+    <p class="consulta-list__state">Nenhuma consulta ainda.</p>
+  } @else {
+    <ul class="consulta-list__items">
+      @for (consulta of consultas(); track consulta.id) {
+        <li>
+          <a class="consulta-card" [routerLink]="['/paciente/consultas', consulta.id]">
+            <div class="consulta-card__info">
+              <span class="consulta-card__data">
+                {{ consulta.dataHora | date: 'dd/MM/yyyy HH:mm' }} · {{ tipoLabel(consulta.tipo) }}
+              </span>
+              @if (consulta.convenio) {
+                <span class="consulta-card__convenio">{{ consulta.convenio }}</span>
+              }
+            </div>
+            <span class="consulta-card__status" [class]="'consulta-card__status--' + consulta.status.toLowerCase()">
+              {{ statusLabel(consulta.status) }}
+            </span>
+          </a>
+        </li>
+      }
+    </ul>
+  }
+</section>

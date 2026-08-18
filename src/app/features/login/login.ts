@@ -3,6 +3,7 @@ import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../../core/auth/auth.service';
+import { homeRouteFor } from '../../core/auth/role-routes';
 
 @Component({
   selector: 'app-login',
@@ -35,9 +36,9 @@ export class Login {
     const { email, senha } = this.form.getRawValue();
 
     this.authService.login(email, senha).subscribe({
-      next: () => {
+      next: (usuario) => {
         this.loading.set(false);
-        this.router.navigateByUrl('/home');
+        this.router.navigateByUrl(homeRouteFor(usuario.role));
       },
       error: (err: { status?: number }) => {
         this.loading.set(false);

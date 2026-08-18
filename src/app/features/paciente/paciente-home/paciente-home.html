@@ -1,0 +1,38 @@
+<section class="home">
+  @if (proximaConsulta()) {
+    <div class="home__highlight">
+      <p class="home__highlight-label">Próxima consulta</p>
+      <p class="home__highlight-value">{{ proximaConsulta() | date: "dd/MM/yyyy 'às' HH:mm" }}</p>
+    </div>
+  }
+
+  <a class="home__card" routerLink="/paciente/consultas">
+    <div>
+      <p class="home__card-label">Minhas Consultas</p>
+      <p class="home__card-value">
+        @if (totalConsultas() !== null) {
+          {{ totalConsultas() }} consulta{{ totalConsultas() === 1 ? '' : 's' }}
+        } @else {
+          Ver consultas
+        }
+      </p>
+    </div>
+    <span class="home__card-arrow">→</span>
+  </a>
+
+  <a class="home__card" routerLink="/paciente/mensagens">
+    <div>
+      <p class="home__card-label">Mensagens</p>
+      <p class="home__card-value">Falar com meu profissional</p>
+    </div>
+    <span class="home__card-arrow">→</span>
+  </a>
+
+  <a class="home__card" routerLink="/paciente/perfil">
+    <div>
+      <p class="home__card-label">Meu Perfil</p>
+      <p class="home__card-value">Editar meus dados</p>
+    </div>
+    <span class="home__card-arrow">→</span>
+  </a>
+</section>

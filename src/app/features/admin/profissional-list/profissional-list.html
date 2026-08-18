@@ -1,0 +1,44 @@
+<section class="profissional-list">
+  <h1 class="profissional-list__title">Profissionais</h1>
+
+  <div class="profissional-list__toolbar">
+    <input
+      class="profissional-list__search"
+      type="search"
+      placeholder="Buscar por nome, email ou especialidade"
+      [value]="filtro()"
+      (input)="onFiltroChange($event)"
+    />
+    <a class="profissional-list__new" routerLink="/admin/profissionais/novo">+ Novo</a>
+  </div>
+
+  @if (loading()) {
+    <p class="profissional-list__state">Carregando...</p>
+  } @else if (errorMessage()) {
+    <p class="profissional-list__state profissional-list__state--error">{{ errorMessage() }}</p>
+  } @else if (profissionaisFiltrados().length === 0) {
+    <p class="profissional-list__state">Nenhum profissional encontrado.</p>
+  } @else {
+    <ul class="profissional-list__items">
+      @for (profissional of profissionaisFiltrados(); track profissional.id) {
+        <li>
+          <a class="profissional-card" [routerLink]="['/admin/profissionais', profissional.id]">
+            <span class="profissional-card__avatar">{{ iniciais(profissional.nome) }}</span>
+            <span class="profissional-card__info">
+              <span class="profissional-card__nome">{{ profissional.nome }}</span>
+              <span class="profissional-card__detalhe">{{ profissional.especialidade }} · {{ profissional.registroProfissional }}</span>
+            </span>
+            <button
+              class="profissional-card__delete"
+              type="button"
+              (click)="excluir(profissional, $event)"
+              aria-label="Excluir profissional"
+            >
+              🗑
+            </button>
+          </a>
+        </li>
+      }
+    </ul>
+  }
+</section>

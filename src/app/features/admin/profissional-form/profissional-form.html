@@ -1,0 +1,55 @@
+<section class="profissional-form">
+  <a class="profissional-form__back" routerLink="/admin/profissionais">← Profissionais</a>
+  <h1 class="profissional-form__title">
+    {{ editando() ? 'Editar Profissional' : 'Cadastrar Profissional' }}
+  </h1>
+
+  @if (loading()) {
+    <p class="profissional-form__state">Carregando...</p>
+  } @else {
+    @if (dataCriacao()) {
+      <p class="profissional-form__meta">Cadastrado em {{ dataCriacao() | date: 'dd/MM/yyyy' }}</p>
+    }
+
+    <form class="profissional-form__form" [formGroup]="form" (ngSubmit)="submit()">
+      <label class="field">
+        <span class="field__label">Nome</span>
+        <input class="field__input" type="text" formControlName="nome" />
+      </label>
+
+      <label class="field">
+        <span class="field__label">Email</span>
+        <input class="field__input" type="email" formControlName="email" />
+      </label>
+
+      <label class="field">
+        <span class="field__label">{{ editando() ? 'Nova senha' : 'Senha' }}</span>
+        <input class="field__input" type="password" formControlName="senha" autocomplete="new-password" />
+      </label>
+
+      <label class="field">
+        <span class="field__label">Registro profissional (CREFITO)</span>
+        <input class="field__input" type="text" formControlName="registroProfissional" />
+      </label>
+
+      <label class="field">
+        <span class="field__label">Especialidade</span>
+        <input class="field__input" type="text" formControlName="especialidade" />
+      </label>
+
+      @if (errorMessage()) {
+        <p class="profissional-form__error">{{ errorMessage() }}</p>
+      }
+
+      <button class="profissional-form__submit" type="submit" [disabled]="saving()">
+        {{ saving() ? 'Salvando...' : 'Salvar' }}
+      </button>
+
+      @if (editando()) {
+        <button class="profissional-form__delete" type="button" (click)="excluir()">
+          Excluir Profissional
+        </button>
+      }
+    </form>
+  }
+</section>
