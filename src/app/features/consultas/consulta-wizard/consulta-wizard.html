@@ -1,0 +1,170 @@
+<section class="wizard">
+  @if (loading()) {
+    <p class="wizard__state">Carregando...</p>
+  } @else {
+    @if (step() !== 'sucesso') {
+      <p class="wizard__meta">Consulta com {{ pacienteNome() }}</p>
+
+      <div class="wizard__steps">
+        <span class="wizard__step-dot" [class.wizard__step-dot--active]="step() === 'quadro-clinico'"></span>
+        <span class="wizard__step-dot" [class.wizard__step-dot--active]="step() === 'habitos-vida'"></span>
+        <span class="wizard__step-dot" [class.wizard__step-dot--active]="step() === 'exame-fisico'"></span>
+        <span class="wizard__step-dot" [class.wizard__step-dot--active]="step() === 'diagnostico'"></span>
+      </div>
+    }
+
+    @switch (step()) {
+      @case ('quadro-clinico') {
+        <h1 class="wizard__title">Quadro Clínico</h1>
+        <form class="wizard__form" [formGroup]="quadroClinicoForm" (ngSubmit)="proximo()">
+          <label class="field">
+            <span class="field__label">Queixa principal</span>
+            <textarea class="field__input" rows="3" formControlName="queixaPrincipal"></textarea>
+          </label>
+
+          <label class="field">
+            <span class="field__label">História da doença atual</span>
+            <textarea class="field__input" rows="3" formControlName="historiaDoencaAtual"></textarea>
+          </label>
+
+          <label class="field">
+            <span class="field__label">Histórico de saúde</span>
+            <input class="field__input" type="text" formControlName="historicoSaude" placeholder="Ex: Hipertensão, Diabetes, Asma" />
+          </label>
+
+          <label class="field field--checkbox">
+            <input type="checkbox" formControlName="cirurgias" />
+            <span>Já realizou cirurgias?</span>
+          </label>
+          @if (quadroClinicoForm.controls.cirurgias.value) {
+            <label class="field">
+              <span class="field__label">Quais cirurgias?</span>
+              <input class="field__input" type="text" formControlName="cirurgiasDescricao" />
+            </label>
+          }
+
+          <label class="field field--checkbox">
+            <input type="checkbox" formControlName="lesoesAnteriores" />
+            <span>Possui lesões anteriores?</span>
+          </label>
+          @if (quadroClinicoForm.controls.lesoesAnteriores.value) {
+            <label class="field">
+              <span class="field__label">Quais lesões?</span>
+              <input class="field__input" type="text" formControlName="lesoesAnterioresDescricao" />
+            </label>
+          }
+
+          <label class="field">
+            <span class="field__label">Medicamentos em uso</span>
+            <textarea class="field__input" rows="2" formControlName="medicamentos"></textarea>
+          </label>
+
+          @if (errorMessage()) {
+            <p class="wizard__error">{{ errorMessage() }}</p>
+          }
+
+          <button class="wizard__submit" type="submit" [disabled]="saving()">
+            {{ saving() ? 'Salvando...' : 'Próximo' }}
+          </button>
+        </form>
+      }
+
+      @case ('habitos-vida') {
+        <h1 class="wizard__title">Hábitos de Vida</h1>
+        <form class="wizard__form" [formGroup]="habitosVidaForm" (ngSubmit)="proximo()">
+          <label class="field">
+            <span class="field__label">Atividade física</span>
+            <textarea class="field__input" rows="2" formControlName="atividadeFisica"></textarea>
+          </label>
+
+          <label class="field">
+            <span class="field__label">Rotina de trabalho</span>
+            <textarea class="field__input" rows="2" formControlName="rotinaTrabalho"></textarea>
+          </label>
+
+          <label class="field field--checkbox">
+            <input type="checkbox" formControlName="tabagismo" />
+            <span>Tabagismo</span>
+          </label>
+
+          <label class="field field--checkbox">
+            <input type="checkbox" formControlName="consumoAlcool" />
+            <span>Consumo de álcool</span>
+          </label>
+
+          @if (errorMessage()) {
+            <p class="wizard__error">{{ errorMessage() }}</p>
+          }
+
+          <button class="wizard__submit" type="submit" [disabled]="saving()">
+            {{ saving() ? 'Salvando...' : 'Próximo' }}
+          </button>
+        </form>
+      }
+
+      @case ('exame-fisico') {
+        <h1 class="wizard__title">Exame Físico</h1>
+        <form class="wizard__form" [formGroup]="exameFisicoForm" (ngSubmit)="proximo()">
+          <label class="field">
+            <span class="field__label">Postura</span>
+            <textarea class="field__input" rows="2" formControlName="postura"></textarea>
+          </label>
+
+          <label class="field">
+            <span class="field__label">Amplitude do movimento</span>
+            <textarea class="field__input" rows="2" formControlName="amplitudeMovimento"></textarea>
+          </label>
+
+          <label class="field">
+            <span class="field__label">Palpação</span>
+            <textarea class="field__input" rows="2" formControlName="palpacao"></textarea>
+          </label>
+
+          <label class="field">
+            <span class="field__label">Força muscular</span>
+            <textarea class="field__input" rows="2" formControlName="forcaMuscular"></textarea>
+          </label>
+
+          @if (errorMessage()) {
+            <p class="wizard__error">{{ errorMessage() }}</p>
+          }
+
+          <button class="wizard__submit" type="submit" [disabled]="saving()">
+            {{ saving() ? 'Salvando...' : 'Próximo' }}
+          </button>
+        </form>
+      }
+
+      @case ('diagnostico') {
+        <h1 class="wizard__title">Diagnóstico</h1>
+        <form class="wizard__form" [formGroup]="diagnosticoForm" (ngSubmit)="proximo()">
+          <label class="field">
+            <span class="field__label">Plano de tratamento</span>
+            <textarea class="field__input" rows="3" formControlName="planoTratamento"></textarea>
+          </label>
+
+          <label class="field">
+            <span class="field__label">Objetivos do tratamento</span>
+            <textarea class="field__input" rows="3" formControlName="objetivosTratamento"></textarea>
+          </label>
+
+          @if (errorMessage()) {
+            <p class="wizard__error">{{ errorMessage() }}</p>
+          }
+
+          <button class="wizard__submit" type="submit" [disabled]="saving()">
+            {{ saving() ? 'Salvando...' : 'Próximo' }}
+          </button>
+        </form>
+      }
+
+      @case ('sucesso') {
+        <div class="wizard__sucesso">
+          <span class="wizard__sucesso-icon">✓</span>
+          <h1 class="wizard__title">Consulta realizada com sucesso!</h1>
+          <a class="wizard__submit wizard__submit--link" [routerLink]="['/consultas', consultaId]">Visualizar</a>
+        </div>
+      }
+    }
+  }
+</section>

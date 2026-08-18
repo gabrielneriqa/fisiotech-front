@@ -29,9 +29,34 @@ export const routes: Routes = [
           import('./features/pacientes/paciente-form/paciente-form').then((m) => m.PacienteForm),
       },
       {
+        path: 'pacientes/:id/mensagens',
+        loadComponent: () =>
+          import('./features/mensagens/mensagem-thread/mensagem-thread').then((m) => m.MensagemThread),
+      },
+      {
         path: 'pacientes/:id',
         loadComponent: () =>
           import('./features/pacientes/paciente-form/paciente-form').then((m) => m.PacienteForm),
+      },
+      {
+        path: 'consultas',
+        loadComponent: () =>
+          import('./features/consultas/consulta-list/consulta-list').then((m) => m.ConsultaList),
+      },
+      {
+        path: 'consultas/novo',
+        loadComponent: () =>
+          import('./features/consultas/consulta-form/consulta-form').then((m) => m.ConsultaForm),
+      },
+      {
+        path: 'consultas/:id/wizard',
+        loadComponent: () =>
+          import('./features/consultas/consulta-wizard/consulta-wizard').then((m) => m.ConsultaWizard),
+      },
+      {
+        path: 'consultas/:id',
+        loadComponent: () =>
+          import('./features/consultas/consulta-detail/consulta-detail').then((m) => m.ConsultaDetail),
       },
     ],
   },

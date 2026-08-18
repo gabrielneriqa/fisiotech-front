@@ -28,6 +28,24 @@ const PROXY_CONFIG = {
     changeOrigin: true,
     bypass: bypassPageNavigation,
   },
+  '/consultas': {
+    target: 'http://localhost:8080',
+    secure: false,
+    changeOrigin: true,
+    bypass: bypassPageNavigation,
+  },
+  '/mensagens': {
+    target: 'http://localhost:8080',
+    secure: false,
+    changeOrigin: true,
+    bypass: bypassPageNavigation,
+  },
+  '/avaliacoes': {
+    target: 'http://localhost:8080',
+    secure: false,
+    changeOrigin: true,
+    bypass: bypassPageNavigation,
+  },
 };
 
 module.exports = PROXY_CONFIG;

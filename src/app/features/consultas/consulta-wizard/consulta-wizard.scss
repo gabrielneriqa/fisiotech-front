@@ -1,0 +1,135 @@
+.wizard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  &__state {
+    color: var(--color-text-secondary);
+    padding: 24px 0;
+  }
+
+  &__meta {
+    color: var(--color-text-secondary);
+    font-size: 0.85rem;
+  }
+
+  &__steps {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+
+  &__step-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-border);
+
+    &--active {
+      background: var(--color-primary);
+    }
+  }
+
+  &__title {
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__error {
+    color: var(--color-danger);
+    font-size: 0.85rem;
+    margin: -4px 0 0;
+  }
+
+  &__submit {
+    border: none;
+    border-radius: var(--radius-pill);
+    background: var(--color-primary);
+    color: var(--color-text-inverse);
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 14px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: default;
+    }
+
+    &:not(:disabled):hover {
+      opacity: 0.9;
+    }
+
+    &--link {
+      display: inline-block;
+    }
+  }
+
+  &__sucesso {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+    padding: 48px 16px;
+  }
+
+  &__sucesso-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--color-success);
+    color: var(--color-text-inverse);
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  &__label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+  }
+
+  &__input {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    font-size: 1rem;
+    color: var(--color-text);
+    background: var(--color-surface);
+    font-family: inherit;
+    resize: vertical;
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-primary);
+    }
+  }
+
+  &--checkbox {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+
+    input {
+      width: 18px;
+      height: 18px;
+    }
+  }
+}

@@ -11,6 +11,17 @@
       <p class="paciente-form__meta">Paciente desde {{ dataCriacao() | date: 'dd/MM/yyyy' }}</p>
     }
 
+    @if (editando()) {
+      <div class="paciente-form__quick-actions">
+        <a class="paciente-form__quick-action" [routerLink]="['/consultas/novo']" [queryParams]="{ pacienteId }">
+          + Nova Consulta
+        </a>
+        <a class="paciente-form__quick-action" [routerLink]="['/pacientes', pacienteId, 'mensagens']">
+          Mensagens
+        </a>
+      </div>
+    }
+
     <form class="paciente-form__form" [formGroup]="form" (ngSubmit)="submit()">
       <label class="field">
         <span class="field__label">Nome</span>
@@ -41,5 +52,20 @@
         </button>
       }
     </form>
+
+    @if (editando() && consultas().length > 0) {
+      <div class="paciente-form__consultas">
+        <h2 class="paciente-form__consultas-title">Consultas</h2>
+        <ul class="paciente-form__consultas-list">
+          @for (consulta of consultas(); track consulta.id) {
+            <li>
+              <a [routerLink]="['/consultas', consulta.id]">
+                {{ consulta.dataHora | date: 'dd/MM/yyyy HH:mm' }} — {{ consulta.status }}
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+    }
   }
 </section>

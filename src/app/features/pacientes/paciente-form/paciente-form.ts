@@ -3,6 +3,8 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
+import { Consulta } from '../../../core/consultas/consulta.model';
+import { ConsultaService } from '../../../core/consultas/consulta.service';
 import { PacienteService } from '../../../core/pacientes/paciente.service';
 
 @Component({
@@ -14,6 +16,7 @@ import { PacienteService } from '../../../core/pacientes/paciente.service';
 export class PacienteForm implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly pacienteService = inject(PacienteService);
+  private readonly consultaService = inject(ConsultaService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
 
@@ -28,8 +31,9 @@ export class PacienteForm implements OnInit {
   protected readonly saving = signal(false);
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly dataCriacao = signal<string | null>(null);
+  protected readonly consultas = signal<Consulta[]>([]);
 
-  private pacienteId: number | null = null;
+  protected pacienteId: number | null = null;
 
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('id');
@@ -51,6 +55,11 @@ export class PacienteForm implements OnInit {
         this.errorMessage.set('Não foi possível carregar o paciente.');
         this.loading.set(false);
       },
+    });
+
+    this.consultaService.listarTodos(this.pacienteId).subscribe({
+      next: (consultas) => this.consultas.set(consultas),
+      error: () => this.consultas.set([]),
     });
   }
 

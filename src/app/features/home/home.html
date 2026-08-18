@@ -17,4 +17,18 @@
     </div>
     <span class="home__card-arrow">→</span>
   </a>
+
+  <a class="home__card" routerLink="/consultas">
+    <div>
+      <p class="home__card-label">Consultas</p>
+      <p class="home__card-value">
+        @if (totalConsultas() !== null) {
+          {{ totalConsultas() }} consulta{{ totalConsultas() === 1 ? '' : 's' }}
+        } @else {
+          Ver agenda
+        }
+      </p>
+    </div>
+    <span class="home__card-arrow">→</span>
+  </a>
 </section>

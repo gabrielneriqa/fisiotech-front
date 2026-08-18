@@ -1,0 +1,40 @@
+<section class="consulta-form">
+  <a class="consulta-form__back" routerLink="/pacientes">← Meus Pacientes</a>
+  <h1 class="consulta-form__title">Nova Consulta</h1>
+  @if (pacienteNome()) {
+    <p class="consulta-form__meta">Paciente: {{ pacienteNome() }}</p>
+  }
+
+  <form class="consulta-form__form" [formGroup]="form" (ngSubmit)="submit()">
+    <label class="field">
+      <span class="field__label">Data e hora</span>
+      <input class="field__input" type="datetime-local" formControlName="dataHora" />
+    </label>
+
+    <label class="field">
+      <span class="field__label">Tipo</span>
+      <select class="field__input" formControlName="tipo">
+        <option value="PRESENCIAL">Presencial</option>
+        <option value="ONLINE">Online</option>
+      </select>
+    </label>
+
+    <label class="field">
+      <span class="field__label">Convênio</span>
+      <input class="field__input" type="text" formControlName="convenio" placeholder="Ex: Particular, Unimed" />
+    </label>
+
+    <label class="field">
+      <span class="field__label">Valor (R$)</span>
+      <input class="field__input" type="number" step="0.01" min="0" formControlName="valor" />
+    </label>
+
+    @if (errorMessage()) {
+      <p class="consulta-form__error">{{ errorMessage() }}</p>
+    }
+
+    <button class="consulta-form__submit" type="submit" [disabled]="saving()">
+      {{ saving() ? 'Iniciando...' : 'Iniciar Consulta' }}
+    </button>
+  </form>
+</section>

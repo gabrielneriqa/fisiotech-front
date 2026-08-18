@@ -1,0 +1,164 @@
+.consulta-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &__back {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  &__state {
+    color: var(--color-text-secondary);
+    padding: 24px 0;
+
+    &--error {
+      color: var(--color-danger);
+    }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  &__paciente {
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+
+  &__status {
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+    background: var(--color-border);
+    color: var(--color-text-secondary);
+
+    &--agendada {
+      background: rgba(139, 144, 240, 0.15);
+      color: var(--color-accent-dark);
+    }
+
+    &--confirmada {
+      background: rgba(31, 182, 196, 0.15);
+      color: var(--color-primary-dark);
+    }
+
+    &--realizada {
+      background: rgba(47, 191, 113, 0.15);
+      color: var(--color-success);
+    }
+
+    &--cancelada {
+      background: rgba(225, 92, 92, 0.15);
+      color: var(--color-danger);
+    }
+  }
+
+  &__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+  }
+
+  &__action {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: var(--radius-pill);
+    background: var(--color-primary);
+    color: var(--color-text-inverse);
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 12px;
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: default;
+    }
+  }
+
+  &__section {
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    box-shadow: var(--shadow-card);
+
+    h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    p {
+      font-size: 0.9rem;
+      margin: 4px 0;
+      line-height: 1.4;
+    }
+  }
+
+  &__nota {
+    color: #f5b301;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+  }
+
+  &__avaliacao-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  &__error {
+    color: var(--color-danger);
+    font-size: 0.85rem;
+  }
+
+  &__delete {
+    border: 1px solid var(--color-danger);
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--color-danger);
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 12px;
+    cursor: pointer;
+
+    &:hover {
+      background: rgba(225, 92, 92, 0.08);
+    }
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  &__label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+  }
+
+  &__input {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    font-size: 1rem;
+    color: var(--color-text);
+    background: var(--color-surface);
+    font-family: inherit;
+  }
+}
