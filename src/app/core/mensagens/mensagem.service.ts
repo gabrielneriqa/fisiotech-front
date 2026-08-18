@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { Mensagem, MensagemCreateRequest } from './mensagem.model';
+import { CaixaEntradaItem, Mensagem, MensagemCreateRequest } from './mensagem.model';
 
 @Injectable({ providedIn: 'root' })
 export class MensagemService {
@@ -16,5 +16,9 @@ export class MensagemService {
 
   enviar(request: MensagemCreateRequest): Observable<void> {
     return this.http.post<void>(this.baseUrl, request);
+  }
+
+  caixaEntrada(): Observable<CaixaEntradaItem[]> {
+    return this.http.get<CaixaEntradaItem[]>(`${this.baseUrl}/caixa-entrada`);
   }
 }

@@ -13,3 +13,11 @@ export interface MensagemCreateRequest {
   autor: AutorMensagem;
   conteudo: string;
 }
+
+export interface CaixaEntradaItem {
+  pacienteId: number;
+  pacienteNome: string;
+  ultimaMensagem: string;
+  ultimoAutor: AutorMensagem;
+  dataUltimaMensagem: string;
+}

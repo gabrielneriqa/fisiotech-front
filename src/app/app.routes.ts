@@ -41,6 +41,11 @@ export const routes: Routes = [
               import('./features/mensagens/mensagem-thread/mensagem-thread').then((m) => m.MensagemThread),
           },
           {
+            path: 'mensagens',
+            loadComponent: () =>
+              import('./features/mensagens/caixa-entrada/caixa-entrada').then((m) => m.CaixaEntrada),
+          },
+          {
             path: 'pacientes/:id',
             loadComponent: () =>
               import('./features/pacientes/paciente-form/paciente-form').then((m) => m.PacienteForm),

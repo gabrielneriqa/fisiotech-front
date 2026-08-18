@@ -16,6 +16,7 @@ const NAV_ITEMS_BY_ROLE: Record<string, NavItem[]> = {
     { path: '/home', icon: 'home', label: 'Home' },
     { path: '/pacientes', icon: 'users', label: 'Pacientes' },
     { path: '/consultas', icon: 'calendar', label: 'Consultas' },
+    { path: '/mensagens', icon: 'chat', label: 'Mensagens' },
   ],
   ROLE_PACIENTE: [
     { path: '/paciente/home', icon: 'home', label: 'Home' },

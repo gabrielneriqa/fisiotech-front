@@ -1,0 +1,31 @@
+<section class="caixa-entrada">
+  <h1 class="caixa-entrada__title">Mensagens</h1>
+
+  @if (loading()) {
+    <p class="caixa-entrada__state">Carregando...</p>
+  } @else if (errorMessage()) {
+    <p class="caixa-entrada__state caixa-entrada__state--error">{{ errorMessage() }}</p>
+  } @else if (conversas().length === 0) {
+    <p class="caixa-entrada__state">Nenhuma conversa ainda.</p>
+  } @else {
+    <ul class="caixa-entrada__items">
+      @for (conversa of conversas(); track conversa.pacienteId) {
+        <li>
+          <a class="conversa-card" [routerLink]="['/pacientes', conversa.pacienteId, 'mensagens']">
+            <span class="conversa-card__avatar">{{ iniciais(conversa.pacienteNome) }}</span>
+            <span class="conversa-card__info">
+              <span class="conversa-card__nome">{{ conversa.pacienteNome }}</span>
+              <span class="conversa-card__preview">
+                @if (conversa.ultimoAutor === 'PROFISSIONAL') {
+                  <span class="conversa-card__prefix">Você:</span>
+                }
+                {{ conversa.ultimaMensagem }}
+              </span>
+            </span>
+            <span class="conversa-card__data">{{ conversa.dataUltimaMensagem | date: 'dd/MM HH:mm' }}</span>
+          </a>
+        </li>
+      }
+    </ul>
+  }
+</section>
