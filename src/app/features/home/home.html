@@ -1,0 +1,20 @@
+<section class="home">
+  <a class="home__cta" routerLink="/pacientes/novo">
+    <span class="home__cta-icon">+</span>
+    Cadastrar Paciente
+  </a>
+
+  <a class="home__card" routerLink="/pacientes">
+    <div>
+      <p class="home__card-label">Meus Pacientes</p>
+      <p class="home__card-value">
+        @if (totalPacientes() !== null) {
+          {{ totalPacientes() }} paciente{{ totalPacientes() === 1 ? '' : 's' }}
+        } @else {
+          Ver lista
+        }
+      </p>
+    </div>
+    <span class="home__card-arrow">→</span>
+  </a>
+</section>

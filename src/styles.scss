@@ -1,1 +1,66 @@
-/* You can add global styles to this file, and also import other style files */
+/* Estilos globais - paleta e tipografia inspiradas no design AgedaFisio (Figma) */
+
+:root {
+  --color-primary: #1fb6c4;
+  --color-primary-dark: #0f6d78;
+  --color-accent: #8b90f0;
+  --color-accent-dark: #6d72e0;
+  --color-success: #2fbf71;
+  --color-danger: #e15c5c;
+
+  --color-bg: #f5f9fa;
+  --color-surface: #ffffff;
+  --color-border: #e6edf0;
+
+  --color-text: #1d2a32;
+  --color-text-secondary: #7c8a93;
+  --color-text-inverse: #ffffff;
+
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-pill: 999px;
+
+  --shadow-card: 0 4px 16px rgba(15, 109, 120, 0.08);
+
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  background: var(--color-bg);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+button {
+  font-family: inherit;
+}
+
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+a {
+  color: inherit;
+}

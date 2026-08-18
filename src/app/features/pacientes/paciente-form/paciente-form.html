@@ -1,0 +1,45 @@
+<section class="paciente-form">
+  <a class="paciente-form__back" routerLink="/pacientes">← Meus Pacientes</a>
+  <h1 class="paciente-form__title">
+    {{ editando() ? 'Editar Paciente' : 'Cadastrar Paciente' }}
+  </h1>
+
+  @if (loading()) {
+    <p class="paciente-form__state">Carregando...</p>
+  } @else {
+    @if (dataCriacao()) {
+      <p class="paciente-form__meta">Paciente desde {{ dataCriacao() | date: 'dd/MM/yyyy' }}</p>
+    }
+
+    <form class="paciente-form__form" [formGroup]="form" (ngSubmit)="submit()">
+      <label class="field">
+        <span class="field__label">Nome</span>
+        <input class="field__input" type="text" formControlName="nome" />
+      </label>
+
+      <label class="field">
+        <span class="field__label">Email</span>
+        <input class="field__input" type="email" formControlName="email" />
+      </label>
+
+      <label class="field">
+        <span class="field__label">{{ editando() ? 'Nova senha' : 'Senha' }}</span>
+        <input class="field__input" type="password" formControlName="senha" autocomplete="new-password" />
+      </label>
+
+      @if (errorMessage()) {
+        <p class="paciente-form__error">{{ errorMessage() }}</p>
+      }
+
+      <button class="paciente-form__submit" type="submit" [disabled]="saving()">
+        {{ saving() ? 'Salvando...' : 'Salvar' }}
+      </button>
+
+      @if (editando()) {
+        <button class="paciente-form__delete" type="button" (click)="excluir()">
+          Excluir Paciente
+        </button>
+      }
+    </form>
+  }
+</section>
