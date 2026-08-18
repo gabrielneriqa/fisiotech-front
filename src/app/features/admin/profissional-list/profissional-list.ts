@@ -3,10 +3,11 @@ import { RouterLink } from '@angular/router';
 
 import { Profissional } from '../../../core/profissionais/profissional.model';
 import { ProfissionalService } from '../../../core/profissionais/profissional.service';
+import { Icon } from '../../../core/ui/icon/icon';
 
 @Component({
   selector: 'app-profissional-list',
-  imports: [RouterLink],
+  imports: [RouterLink, Icon],
   templateUrl: './profissional-list.html',
   styleUrl: './profissional-list.scss',
 })

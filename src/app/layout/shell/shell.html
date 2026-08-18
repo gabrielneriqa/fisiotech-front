@@ -14,7 +14,7 @@
   <nav class="shell__nav">
     @for (item of navItems(); track item.path) {
       <a class="shell__nav-item" [routerLink]="item.path" routerLinkActive="shell__nav-item--active">
-        <span class="shell__nav-icon">{{ item.icon }}</span>
+        <app-icon class="shell__nav-icon" [name]="item.icon" />
         <span>{{ item.label }}</span>
       </a>
     }

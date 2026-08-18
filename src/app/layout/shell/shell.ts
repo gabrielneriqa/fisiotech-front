@@ -2,31 +2,32 @@ import { Component, computed, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 import { AuthService } from '../../core/auth/auth.service';
+import { Icon, IconName } from '../../core/ui/icon/icon';
 
 interface NavItem {
   path: string;
-  icon: string;
+  icon: IconName;
   label: string;
 }
 
 const NAV_ITEMS_BY_ROLE: Record<string, NavItem[]> = {
-  ROLE_ADMIN: [{ path: '/admin/profissionais', icon: '🩺', label: 'Profissionais' }],
+  ROLE_ADMIN: [{ path: '/admin/profissionais', icon: 'briefcase', label: 'Profissionais' }],
   ROLE_PROFISSIONAL: [
-    { path: '/home', icon: '🏠', label: 'Home' },
-    { path: '/pacientes', icon: '👥', label: 'Pacientes' },
-    { path: '/consultas', icon: '📅', label: 'Consultas' },
+    { path: '/home', icon: 'home', label: 'Home' },
+    { path: '/pacientes', icon: 'users', label: 'Pacientes' },
+    { path: '/consultas', icon: 'calendar', label: 'Consultas' },
   ],
   ROLE_PACIENTE: [
-    { path: '/paciente/home', icon: '🏠', label: 'Home' },
-    { path: '/paciente/consultas', icon: '📅', label: 'Consultas' },
-    { path: '/paciente/mensagens', icon: '💬', label: 'Mensagens' },
-    { path: '/paciente/perfil', icon: '👤', label: 'Perfil' },
+    { path: '/paciente/home', icon: 'home', label: 'Home' },
+    { path: '/paciente/consultas', icon: 'calendar', label: 'Consultas' },
+    { path: '/paciente/mensagens', icon: 'chat', label: 'Mensagens' },
+    { path: '/paciente/perfil', icon: 'user', label: 'Perfil' },
   ],
 };
 
 @Component({
   selector: 'app-shell',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, Icon],
   templateUrl: './shell.html',
   styleUrl: './shell.scss',
 })
