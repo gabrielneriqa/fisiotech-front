@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">FisioTech</string>
+    <string name="title_activity_main">FisioTech</string>
+    <string name="package_name">com.fisiotech.app</string>
+    <string name="custom_url_scheme">com.fisiotech.app</string>
+</resources>
