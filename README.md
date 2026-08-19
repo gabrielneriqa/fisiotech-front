@@ -75,7 +75,8 @@ Não existe usuário de demonstração pré-cadastrado no front — os usuários
 
 1. Crie um profissional autenticando como admin (`admin@fisiotech.com` / `12345678` no modo `dev` do backend).
 2. Faça login na tela inicial do front com o email/senha desse profissional.
-3. Para testar a área do paciente, cadastre um paciente pela própria tela **Pacientes** do app (como profissional logado) e depois faça logout e entre com as credenciais do paciente.
+3. Para testar a área do paciente, o jeito mais rápido é usar a aba **Cadastrar** da própria tela de login (autocadastro público) — cria a conta e já faz login automaticamente. Alternativamente, um profissional logado pode cadastrar um paciente pela tela **Pacientes** do app.
+4. Um paciente autocadastrado ainda não tem nenhum profissional vinculado nem consegue trocar mensagens com ninguém até marcar sua primeira consulta (tela **Marcar Consulta**, que também define automaticamente esse profissional como responsável) — um paciente cadastrado diretamente pelo profissional já nasce vinculado a ele, mas mesmo assim só consegue conversar depois de existir uma consulta marcada entre os dois.
 
 ## Rodando os testes
 
