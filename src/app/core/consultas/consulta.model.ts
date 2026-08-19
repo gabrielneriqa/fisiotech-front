@@ -35,9 +35,12 @@ export interface Consulta {
   id: number;
   pacienteId: number;
   pacienteNome: string;
+  profissionalId: number;
+  profissionalNome: string;
   dataHora: string;
   tipo: TipoConsulta;
   status: StatusConsulta;
+  foiRemarcada: boolean;
   convenio: string | null;
   valor: number | null;
   quadroClinico: QuadroClinico;

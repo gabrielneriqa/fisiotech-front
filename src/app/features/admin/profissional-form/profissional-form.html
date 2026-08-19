@@ -75,6 +75,41 @@
         }
       </label>
 
+      <label class="field">
+        <span class="field__label">Valor da consulta particular (R$)</span>
+        <input class="field__input" type="number" step="0.01" min="0" formControlName="valorConsultaParticular" />
+      </label>
+
+      <label class="field">
+        <span class="field__label">Convênios aceitos (separados por vírgula)</span>
+        <input class="field__input" type="text" formControlName="conveniosAceitos" placeholder="Ex: Unimed, Bradesco Saúde" />
+      </label>
+
+      <label class="field">
+        <span class="field__label">Foto (URL)</span>
+        <input class="field__input" type="text" formControlName="foto" placeholder="https://..." />
+      </label>
+
+      <label class="field">
+        <span class="field__label">Data de nascimento</span>
+        <input class="field__input" type="date" formControlName="dataNascimento" />
+      </label>
+
+      <label class="field">
+        <span class="field__label">Sexo</span>
+        <select class="field__input" formControlName="sexo">
+          <option value="">Não informado</option>
+          <option value="Feminino">Feminino</option>
+          <option value="Masculino">Masculino</option>
+          <option value="Outro">Outro</option>
+        </select>
+      </label>
+
+      <label class="field">
+        <span class="field__label">Telefone</span>
+        <input class="field__input" type="text" formControlName="telefone" />
+      </label>
+
       @if (errorMessage()) {
         <p class="profissional-form__error">{{ errorMessage() }}</p>
       }

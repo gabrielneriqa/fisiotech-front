@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
+import { mensagemErro } from '../../../core/forms/field-error';
 import { MeService } from '../../../core/me/me.service';
 
 @Component({
@@ -14,10 +15,18 @@ export class PacientePerfil implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly meService = inject(MeService);
 
+  protected readonly mensagemErro = mensagemErro;
+
   protected readonly form = this.fb.nonNullable.group({
     nome: ['', [Validators.required, Validators.maxLength(120)]],
     email: ['', [Validators.required, Validators.email, Validators.maxLength(120)]],
-    senha: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
+    dataNascimento: [''],
+    sexo: [''],
+    profissao: [''],
+    telefone: [''],
+    endereco: [''],
+    bairro: [''],
+    foto: [''],
   });
 
   protected readonly loading = signal(true);
@@ -29,7 +38,17 @@ export class PacientePerfil implements OnInit {
   ngOnInit(): void {
     this.meService.perfil().subscribe({
       next: (paciente) => {
-        this.form.patchValue({ nome: paciente.nome, email: paciente.email });
+        this.form.patchValue({
+          nome: paciente.nome,
+          email: paciente.email,
+          dataNascimento: paciente.dataNascimento ?? '',
+          sexo: paciente.sexo ?? '',
+          profissao: paciente.profissao ?? '',
+          telefone: paciente.telefone ?? '',
+          endereco: paciente.endereco ?? '',
+          bairro: paciente.bairro ?? '',
+          foto: paciente.foto ?? '',
+        });
         this.dataCriacao.set(paciente.dataCriacao);
         this.loading.set(false);
       },
@@ -50,17 +69,31 @@ export class PacientePerfil implements OnInit {
     this.errorMessage.set(null);
     this.successMessage.set(null);
 
-    this.meService.atualizarPerfil(this.form.getRawValue()).subscribe({
-      next: () => {
-        this.saving.set(false);
-        this.successMessage.set('Perfil atualizado com sucesso.');
-      },
-      error: (err: { status?: number }) => {
-        this.saving.set(false);
-        this.errorMessage.set(
-          err.status === 409 ? 'Já existe uma conta com este email.' : 'Não foi possível salvar. Tente novamente.',
-        );
-      },
-    });
+    const raw = this.form.getRawValue();
+
+    this.meService
+      .atualizarPerfil({
+        nome: raw.nome,
+        email: raw.email,
+        dataNascimento: raw.dataNascimento || null,
+        sexo: raw.sexo || null,
+        profissao: raw.profissao || null,
+        telefone: raw.telefone || null,
+        endereco: raw.endereco || null,
+        bairro: raw.bairro || null,
+        foto: raw.foto || null,
+      })
+      .subscribe({
+        next: () => {
+          this.saving.set(false);
+          this.successMessage.set('Perfil atualizado com sucesso.');
+        },
+        error: (err: { status?: number }) => {
+          this.saving.set(false);
+          this.errorMessage.set(
+            err.status === 409 ? 'Já existe uma conta com este email.' : 'Não foi possível salvar. Tente novamente.',
+          );
+        },
+      });
   }
 }

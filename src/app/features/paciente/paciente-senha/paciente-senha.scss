@@ -1,23 +1,7 @@
-.perfil {
+.senha {
   display: flex;
   flex-direction: column;
   gap: 12px;
-
-  &__title {
-    font-size: 1.3rem;
-    font-weight: 700;
-  }
-
-  &__meta {
-    color: var(--color-text-secondary);
-    font-size: 0.85rem;
-    margin-top: -4px;
-  }
-
-  &__state {
-    color: var(--color-text-secondary);
-    padding: 24px 0;
-  }
 
   &__form {
     display: flex;

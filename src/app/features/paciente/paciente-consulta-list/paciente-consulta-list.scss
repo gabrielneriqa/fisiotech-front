@@ -26,6 +26,21 @@
     flex-direction: column;
     gap: 10px;
   }
+
+  &__marcar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+    border-radius: var(--radius-pill);
+    background: var(--color-primary);
+    color: var(--color-text-inverse);
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 12px;
+    text-decoration: none;
+  }
 }
 
 .consulta-card {

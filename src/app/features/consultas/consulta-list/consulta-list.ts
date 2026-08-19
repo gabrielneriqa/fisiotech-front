@@ -1,9 +1,11 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { Consulta } from '../../../core/consultas/consulta.model';
 import { ConsultaService } from '../../../core/consultas/consulta.service';
+
+type Filtro = 'todas' | 'agendadas' | 'canceladas' | 'remarcadas';
 
 @Component({
   selector: 'app-consulta-list',
@@ -17,6 +19,23 @@ export class ConsultaList implements OnInit {
   protected readonly consultas = signal<Consulta[]>([]);
   protected readonly loading = signal(true);
   protected readonly errorMessage = signal<string | null>(null);
+  protected readonly filtro = signal<Filtro>('todas');
+
+  protected readonly consultasFiltradas = computed(() => {
+    const filtro = this.filtro();
+    const consultas = this.consultas();
+
+    if (filtro === 'todas') {
+      return consultas;
+    }
+    if (filtro === 'agendadas') {
+      return consultas.filter((c) => c.status === 'AGENDADA' || c.status === 'CONFIRMADA');
+    }
+    if (filtro === 'canceladas') {
+      return consultas.filter((c) => c.status === 'CANCELADA');
+    }
+    return consultas.filter((c) => c.foiRemarcada);
+  });
 
   ngOnInit(): void {
     this.consultaService.listarTodos().subscribe({
@@ -29,6 +48,10 @@ export class ConsultaList implements OnInit {
         this.loading.set(false);
       },
     });
+  }
+
+  protected selecionarFiltro(filtro: Filtro): void {
+    this.filtro.set(filtro);
   }
 
   protected statusLabel(status: string): string {

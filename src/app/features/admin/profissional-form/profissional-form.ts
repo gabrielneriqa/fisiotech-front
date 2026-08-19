@@ -24,6 +24,12 @@ export class ProfissionalForm implements OnInit {
     senha: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
     registroProfissional: ['', [Validators.required, Validators.maxLength(20)]],
     especialidade: ['', [Validators.required, Validators.maxLength(120)]],
+    valorConsultaParticular: [null as number | null],
+    conveniosAceitos: [''],
+    foto: [''],
+    dataNascimento: [''],
+    sexo: [''],
+    telefone: [''],
   });
 
   protected readonly editando = signal(false);
@@ -53,6 +59,12 @@ export class ProfissionalForm implements OnInit {
           email: profissional.email,
           registroProfissional: profissional.registroProfissional,
           especialidade: profissional.especialidade,
+          valorConsultaParticular: profissional.valorConsultaParticular,
+          conveniosAceitos: profissional.conveniosAceitos.join(', '),
+          foto: profissional.foto ?? '',
+          dataNascimento: profissional.dataNascimento ?? '',
+          sexo: profissional.sexo ?? '',
+          telefone: profissional.telefone ?? '',
         });
         this.dataCriacao.set(profissional.dataCriacao);
         this.loading.set(false);
@@ -73,7 +85,23 @@ export class ProfissionalForm implements OnInit {
     this.saving.set(true);
     this.errorMessage.set(null);
 
-    const request = this.form.getRawValue();
+    const raw = this.form.getRawValue();
+    const request = {
+      nome: raw.nome,
+      email: raw.email,
+      senha: raw.senha,
+      registroProfissional: raw.registroProfissional,
+      especialidade: raw.especialidade,
+      valorConsultaParticular: raw.valorConsultaParticular,
+      conveniosAceitos: raw.conveniosAceitos
+        .split(',')
+        .map((c) => c.trim())
+        .filter(Boolean),
+      foto: raw.foto || null,
+      dataNascimento: raw.dataNascimento || null,
+      sexo: raw.sexo || null,
+      telefone: raw.telefone || null,
+    };
     const request$ = this.profissionalId
       ? this.profissionalService.atualizar(this.profissionalId, request)
       : this.profissionalService.criar(request);

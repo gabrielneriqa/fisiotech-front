@@ -4,6 +4,12 @@ export interface Profissional {
   email: string;
   registroProfissional: string;
   especialidade: string;
+  valorConsultaParticular: number | null;
+  conveniosAceitos: string[];
+  foto: string | null;
+  dataNascimento: string | null;
+  sexo: string | null;
+  telefone: string | null;
   dataCriacao: string;
 }
 
@@ -13,6 +19,12 @@ export interface ProfissionalCreateRequest {
   senha: string;
   registroProfissional: string;
   especialidade: string;
+  valorConsultaParticular: number | null;
+  conveniosAceitos: string[];
+  foto: string | null;
+  dataNascimento: string | null;
+  sexo: string | null;
+  telefone: string | null;
 }
 
 export interface ProfissionalUpdateRequest {
@@ -21,4 +33,10 @@ export interface ProfissionalUpdateRequest {
   senha: string;
   registroProfissional: string;
   especialidade: string;
+  valorConsultaParticular: number | null;
+  conveniosAceitos: string[];
+  foto: string | null;
+  dataNascimento: string | null;
+  sexo: string | null;
+  telefone: string | null;
 }

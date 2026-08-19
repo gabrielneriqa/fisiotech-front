@@ -26,6 +26,29 @@
     flex-direction: column;
     gap: 10px;
   }
+
+  &__filtros {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+  }
+
+  &__filtro {
+    flex-shrink: 0;
+    border: none;
+    border-radius: var(--radius-pill);
+    background: var(--color-border);
+    color: var(--color-text-secondary);
+    font-weight: 600;
+    font-size: 0.82rem;
+    padding: 8px 14px;
+    cursor: pointer;
+
+    &--active {
+      background: var(--color-primary);
+      color: var(--color-text-inverse);
+    }
+  }
 }
 
 .consulta-card {

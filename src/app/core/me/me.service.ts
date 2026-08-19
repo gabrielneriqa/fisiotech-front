@@ -6,7 +6,8 @@ import { environment } from '../../../environments/environment';
 import { Avaliacao, AvaliacaoCreateRequest } from '../avaliacoes/avaliacao.model';
 import { Consulta } from '../consultas/consulta.model';
 import { Mensagem } from '../mensagens/mensagem.model';
-import { Paciente, PacienteUpdateRequest } from '../pacientes/paciente.model';
+import { AlterarSenhaRequest, MePerfilUpdateRequest, Paciente } from '../pacientes/paciente.model';
+import { ConsultaBookingRequest, DisponibilidadeResponse, ProfissionalBusca } from '../consultas/consulta-booking.model';
 
 @Injectable({ providedIn: 'root' })
 export class MeService {
@@ -17,8 +18,12 @@ export class MeService {
     return this.http.get<Paciente>(this.baseUrl);
   }
 
-  atualizarPerfil(request: PacienteUpdateRequest): Observable<void> {
+  atualizarPerfil(request: MePerfilUpdateRequest): Observable<void> {
     return this.http.put<void>(this.baseUrl, request);
+  }
+
+  alterarSenha(request: AlterarSenhaRequest): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/senha`, request);
   }
 
   minhasConsultas(): Observable<Consulta[]> {
@@ -43,5 +48,26 @@ export class MeService {
 
   minhaAvaliacao(consultaId: number): Observable<Avaliacao> {
     return this.http.get<Avaliacao>(`${this.baseUrl}/avaliacoes/consulta/${consultaId}`);
+  }
+
+  buscarProfissionais(nome?: string, especialidade?: string): Observable<ProfissionalBusca[]> {
+    const params: Record<string, string> = {};
+    if (nome) {
+      params['nome'] = nome;
+    }
+    if (especialidade) {
+      params['especialidade'] = especialidade;
+    }
+    return this.http.get<ProfissionalBusca[]>(`${this.baseUrl}/profissionais`, { params });
+  }
+
+  buscarDisponibilidade(profissionalId: number, data: string): Observable<DisponibilidadeResponse> {
+    return this.http.get<DisponibilidadeResponse>(`${this.baseUrl}/profissionais/${profissionalId}/disponibilidade`, {
+      params: { data },
+    });
+  }
+
+  marcarConsulta(request: ConsultaBookingRequest): Observable<Consulta> {
+    return this.http.post<Consulta>(`${this.baseUrl}/consultas`, request);
   }
 }

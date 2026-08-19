@@ -9,17 +9,68 @@
     <form class="perfil__form" [formGroup]="form" (ngSubmit)="submit()">
       <label class="field">
         <span class="field__label">Nome</span>
-        <input class="field__input" type="text" formControlName="nome" />
+        <input
+          class="field__input"
+          type="text"
+          formControlName="nome"
+          [class.field__input--invalid]="mensagemErro(form.controls.nome)"
+        />
+        @if (mensagemErro(form.controls.nome); as erro) {
+          <span class="field__error">{{ erro }}</span>
+        }
       </label>
 
       <label class="field">
         <span class="field__label">Email</span>
-        <input class="field__input" type="email" formControlName="email" />
+        <input
+          class="field__input"
+          type="email"
+          formControlName="email"
+          [class.field__input--invalid]="mensagemErro(form.controls.email)"
+        />
+        @if (mensagemErro(form.controls.email); as erro) {
+          <span class="field__error">{{ erro }}</span>
+        }
       </label>
 
       <label class="field">
-        <span class="field__label">Nova senha</span>
-        <input class="field__input" type="password" formControlName="senha" autocomplete="new-password" />
+        <span class="field__label">Data de nascimento</span>
+        <input class="field__input" type="date" formControlName="dataNascimento" />
+      </label>
+
+      <label class="field">
+        <span class="field__label">Sexo</span>
+        <select class="field__input" formControlName="sexo">
+          <option value="">Prefiro não informar</option>
+          <option value="Feminino">Feminino</option>
+          <option value="Masculino">Masculino</option>
+          <option value="Outro">Outro</option>
+        </select>
+      </label>
+
+      <label class="field">
+        <span class="field__label">Profissão</span>
+        <input class="field__input" type="text" formControlName="profissao" />
+      </label>
+
+      <label class="field">
+        <span class="field__label">Telefone</span>
+        <input class="field__input" type="text" formControlName="telefone" />
+      </label>
+
+      <label class="field">
+        <span class="field__label">Endereço</span>
+        <input class="field__input" type="text" formControlName="endereco" />
+      </label>
+
+      <label class="field">
+        <span class="field__label">Bairro</span>
+        <input class="field__input" type="text" formControlName="bairro" />
+      </label>
+
+      <label class="field">
+        <span class="field__label">Foto (URL)</span>
+        <input class="field__input" type="text" formControlName="foto" placeholder="https://..." />
       </label>
 
       @if (errorMessage()) {

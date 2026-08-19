@@ -1,4 +1,41 @@
 <section class="consulta-list">
+  @if (!loading() && !errorMessage() && consultas().length > 0) {
+    <div class="consulta-list__filtros">
+      <button
+        class="consulta-list__filtro"
+        [class.consulta-list__filtro--active]="filtro() === 'todas'"
+        type="button"
+        (click)="selecionarFiltro('todas')"
+      >
+        Todas
+      </button>
+      <button
+        class="consulta-list__filtro"
+        [class.consulta-list__filtro--active]="filtro() === 'agendadas'"
+        type="button"
+        (click)="selecionarFiltro('agendadas')"
+      >
+        Agendadas
+      </button>
+      <button
+        class="consulta-list__filtro"
+        [class.consulta-list__filtro--active]="filtro() === 'canceladas'"
+        type="button"
+        (click)="selecionarFiltro('canceladas')"
+      >
+        Canceladas
+      </button>
+      <button
+        class="consulta-list__filtro"
+        [class.consulta-list__filtro--active]="filtro() === 'remarcadas'"
+        type="button"
+        (click)="selecionarFiltro('remarcadas')"
+      >
+        Remarcadas
+      </button>
+    </div>
+  }
+
   @if (loading()) {
     <p class="consulta-list__state">Carregando...</p>
   } @else if (errorMessage()) {
@@ -7,9 +44,11 @@
     <p class="consulta-list__state">
       Nenhuma consulta ainda. Abra um paciente em "Meus Pacientes" para iniciar uma.
     </p>
+  } @else if (consultasFiltradas().length === 0) {
+    <p class="consulta-list__state">Nenhuma consulta neste filtro.</p>
   } @else {
     <ul class="consulta-list__items">
-      @for (consulta of consultas(); track consulta.id) {
+      @for (consulta of consultasFiltradas(); track consulta.id) {
         <li>
           <a class="consulta-card" [routerLink]="['/consultas', consulta.id]">
             <div class="consulta-card__info">

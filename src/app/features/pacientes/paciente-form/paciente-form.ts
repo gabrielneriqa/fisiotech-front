@@ -24,6 +24,13 @@ export class PacienteForm implements OnInit {
     nome: ['', [Validators.required, Validators.maxLength(120)]],
     email: ['', [Validators.required, Validators.email, Validators.maxLength(120)]],
     senha: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
+    dataNascimento: [''],
+    sexo: [''],
+    profissao: [''],
+    telefone: [''],
+    endereco: [''],
+    bairro: [''],
+    foto: [''],
   });
 
   protected readonly editando = signal(false);
@@ -47,7 +54,17 @@ export class PacienteForm implements OnInit {
 
     this.pacienteService.buscarPorId(this.pacienteId).subscribe({
       next: (paciente) => {
-        this.form.patchValue({ nome: paciente.nome, email: paciente.email });
+        this.form.patchValue({
+          nome: paciente.nome,
+          email: paciente.email,
+          dataNascimento: paciente.dataNascimento ?? '',
+          sexo: paciente.sexo ?? '',
+          profissao: paciente.profissao ?? '',
+          telefone: paciente.telefone ?? '',
+          endereco: paciente.endereco ?? '',
+          bairro: paciente.bairro ?? '',
+          foto: paciente.foto ?? '',
+        });
         this.dataCriacao.set(paciente.dataCriacao);
         this.loading.set(false);
       },
@@ -72,10 +89,24 @@ export class PacienteForm implements OnInit {
     this.saving.set(true);
     this.errorMessage.set(null);
 
-    const request = this.form.getRawValue();
+    const raw = this.form.getRawValue();
+    const camposNovos = {
+      dataNascimento: raw.dataNascimento || null,
+      sexo: raw.sexo || null,
+      profissao: raw.profissao || null,
+      telefone: raw.telefone || null,
+      endereco: raw.endereco || null,
+      bairro: raw.bairro || null,
+      foto: raw.foto || null,
+    };
     const request$ = this.pacienteId
-      ? this.pacienteService.atualizar(this.pacienteId, request)
-      : this.pacienteService.criar(request);
+      ? this.pacienteService.atualizar(this.pacienteId, {
+          nome: raw.nome,
+          email: raw.email,
+          senha: raw.senha,
+          ...camposNovos,
+        })
+      : this.pacienteService.criar({ nome: raw.nome, email: raw.email, senha: raw.senha });
 
     request$.subscribe({
       next: () => {

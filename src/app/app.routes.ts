@@ -137,6 +137,12 @@ export const routes: Routes = [
             data: { title: 'Minhas Consultas' },
           },
           {
+            path: 'consultas/marcar',
+            loadComponent: () =>
+              import('./features/paciente/consulta-booking/consulta-booking').then((m) => m.ConsultaBooking),
+            data: { title: 'Marcar Consulta', backTo: '/paciente/consultas' },
+          },
+          {
             path: 'consultas/:id',
             loadComponent: () =>
               import('./features/paciente/paciente-consulta-detail/paciente-consulta-detail').then(
@@ -155,6 +161,12 @@ export const routes: Routes = [
             loadComponent: () =>
               import('./features/paciente/paciente-perfil/paciente-perfil').then((m) => m.PacientePerfil),
             data: { title: 'Meu Perfil' },
+          },
+          {
+            path: 'senha',
+            loadComponent: () =>
+              import('./features/paciente/paciente-senha/paciente-senha').then((m) => m.PacienteSenha),
+            data: { title: 'Alterar Senha', backTo: '/paciente/perfil' },
           },
         ],
       },

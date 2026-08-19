@@ -4,8 +4,14 @@
   } @else if (errorMessage()) {
     <p class="consulta-list__state consulta-list__state--error">{{ errorMessage() }}</p>
   } @else if (consultas().length === 0) {
+    <a class="consulta-list__marcar" routerLink="/paciente/consultas/marcar">
+      <app-icon name="calendar-plus" /> Marcar Consulta
+    </a>
     <p class="consulta-list__state">Nenhuma consulta ainda.</p>
   } @else {
+    <a class="consulta-list__marcar" routerLink="/paciente/consultas/marcar">
+      <app-icon name="calendar-plus" /> Marcar Consulta
+    </a>
     <ul class="consulta-list__items">
       @for (consulta of consultas(); track consulta.id) {
         <li>

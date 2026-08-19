@@ -35,6 +35,46 @@
         <input class="field__input" type="password" formControlName="senha" autocomplete="new-password" />
       </label>
 
+      <label class="field">
+        <span class="field__label">Data de nascimento</span>
+        <input class="field__input" type="date" formControlName="dataNascimento" />
+      </label>
+
+      <label class="field">
+        <span class="field__label">Sexo</span>
+        <select class="field__input" formControlName="sexo">
+          <option value="">Não informado</option>
+          <option value="Feminino">Feminino</option>
+          <option value="Masculino">Masculino</option>
+          <option value="Outro">Outro</option>
+        </select>
+      </label>
+
+      <label class="field">
+        <span class="field__label">Profissão</span>
+        <input class="field__input" type="text" formControlName="profissao" />
+      </label>
+
+      <label class="field">
+        <span class="field__label">Telefone</span>
+        <input class="field__input" type="text" formControlName="telefone" />
+      </label>
+
+      <label class="field">
+        <span class="field__label">Endereço</span>
+        <input class="field__input" type="text" formControlName="endereco" />
+      </label>
+
+      <label class="field">
+        <span class="field__label">Bairro</span>
+        <input class="field__input" type="text" formControlName="bairro" />
+      </label>
+
+      <label class="field">
+        <span class="field__label">Foto (URL)</span>
+        <input class="field__input" type="text" formControlName="foto" placeholder="https://..." />
+      </label>
+
       @if (errorMessage()) {
         <p class="paciente-form__error">{{ errorMessage() }}</p>
       }

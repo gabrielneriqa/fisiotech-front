@@ -42,6 +42,14 @@
         <span class="shell__sidebar-avatar">{{ iniciais(currentUser()?.nome) }}</span>
         <p class="shell__sidebar-name">{{ currentUser()?.nome }}</p>
       </div>
+      @if (isPaciente()) {
+        <a class="shell__sidebar-link" routerLink="/paciente/perfil" (click)="fecharSidebar()">
+          <app-icon name="user" /> Editar Perfil
+        </a>
+        <a class="shell__sidebar-link" routerLink="/paciente/senha" (click)="fecharSidebar()">
+          <app-icon name="lock" /> Alterar Senha
+        </a>
+      }
       <button class="shell__sidebar-logout" type="button" (click)="logout()">Sair</button>
     </aside>
   }

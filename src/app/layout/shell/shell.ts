@@ -47,6 +47,8 @@ export class Shell {
     () => NAV_ITEMS_BY_ROLE[this.currentUser()?.role ?? ''] ?? [],
   );
 
+  protected readonly isPaciente = computed(() => this.currentUser()?.role === 'ROLE_PACIENTE');
+
   private readonly routeData = toSignal(
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd),

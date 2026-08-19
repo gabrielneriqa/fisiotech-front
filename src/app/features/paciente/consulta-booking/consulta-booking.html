@@ -1,0 +1,166 @@
+<section class="booking">
+  @if (errorMessage()) {
+    <p class="booking__error">{{ errorMessage() }}</p>
+  }
+
+  @if (etapa() === 'profissional') {
+    <h2 class="booking__step-title">Escolha o profissional</h2>
+
+    <div class="booking__busca">
+      <input
+        class="booking__busca-input"
+        type="text"
+        placeholder="Nome"
+        [ngModel]="buscaNome()"
+        (ngModelChange)="buscaNome.set($event)"
+        (keyup.enter)="buscarProfissionais()"
+      />
+      <input
+        class="booking__busca-input"
+        type="text"
+        placeholder="Especialidade"
+        [ngModel]="buscaEspecialidade()"
+        (ngModelChange)="buscaEspecialidade.set($event)"
+        (keyup.enter)="buscarProfissionais()"
+      />
+      <button class="booking__busca-submit" type="button" (click)="buscarProfissionais()">Buscar</button>
+    </div>
+
+    @if (buscandoProfissionais()) {
+      <p class="booking__state">Buscando...</p>
+    } @else if (profissionais().length === 0) {
+      <p class="booking__state">Nenhum profissional encontrado.</p>
+    } @else {
+      <ul class="booking__lista">
+        @for (profissional of profissionais(); track profissional.id) {
+          <li>
+            <button class="profissional-card" type="button" (click)="selecionarProfissional(profissional)">
+              <span class="profissional-card__nome">{{ profissional.nome }}</span>
+              <span class="profissional-card__especialidade">{{ profissional.especialidade }}</span>
+            </button>
+          </li>
+        }
+      </ul>
+    }
+  }
+
+  @if (etapa() === 'data' || etapa() === 'horario' || etapa() === 'pagamento') {
+    <p class="booking__meta">Profissional: {{ profissionalSelecionado()?.nome }}</p>
+
+    <label class="field">
+      <span class="field__label">Data</span>
+      <input
+        class="field__input"
+        type="date"
+        [min]="hoje"
+        [ngModel]="dataSelecionada()"
+        (ngModelChange)="onDataChange($event)"
+      />
+    </label>
+  }
+
+  @if (etapa() === 'horario') {
+    <h2 class="booking__step-title">Escolha o horário</h2>
+
+    @if (carregandoDisponibilidade()) {
+      <p class="booking__state">Carregando horários...</p>
+    } @else if (disponibilidade()) {
+      <div class="booking__slots">
+        @for (slot of disponibilidade()!.horarios; track slot.horario) {
+          <button
+            class="slot"
+            [class.slot--indisponivel]="!slot.disponivel"
+            [class.slot--selecionado]="horarioSelecionado() === slot.horario"
+            type="button"
+            [disabled]="!slot.disponivel"
+            (click)="selecionarHorario(slot)"
+          >
+            {{ slot.horario.slice(0, 5) }}
+          </button>
+        }
+      </div>
+    }
+  }
+
+  @if (etapa() === 'pagamento') {
+    <h2 class="booking__step-title">Pagamento e tipo</h2>
+
+    <p class="booking__meta">Horário: {{ horarioSelecionado()?.slice(0, 5) }}</p>
+
+    <div class="booking__papel">
+      <button
+        class="booking__papel-option"
+        type="button"
+        [class.booking__papel-option--active]="formaPagamento() === 'particular'"
+        (click)="selecionarFormaPagamento('particular')"
+      >
+        Particular
+      </button>
+      <button
+        class="booking__papel-option"
+        type="button"
+        [class.booking__papel-option--active]="formaPagamento() === 'convenio'"
+        (click)="selecionarFormaPagamento('convenio')"
+      >
+        Convênio
+      </button>
+    </div>
+
+    @if (formaPagamento() === 'particular') {
+      @if (valorParticular() !== null) {
+        <p class="booking__valor">Valor: R$ {{ valorParticular()?.toFixed(2) }}</p>
+      } @else {
+        <p class="booking__state">Este profissional ainda não definiu um valor particular.</p>
+      }
+    } @else {
+      @if (conveniosDisponiveis().length === 0) {
+        <p class="booking__state">Este profissional não tem convênios cadastrados.</p>
+      } @else {
+        <label class="field">
+          <span class="field__label">Convênio</span>
+          <select
+            class="field__input"
+            [ngModel]="convenioSelecionado()"
+            (ngModelChange)="convenioSelecionado.set($event)"
+          >
+            <option [ngValue]="null">Selecione</option>
+            @for (convenio of conveniosDisponiveis(); track convenio) {
+              <option [ngValue]="convenio">{{ convenio }}</option>
+            }
+          </select>
+        </label>
+      }
+    }
+
+    <label class="field">
+      <span class="field__label">Tipo</span>
+      <select class="field__input" [ngModel]="tipo()" (ngModelChange)="tipo.set($event)">
+        <option value="PRESENCIAL">Presencial</option>
+        <option value="ONLINE">Online</option>
+      </select>
+    </label>
+
+    <button
+      class="booking__confirmar"
+      type="button"
+      [disabled]="formaPagamento() === 'convenio' && !convenioSelecionado()"
+      (click)="abrirConfirmacao()"
+    >
+      Confirmar Consulta
+    </button>
+  }
+
+  @if (mostrarConfirmacao()) {
+    <div class="booking__overlay">
+      <div class="booking__popup">
+        <p class="booking__popup-texto">Confirmar consulta com {{ profissionalSelecionado()?.nome }}?</p>
+        <div class="booking__popup-acoes">
+          <button class="booking__popup-nao" type="button" (click)="fecharConfirmacao()">Não</button>
+          <button class="booking__popup-sim" type="button" [disabled]="saving()" (click)="confirmar()">
+            {{ saving() ? 'Marcando...' : 'Sim' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</section>
