@@ -1,5 +1,5 @@
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { filter, map } from 'rxjs';
 
@@ -57,6 +57,28 @@ export class Shell {
 
   protected readonly pageTitle = computed(() => this.routeData()['title'] as string | undefined);
   protected readonly backTo = computed(() => this.routeData()['backTo'] as string | undefined);
+
+  protected readonly sidebarAberta = signal(false);
+
+  protected abrirSidebar(): void {
+    this.sidebarAberta.set(true);
+  }
+
+  protected fecharSidebar(): void {
+    this.sidebarAberta.set(false);
+  }
+
+  protected iniciais(nome: string | undefined): string {
+    if (!nome) {
+      return '';
+    }
+    return nome
+      .trim()
+      .split(/\s+/)
+      .slice(0, 2)
+      .map((parte) => parte[0]?.toUpperCase() ?? '')
+      .join('');
+  }
 
   protected logout(): void {
     this.authService.logout();

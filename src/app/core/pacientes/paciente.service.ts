@@ -22,6 +22,10 @@ export class PacienteService {
     return this.http.post<void>(this.baseUrl, request);
   }
 
+  cadastrarPublico(request: PacienteCreateRequest): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/cadastro`, request);
+  }
+
   atualizar(id: number, request: PacienteUpdateRequest): Observable<void> {
     return this.http.put<void>(`${this.baseUrl}/${id}`, request);
   }

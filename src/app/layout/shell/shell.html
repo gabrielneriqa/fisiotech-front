@@ -11,11 +11,14 @@
     </header>
   } @else {
     <header class="shell__header">
+      <button class="shell__menu-toggle" type="button" (click)="abrirSidebar()" aria-label="Abrir menu">
+        <app-icon name="menu" />
+      </button>
       <div class="shell__greeting">
         <p class="shell__greeting-label">Bem-vindo(a),</p>
         <h1 class="shell__greeting-name">{{ currentUser()?.nome }}</h1>
       </div>
-      <button class="shell__logout" type="button" (click)="logout()">Sair</button>
+      <span class="shell__avatar">{{ iniciais(currentUser()?.nome) }}</span>
     </header>
   }
 
@@ -31,4 +34,15 @@
       </a>
     }
   </nav>
+
+  @if (sidebarAberta()) {
+    <div class="shell__overlay" (click)="fecharSidebar()"></div>
+    <aside class="shell__sidebar">
+      <div class="shell__sidebar-profile">
+        <span class="shell__sidebar-avatar">{{ iniciais(currentUser()?.nome) }}</span>
+        <p class="shell__sidebar-name">{{ currentUser()?.nome }}</p>
+      </div>
+      <button class="shell__sidebar-logout" type="button" (click)="logout()">Sair</button>
+    </aside>
+  }
 </div>

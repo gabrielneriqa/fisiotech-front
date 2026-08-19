@@ -1,34 +1,42 @@
 <section class="home">
-  <a class="home__cta" routerLink="/pacientes/novo">
-    <span class="home__cta-icon">+</span>
-    Cadastrar Paciente
+  <a class="home__action home__action--consulta" routerLink="/consultas/novo">
+    <span class="home__action-label">Iniciar consulta</span>
+    <span class="home__action-decor">
+      <app-icon class="home__action-icon" name="clipboard" />
+    </span>
   </a>
 
-  <a class="home__card" routerLink="/pacientes">
-    <div>
-      <p class="home__card-label">Meus Pacientes</p>
-      <p class="home__card-value">
-        @if (totalPacientes() !== null) {
-          {{ totalPacientes() }} paciente{{ totalPacientes() === 1 ? '' : 's' }}
-        } @else {
-          Ver lista
-        }
-      </p>
-    </div>
-    <span class="home__card-arrow">→</span>
+  <a class="home__action home__action--paciente" routerLink="/pacientes/novo">
+    <span class="home__action-label">Cadastrar Paciente</span>
+    <span class="home__action-decor">
+      <app-icon class="home__action-icon" name="user-plus" />
+    </span>
   </a>
 
-  <a class="home__card" routerLink="/consultas">
-    <div>
-      <p class="home__card-label">Consultas</p>
-      <p class="home__card-value">
-        @if (totalConsultas() !== null) {
-          {{ totalConsultas() }} consulta{{ totalConsultas() === 1 ? '' : 's' }}
-        } @else {
-          Ver agenda
-        }
-      </p>
-    </div>
-    <span class="home__card-arrow">→</span>
-  </a>
+  <h2 class="home__section-title">Notificações recentes</h2>
+
+  @if (loadingNotificacoes()) {
+    <p class="home__state">Carregando...</p>
+  } @else if (notificacoes().length === 0) {
+    <p class="home__state">Nenhuma notificação ainda.</p>
+  } @else {
+    <ul class="home__notificacoes">
+      @for (n of notificacoes(); track n.pacienteId) {
+        <li>
+          <a class="notificacao-card" [routerLink]="['/pacientes', n.pacienteId, 'mensagens']">
+            <span class="notificacao-card__avatar">{{ iniciais(n.pacienteNome) }}</span>
+            <span class="notificacao-card__info">
+              <span class="notificacao-card__nome">{{ n.pacienteNome }}</span>
+              <span class="notificacao-card__desc">
+                @if (n.ultimoAutor === 'PROFISSIONAL') {
+                  <span class="notificacao-card__prefix">Você:</span>
+                }
+                {{ n.ultimaMensagem }}
+              </span>
+            </span>
+          </a>
+        </li>
+      }
+    </ul>
+  }
 </section>

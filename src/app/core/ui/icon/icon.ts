@@ -9,7 +9,10 @@ export type IconName =
   | 'briefcase'
   | 'trash'
   | 'plus'
-  | 'arrow-left';
+  | 'arrow-left'
+  | 'clipboard'
+  | 'user-plus'
+  | 'menu';
 
 @Component({
   selector: 'app-icon',
@@ -74,6 +77,29 @@ export type IconName =
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="19" y1="12" x2="5" y2="12" />
           <polyline points="12 19 5 12 12 5" />
+        </svg>
+      }
+      @case ('clipboard') {
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="5" y="4" width="14" height="17" rx="2" />
+          <path d="M9 4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1H9V4Z" />
+          <line x1="8" y1="11" x2="16" y2="11" />
+          <line x1="8" y1="15" x2="13" y2="15" />
+        </svg>
+      }
+      @case ('user-plus') {
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="8" r="4" />
+          <path d="M2 21v-2a5 5 0 0 1 5-5h4a5 5 0 0 1 1.5 0.22" />
+          <line x1="18" y1="9" x2="18" y2="15" />
+          <line x1="15" y1="12" x2="21" y2="12" />
+        </svg>
+      }
+      @case ('menu') {
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
         </svg>
       }
     }

@@ -23,7 +23,7 @@
             <span class="paciente-card__avatar">{{ iniciais(paciente.nome) }}</span>
             <span class="paciente-card__info">
               <span class="paciente-card__nome">{{ paciente.nome }}</span>
-              <span class="paciente-card__detalhe">{{ paciente.email }} · {{ paciente.profissionalNome }}</span>
+              <span class="paciente-card__detalhe">{{ paciente.email }} · {{ paciente.profissionalNome ?? 'Sem profissional atribuído' }}</span>
             </span>
           </a>
         </li>

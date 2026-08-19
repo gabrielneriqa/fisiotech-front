@@ -1,8 +1,9 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { ConsultaService } from '../../../core/consultas/consulta.service';
+import { Paciente } from '../../../core/pacientes/paciente.model';
 import { PacienteService } from '../../../core/pacientes/paciente.service';
 
 @Component({
@@ -29,20 +30,43 @@ export class ConsultaForm implements OnInit {
   protected readonly saving = signal(false);
   protected readonly errorMessage = signal<string | null>(null);
 
-  private pacienteId!: number;
+  protected readonly pacientes = signal<Paciente[]>([]);
+  protected readonly buscaPaciente = signal('');
+  protected readonly pacientesFiltrados = computed(() => {
+    const termo = this.buscaPaciente().trim().toLowerCase();
+    if (!termo) {
+      return this.pacientes();
+    }
+    return this.pacientes().filter((p) => p.nome.toLowerCase().includes(termo));
+  });
+
+  private pacienteId: number | null = null;
 
   ngOnInit(): void {
     const pacienteIdParam = this.route.snapshot.queryParamMap.get('pacienteId');
-    if (!pacienteIdParam) {
-      this.errorMessage.set('Nenhum paciente selecionado.');
+
+    if (pacienteIdParam) {
+      this.pacienteId = Number(pacienteIdParam);
+      this.pacienteService.buscarPorId(this.pacienteId).subscribe({
+        next: (paciente) => this.pacienteNome.set(paciente.nome),
+        error: () => this.errorMessage.set('Paciente não encontrado.'),
+      });
       return;
     }
 
-    this.pacienteId = Number(pacienteIdParam);
-    this.pacienteService.buscarPorId(this.pacienteId).subscribe({
-      next: (paciente) => this.pacienteNome.set(paciente.nome),
-      error: () => this.errorMessage.set('Paciente não encontrado.'),
+    this.pacienteService.listarTodos().subscribe({
+      next: (pacientes) => this.pacientes.set(pacientes),
+      error: () => this.errorMessage.set('Não foi possível carregar os pacientes.'),
     });
+  }
+
+  protected onBuscaPacienteChange(event: Event): void {
+    this.buscaPaciente.set((event.target as HTMLInputElement).value);
+  }
+
+  protected selecionarPaciente(paciente: Paciente): void {
+    this.pacienteId = paciente.id;
+    this.pacienteNome.set(paciente.nome);
   }
 
   protected submit(): void {

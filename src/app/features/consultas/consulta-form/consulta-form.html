@@ -1,39 +1,63 @@
 <section class="consulta-form">
   <a class="consulta-form__back" routerLink="/pacientes">← Meus Pacientes</a>
-  @if (pacienteNome()) {
-    <p class="consulta-form__meta">Paciente: {{ pacienteNome() }}</p>
-  }
 
-  <form class="consulta-form__form" [formGroup]="form" (ngSubmit)="submit()">
-    <label class="field">
-      <span class="field__label">Data e hora</span>
-      <input class="field__input" type="datetime-local" formControlName="dataHora" />
-    </label>
+  @if (!pacienteNome()) {
+    <input
+      class="consulta-form__search"
+      type="search"
+      placeholder="Buscar paciente pelo nome"
+      [value]="buscaPaciente()"
+      (input)="onBuscaPacienteChange($event)"
+    />
 
-    <label class="field">
-      <span class="field__label">Tipo</span>
-      <select class="field__input" formControlName="tipo">
-        <option value="PRESENCIAL">Presencial</option>
-        <option value="ONLINE">Online</option>
-      </select>
-    </label>
-
-    <label class="field">
-      <span class="field__label">Convênio</span>
-      <input class="field__input" type="text" formControlName="convenio" placeholder="Ex: Particular, Unimed" />
-    </label>
-
-    <label class="field">
-      <span class="field__label">Valor (R$)</span>
-      <input class="field__input" type="number" step="0.01" min="0" formControlName="valor" />
-    </label>
-
-    @if (errorMessage()) {
-      <p class="consulta-form__error">{{ errorMessage() }}</p>
+    @if (pacientesFiltrados().length === 0) {
+      <p class="consulta-form__state">Nenhum paciente encontrado.</p>
+    } @else {
+      <ul class="consulta-form__pacientes">
+        @for (paciente of pacientesFiltrados(); track paciente.id) {
+          <li>
+            <button class="paciente-card" type="button" (click)="selecionarPaciente(paciente)">
+              <span class="paciente-card__nome">{{ paciente.nome }}</span>
+              <span class="paciente-card__email">{{ paciente.email }}</span>
+            </button>
+          </li>
+        }
+      </ul>
     }
+  } @else {
+    <p class="consulta-form__meta">Paciente: {{ pacienteNome() }}</p>
 
-    <button class="consulta-form__submit" type="submit" [disabled]="saving()">
-      {{ saving() ? 'Iniciando...' : 'Iniciar Consulta' }}
-    </button>
-  </form>
+    <form class="consulta-form__form" [formGroup]="form" (ngSubmit)="submit()">
+      <label class="field">
+        <span class="field__label">Data e hora</span>
+        <input class="field__input" type="datetime-local" formControlName="dataHora" />
+      </label>
+
+      <label class="field">
+        <span class="field__label">Tipo</span>
+        <select class="field__input" formControlName="tipo">
+          <option value="PRESENCIAL">Presencial</option>
+          <option value="ONLINE">Online</option>
+        </select>
+      </label>
+
+      <label class="field">
+        <span class="field__label">Convênio</span>
+        <input class="field__input" type="text" formControlName="convenio" placeholder="Ex: Particular, Unimed" />
+      </label>
+
+      <label class="field">
+        <span class="field__label">Valor (R$)</span>
+        <input class="field__input" type="number" step="0.01" min="0" formControlName="valor" />
+      </label>
+
+      @if (errorMessage()) {
+        <p class="consulta-form__error">{{ errorMessage() }}</p>
+      }
+
+      <button class="consulta-form__submit" type="submit" [disabled]="saving()">
+        {{ saving() ? 'Iniciando...' : 'Iniciar Consulta' }}
+      </button>
+    </form>
+  }
 </section>

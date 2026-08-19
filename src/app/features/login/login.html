@@ -1,27 +1,122 @@
 <div class="login">
   <div class="login__card">
     <p class="login__brand">FisioTech</p>
-    <h1 class="login__title">Entrar</h1>
-    <p class="login__subtitle">Acesse sua conta profissional</p>
 
-    <form class="login__form" [formGroup]="form" (ngSubmit)="submit()">
-      <label class="field">
-        <span class="field__label">Email</span>
-        <input class="field__input" type="email" formControlName="email" autocomplete="username" />
-      </label>
-
-      <label class="field">
-        <span class="field__label">Senha</span>
-        <input class="field__input" type="password" formControlName="senha" autocomplete="current-password" />
-      </label>
-
-      @if (errorMessage()) {
-        <p class="login__error">{{ errorMessage() }}</p>
-      }
-
-      <button class="login__submit" type="submit" [disabled]="loading()">
-        {{ loading() ? 'Entrando...' : 'Entrar' }}
+    <div class="login__tabs">
+      <button
+        class="login__tab"
+        type="button"
+        [class.login__tab--active]="aba() === 'login'"
+        (click)="selecionarAba('login')"
+      >
+        Login
       </button>
-    </form>
+      <button
+        class="login__tab"
+        type="button"
+        [class.login__tab--active]="aba() === 'cadastro'"
+        (click)="selecionarAba('cadastro')"
+      >
+        Cadastrar
+      </button>
+    </div>
+
+    @if (aba() === 'login') {
+      <h1 class="login__title">Entrar</h1>
+      <p class="login__subtitle">Acesse sua conta</p>
+
+      <div class="login__papel">
+        <button
+          class="login__papel-option"
+          type="button"
+          [class.login__papel-option--active]="papelSelecionado() === 'ROLE_PROFISSIONAL'"
+          (click)="selecionarPapel('ROLE_PROFISSIONAL')"
+        >
+          Sou médico
+        </button>
+        <button
+          class="login__papel-option"
+          type="button"
+          [class.login__papel-option--active]="papelSelecionado() === 'ROLE_PACIENTE'"
+          (click)="selecionarPapel('ROLE_PACIENTE')"
+        >
+          Sou Paciente
+        </button>
+      </div>
+
+      <form class="login__form" [formGroup]="form" (ngSubmit)="submit()">
+        <label class="field">
+          <span class="field__label">Email</span>
+          <input class="field__input" type="email" formControlName="email" autocomplete="username" />
+        </label>
+
+        <label class="field">
+          <span class="field__label">Senha</span>
+          <input class="field__input" type="password" formControlName="senha" autocomplete="current-password" />
+        </label>
+
+        @if (errorMessage()) {
+          <p class="login__error">{{ errorMessage() }}</p>
+        }
+
+        <button class="login__submit" type="submit" [disabled]="loading()">
+          {{ loading() ? 'Entrando...' : 'Entrar' }}
+        </button>
+      </form>
+    } @else {
+      <h1 class="login__title">Criar conta</h1>
+      <p class="login__subtitle">Cadastro de paciente</p>
+
+      <form class="login__form" [formGroup]="formCadastro" (ngSubmit)="submitCadastro()">
+        <label class="field">
+          <span class="field__label">Nome</span>
+          <input
+            class="field__input"
+            type="text"
+            formControlName="nome"
+            [class.field__input--invalid]="mensagemErro(formCadastro.controls.nome)"
+          />
+          @if (mensagemErro(formCadastro.controls.nome); as erro) {
+            <span class="field__error">{{ erro }}</span>
+          }
+        </label>
+
+        <label class="field">
+          <span class="field__label">Email</span>
+          <input
+            class="field__input"
+            type="email"
+            formControlName="email"
+            autocomplete="username"
+            [class.field__input--invalid]="mensagemErro(formCadastro.controls.email)"
+          />
+          @if (mensagemErro(formCadastro.controls.email); as erro) {
+            <span class="field__error">{{ erro }}</span>
+          }
+        </label>
+
+        <label class="field">
+          <span class="field__label">Senha</span>
+          <input
+            class="field__input"
+            type="password"
+            formControlName="senha"
+            autocomplete="new-password"
+            [class.field__input--invalid]="mensagemErro(formCadastro.controls.senha)"
+          />
+          @if (mensagemErro(formCadastro.controls.senha); as erro) {
+            <span class="field__error">{{ erro }}</span>
+          }
+        </label>
+
+        @if (cadastroErrorMessage()) {
+          <p class="login__error">{{ cadastroErrorMessage() }}</p>
+        }
+
+        <button class="login__submit" type="submit" [disabled]="cadastrando()">
+          {{ cadastrando() ? 'Criando conta...' : 'Cadastrar' }}
+        </button>
+      </form>
+    }
   </div>
 </div>

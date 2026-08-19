@@ -27,7 +27,7 @@ export class PacienteList implements OnInit {
       (paciente) =>
         paciente.nome.toLowerCase().includes(termo) ||
         paciente.email.toLowerCase().includes(termo) ||
-        paciente.profissionalNome.toLowerCase().includes(termo),
+        (paciente.profissionalNome?.toLowerCase().includes(termo) ?? false),
     );
   });
 
