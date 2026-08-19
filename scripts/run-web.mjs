@@ -1,4 +1,4 @@
-import { spawnSync } from 'node:child_process';
+import { spawn } from 'node:child_process';
 
 import { checkBackend, readPortFromProxyConfig, warnBackendUnreachable } from './check-backend.mjs';
 
@@ -12,6 +12,13 @@ if (!(await checkBackend(port))) {
   console.log('Backend respondendo. Subindo o dev server...\n');
 }
 
+// spawn (assincrono) em vez de spawnSync: no Windows, chamar spawnSync logo
+// apos um fetch/AbortSignal.timeout ainda pendente pode derrubar o processo
+// com um assertion failure do libuv (UV_HANDLE_CLOSING).
 const npxCmd = process.platform === 'win32' ? 'npx.cmd' : 'npx';
-const result = spawnSync(npxCmd, ['ng', 'serve'], { stdio: 'inherit' });
-process.exit(result.status ?? 1);
+const child = spawn(npxCmd, ['ng', 'serve'], { stdio: 'inherit', shell: true });
+child.on('error', (err) => {
+  console.error(`\n[erro] Nao consegui iniciar o "${npxCmd} ng serve": ${err.message}\n`);
+  process.exit(1);
+});
+child.on('exit', (code) => process.exit(code ?? 0));
