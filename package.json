@@ -8,7 +8,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "build:mobile": "ng build --configuration mobile && npx cap sync android",
-    "android:apk": "npm run build:mobile && cd android && ./gradlew assembleDebug"
+    "android:apk": "npm run build:mobile && cd android && ./gradlew assembleDebug",
+    "web": "node scripts/run-web.mjs",
+    "mobile": "node scripts/run-mobile.mjs"
   },
   "private": true,
   "packageManager": "npm@11.17.0",

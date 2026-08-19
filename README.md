@@ -29,6 +29,17 @@ cd fisiotech-front
 npm install
 ```
 
+## Modo rápido: um comando
+
+Depois do `npm install`, com o backend já rodando (veja o README do [FisioTech-back](https://github.com/gabrielneriqa/fisiotech-back)), dois comandos cobrem os dois modos de uso do projeto:
+
+```bash
+npm run web      # sobe o dev server (ng serve) em http://localhost:4200
+npm run mobile   # builda, gera o APK, instala e abre no emulador/dispositivo conectado
+```
+
+Os dois primeiro checam se o backend está respondendo na porta esperada (avisando, mas sem travar, se não estiver) e o `mobile` para se não houver nenhum emulador/dispositivo Android conectado. As seções abaixo detalham exatamente o que cada um faz e como configurar/depurar cada passo manualmente.
+
 ## Conectando ao backend
 
 Em desenvolvimento (`ng serve`), o Angular **não** chama o backend diretamente — ele usa um proxy (`proxy.conf.js`) que encaminha as chamadas de API para o backend, evitando problemas de CORS e mantendo tudo na mesma origem (`localhost:4200`). Por padrão, o proxy aponta para `http://localhost:8080`, que é a porta padrão do Spring Boot.
@@ -53,10 +64,10 @@ const PROXY_CONFIG = {
 Com o backend já no ar (ver seção acima):
 
 ```bash
-npm start
+npm run web
 ```
 
-Acesse `http://localhost:4200`. A aplicação recarrega automaticamente ao salvar qualquer arquivo fonte.
+(equivalente a `npm start`/`ng serve`, mas com uma checagem prévia de que o backend está acessível na porta configurada em `proxy.conf.js`). Acesse `http://localhost:4200`. A aplicação recarrega automaticamente ao salvar qualquer arquivo fonte.
 
 ### Login de teste
 
@@ -108,6 +119,16 @@ O mesmo código do app web roda dentro de um `WebView` nativo via [Capacitor](ht
 - Variável de ambiente `ANDROID_HOME` (ou `ANDROID_SDK_ROOT`) apontando para a instalação do SDK. Não é necessário criar `android/local.properties` manualmente — o Gradle usa `ANDROID_HOME` diretamente.
 
 O caminho mais simples para ter tudo isso é instalar o **Android Studio**, que já vem com o SDK, um AVD padrão e o JDK. A geração do APK abaixo, porém, é feita inteiramente por linha de comando — o Android Studio não precisa estar aberto.
+
+### Um comando (recomendado)
+
+Com um emulador já aberto (ou um celular conectado via USB com depuração habilitada) e o backend rodando:
+
+```bash
+npm run mobile
+```
+
+Isso executa, em sequência, exatamente os passos 1 a 5 abaixo: builda para mobile, sincroniza com o Capacitor, gera o APK de debug, roda `adb reverse` na porta lida de `environment.mobile.ts`, instala o APK e abre o app. Se qualquer passo falhar (SDK não encontrado, nenhum dispositivo conectado, build do Gradle quebrando), o script para e imprime uma mensagem indicando o que verificar — as subseções abaixo explicam cada um desses passos em detalhe, para quando for preciso depurar manualmente.
 
 ### 1. Gerar o build web para mobile e sincronizar com o projeto Android
 
@@ -194,4 +215,4 @@ O app deve abrir na tela de login, chamando o backend local através do `adb rev
 
 ### Repetindo o ciclo após alterar código
 
-Sempre que alterar código do Angular e quiser refletir no APK: repita a partir do passo 1 (`npm run build:mobile`, depois `assembleDebug`, depois reinstalar com `adb install -r`).
+Sempre que alterar código do Angular e quiser refletir no APK: rode `npm run mobile` de novo (ou repita manualmente a partir do passo 1: `build:mobile`, depois `assembleDebug`, depois reinstalar com `adb install -r`).
