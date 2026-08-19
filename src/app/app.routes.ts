@@ -157,6 +157,14 @@ export const routes: Routes = [
             data: { title: 'Mensagens' },
           },
           {
+            path: 'mensagens/:profissionalId',
+            loadComponent: () =>
+              import('./features/paciente/paciente-mensagem-thread/paciente-mensagem-thread').then(
+                (m) => m.PacienteMensagemThread,
+              ),
+            data: { title: 'Mensagens' },
+          },
+          {
             path: 'perfil',
             loadComponent: () =>
               import('./features/paciente/paciente-perfil/paciente-perfil').then((m) => m.PacientePerfil),

@@ -1,28 +1,89 @@
 <section class="consulta-form">
-  <a class="consulta-form__back" routerLink="/pacientes">← Meus Pacientes</a>
+  <a class="consulta-form__back" routerLink="/pacientes">
+    <app-icon name="arrow-left" /> Meus Pacientes
+  </a>
 
   @if (!pacienteNome()) {
-    <input
-      class="consulta-form__search"
-      type="search"
-      placeholder="Buscar paciente pelo nome"
-      [value]="buscaPaciente()"
-      (input)="onBuscaPacienteChange($event)"
-    />
+    @if (!cadastrandoNovo()) {
+      <input
+        class="consulta-form__search"
+        type="search"
+        placeholder="Buscar paciente pelo nome"
+        [value]="buscaPaciente()"
+        (input)="onBuscaPacienteChange($event)"
+      />
 
-    @if (pacientesFiltrados().length === 0) {
-      <p class="consulta-form__state">Nenhum paciente encontrado.</p>
+      <button class="consulta-form__cadastrar-novo" type="button" (click)="abrirCadastroNovo()">
+        + Cadastrar novo paciente
+      </button>
+
+      @if (pacientesFiltrados().length === 0) {
+        <p class="consulta-form__state">Nenhum paciente encontrado.</p>
+      } @else {
+        <ul class="consulta-form__pacientes">
+          @for (paciente of pacientesFiltrados(); track paciente.id) {
+            <li>
+              <button class="paciente-card" type="button" (click)="selecionarPaciente(paciente)">
+                <span class="paciente-card__nome">{{ paciente.nome }}</span>
+                <span class="paciente-card__email">{{ paciente.email }}</span>
+              </button>
+            </li>
+          }
+        </ul>
+      }
     } @else {
-      <ul class="consulta-form__pacientes">
-        @for (paciente of pacientesFiltrados(); track paciente.id) {
-          <li>
-            <button class="paciente-card" type="button" (click)="selecionarPaciente(paciente)">
-              <span class="paciente-card__nome">{{ paciente.nome }}</span>
-              <span class="paciente-card__email">{{ paciente.email }}</span>
-            </button>
-          </li>
+      <form class="consulta-form__form" [formGroup]="formCadastro" (ngSubmit)="submitCadastroNovo()">
+        <label class="field">
+          <span class="field__label">Nome</span>
+          <input
+            class="field__input"
+            type="text"
+            formControlName="nome"
+            [class.field__input--invalid]="mensagemErro(formCadastro.controls.nome)"
+          />
+          @if (mensagemErro(formCadastro.controls.nome); as erro) {
+            <span class="field__error">{{ erro }}</span>
+          }
+        </label>
+
+        <label class="field">
+          <span class="field__label">Email</span>
+          <input
+            class="field__input"
+            type="email"
+            formControlName="email"
+            [class.field__input--invalid]="mensagemErro(formCadastro.controls.email)"
+          />
+          @if (mensagemErro(formCadastro.controls.email); as erro) {
+            <span class="field__error">{{ erro }}</span>
+          }
+        </label>
+
+        <label class="field">
+          <span class="field__label">Senha</span>
+          <input
+            class="field__input"
+            type="password"
+            formControlName="senha"
+            autocomplete="new-password"
+            [class.field__input--invalid]="mensagemErro(formCadastro.controls.senha)"
+          />
+          @if (mensagemErro(formCadastro.controls.senha); as erro) {
+            <span class="field__error">{{ erro }}</span>
+          }
+        </label>
+
+        @if (cadastroErrorMessage()) {
+          <p class="consulta-form__error">{{ cadastroErrorMessage() }}</p>
         }
-      </ul>
+
+        <button class="paciente-card__submit" type="submit" [disabled]="cadastroSaving()">
+          {{ cadastroSaving() ? 'Cadastrando...' : 'Cadastrar' }}
+        </button>
+        <button class="consulta-form__cadastrar-novo" type="button" (click)="fecharCadastroNovo()">
+          Voltar pra busca
+        </button>
+      </form>
     }
   } @else {
     <p class="consulta-form__meta">Paciente: {{ pacienteNome() }}</p>

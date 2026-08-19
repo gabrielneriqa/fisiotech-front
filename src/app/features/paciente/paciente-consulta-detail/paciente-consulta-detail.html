@@ -71,6 +71,61 @@
       </section>
     }
 
+    @if (c.status === 'AGENDADA' || c.status === 'CONFIRMADA') {
+      <div class="consulta-detail__acoes">
+        <button class="consulta-detail__action consulta-detail__action--secundaria" type="button" (click)="abrirRemarcar()">
+          Remarcar
+        </button>
+        <button
+          class="consulta-detail__action consulta-detail__action--perigo"
+          type="button"
+          [disabled]="cancelando()"
+          (click)="cancelar()"
+        >
+          {{ cancelando() ? 'Cancelando...' : 'Cancelar Consulta' }}
+        </button>
+      </div>
+
+      @if (remarcando()) {
+        <section class="consulta-detail__section">
+          <h2>Remarcar consulta</h2>
+
+          <label class="field">
+            <span class="field__label">Nova data</span>
+            <input
+              class="field__input"
+              type="date"
+              [min]="hoje"
+              [ngModel]="dataSelecionada()"
+              (ngModelChange)="onDataChange($event)"
+            />
+          </label>
+
+          @if (carregandoDisponibilidade()) {
+            <p class="consulta-detail__hint">Carregando horários...</p>
+          } @else if (disponibilidade()) {
+            <div class="consulta-detail__slots">
+              @for (slot of disponibilidade()!.horarios; track slot.horario) {
+                <button
+                  class="slot"
+                  [class.slot--indisponivel]="!slot.disponivel"
+                  type="button"
+                  [disabled]="!slot.disponivel || remarcarSaving()"
+                  (click)="selecionarHorario(slot)"
+                >
+                  {{ slot.horario.slice(0, 5) }}
+                </button>
+              }
+            </div>
+          }
+
+          <button class="consulta-detail__action consulta-detail__action--secundaria" type="button" (click)="fecharRemarcar()">
+            Cancelar remarcação
+          </button>
+        </section>
+      }
+    }
+
     @if (c.status === 'REALIZADA' && avaliacaoBuscada()) {
       <section class="consulta-detail__section">
         <h2>Sua Avaliação</h2>

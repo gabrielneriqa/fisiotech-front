@@ -14,13 +14,19 @@
             <span class="conversa-card__info">
               <span class="conversa-card__nome">{{ conversa.pacienteNome }}</span>
               <span class="conversa-card__preview">
-                @if (conversa.ultimoAutor === 'PROFISSIONAL') {
-                  <span class="conversa-card__prefix">Você:</span>
+                @if (conversa.ultimaMensagem) {
+                  @if (conversa.ultimoAutor === 'PROFISSIONAL') {
+                    <span class="conversa-card__prefix">Você:</span>
+                  }
+                  {{ conversa.ultimaMensagem }}
+                } @else {
+                  Nenhuma mensagem ainda, comece a conversar
                 }
-                {{ conversa.ultimaMensagem }}
               </span>
             </span>
-            <span class="conversa-card__data">{{ conversa.dataUltimaMensagem | date: 'dd/MM HH:mm' }}</span>
+            @if (conversa.dataUltimaMensagem) {
+              <span class="conversa-card__data">{{ conversa.dataUltimaMensagem | date: 'dd/MM HH:mm' }}</span>
+            }
           </a>
         </li>
       }

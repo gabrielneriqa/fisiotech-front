@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Avaliacao, AvaliacaoCreateRequest } from '../avaliacoes/avaliacao.model';
 import { Consulta } from '../consultas/consulta.model';
-import { Mensagem } from '../mensagens/mensagem.model';
+import { Mensagem, MinhaConversaItem } from '../mensagens/mensagem.model';
 import { AlterarSenhaRequest, MePerfilUpdateRequest, Paciente } from '../pacientes/paciente.model';
 import { ConsultaBookingRequest, DisponibilidadeResponse, ProfissionalBusca } from '../consultas/consulta-booking.model';
 
@@ -34,12 +34,24 @@ export class MeService {
     return this.http.get<Consulta>(`${this.baseUrl}/consultas/${id}`);
   }
 
-  minhasMensagens(): Observable<Mensagem[]> {
-    return this.http.get<Mensagem[]>(`${this.baseUrl}/mensagens`);
+  cancelarConsulta(id: number): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/consultas/${id}/cancelar`, {});
   }
 
-  enviarMensagem(conteudo: string): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/mensagens`, { conteudo });
+  remarcarConsulta(id: number, novaDataHora: string): Observable<Consulta> {
+    return this.http.put<Consulta>(`${this.baseUrl}/consultas/${id}/remarcar`, { novaDataHora });
+  }
+
+  minhasConversas(): Observable<MinhaConversaItem[]> {
+    return this.http.get<MinhaConversaItem[]>(`${this.baseUrl}/mensagens/caixa-entrada`);
+  }
+
+  minhaConversa(profissionalId: number): Observable<Mensagem[]> {
+    return this.http.get<Mensagem[]>(`${this.baseUrl}/mensagens/${profissionalId}`);
+  }
+
+  enviarMensagem(profissionalId: number, conteudo: string): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/mensagens/${profissionalId}`, { conteudo });
   }
 
   avaliar(request: AvaliacaoCreateRequest): Observable<void> {
@@ -59,6 +71,10 @@ export class MeService {
       params['especialidade'] = especialidade;
     }
     return this.http.get<ProfissionalBusca[]>(`${this.baseUrl}/profissionais`, { params });
+  }
+
+  buscarProfissional(profissionalId: number): Observable<ProfissionalBusca> {
+    return this.http.get<ProfissionalBusca>(`${this.baseUrl}/profissionais/${profissionalId}`);
   }
 
   buscarDisponibilidade(profissionalId: number, data: string): Observable<DisponibilidadeResponse> {

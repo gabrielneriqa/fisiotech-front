@@ -83,12 +83,12 @@
   }
 
   &__sucesso-icon {
-    width: 64px;
-    height: 64px;
+    width: 96px;
+    height: 96px;
     border-radius: 50%;
     background: var(--color-success);
     color: var(--color-text-inverse);
-    font-size: 2rem;
+    font-size: 2.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -131,5 +131,48 @@
       width: 18px;
       height: 18px;
     }
+  }
+
+  &__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  &__radios {
+    display: flex;
+    gap: 16px;
+  }
+
+  &__radio {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+    color: var(--color-text);
+    cursor: pointer;
+
+    input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--color-primary);
+    }
+  }
+}
+
+.chip {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 8px 14px;
+  cursor: pointer;
+
+  &--ativo {
+    background: var(--color-primary);
+    color: var(--color-text-inverse);
+    border-color: var(--color-primary);
   }
 }

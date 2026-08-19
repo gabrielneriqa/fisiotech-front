@@ -6,10 +6,11 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Consulta } from '../../../core/consultas/consulta.model';
 import { ConsultaService } from '../../../core/consultas/consulta.service';
 import { PacienteService } from '../../../core/pacientes/paciente.service';
+import { Icon } from '../../../core/ui/icon/icon';
 
 @Component({
   selector: 'app-paciente-form',
-  imports: [ReactiveFormsModule, RouterLink, DatePipe],
+  imports: [ReactiveFormsModule, RouterLink, DatePipe, Icon],
   templateUrl: './paciente-form.html',
   styleUrl: './paciente-form.scss',
 })

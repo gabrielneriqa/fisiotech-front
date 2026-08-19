@@ -85,7 +85,7 @@ export class Login {
       error: (err: { status?: number }) => {
         this.loading.set(false);
         this.errorMessage.set(
-          err.status === 401 ? 'Email ou senha inválidos.' : 'Não foi possível entrar. Tente novamente.',
+          err.status === 401 ? 'Usuário ou senha incorreta.' : 'Não foi possível entrar. Tente novamente.',
         );
       },
     });

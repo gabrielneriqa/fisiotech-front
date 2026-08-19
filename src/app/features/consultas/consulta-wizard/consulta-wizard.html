@@ -27,15 +27,41 @@
             <textarea class="field__input" rows="3" formControlName="historiaDoencaAtual"></textarea>
           </label>
 
-          <label class="field">
+          <div class="field">
             <span class="field__label">Histórico de saúde</span>
-            <input class="field__input" type="text" formControlName="historicoSaude" placeholder="Ex: Hipertensão, Diabetes, Asma" />
-          </label>
+            <div class="field__chips">
+              @for (opcao of opcoesHistoricoSaude; track opcao) {
+                <button
+                  class="chip"
+                  [class.chip--ativo]="chipHistoricoSaudeAtivo(opcao)"
+                  type="button"
+                  (click)="toggleChipHistoricoSaude(opcao)"
+                >
+                  {{ opcao }}
+                </button>
+              }
+              <button class="chip" [class.chip--ativo]="outrasAtivo()" type="button" (click)="toggleOutras()">
+                Outras
+              </button>
+            </div>
+            @if (outrasAtivo()) {
+              <input class="field__input" type="text" placeholder="Quais outras?" (input)="onOutrasChange($event)" />
+            }
+          </div>
 
-          <label class="field field--checkbox">
-            <input type="checkbox" formControlName="cirurgias" />
-            <span>Já realizou cirurgias?</span>
-          </label>
+          <div class="field">
+            <span class="field__label">Já realizou cirurgias?</span>
+            <div class="field__radios">
+              <label class="field__radio">
+                <input type="radio" formControlName="cirurgias" [value]="true" />
+                <span>Sim</span>
+              </label>
+              <label class="field__radio">
+                <input type="radio" formControlName="cirurgias" [value]="false" />
+                <span>Não</span>
+              </label>
+            </div>
+          </div>
           @if (quadroClinicoForm.controls.cirurgias.value) {
             <label class="field">
               <span class="field__label">Quais cirurgias?</span>
@@ -43,10 +69,19 @@
             </label>
           }
 
-          <label class="field field--checkbox">
-            <input type="checkbox" formControlName="lesoesAnteriores" />
-            <span>Possui lesões anteriores?</span>
-          </label>
+          <div class="field">
+            <span class="field__label">Possui lesões anteriores?</span>
+            <div class="field__radios">
+              <label class="field__radio">
+                <input type="radio" formControlName="lesoesAnteriores" [value]="true" />
+                <span>Sim</span>
+              </label>
+              <label class="field__radio">
+                <input type="radio" formControlName="lesoesAnteriores" [value]="false" />
+                <span>Não</span>
+              </label>
+            </div>
+          </div>
           @if (quadroClinicoForm.controls.lesoesAnteriores.value) {
             <label class="field">
               <span class="field__label">Quais lesões?</span>
@@ -82,15 +117,33 @@
             <textarea class="field__input" rows="2" formControlName="rotinaTrabalho"></textarea>
           </label>
 
-          <label class="field field--checkbox">
-            <input type="checkbox" formControlName="tabagismo" />
-            <span>Tabagismo</span>
-          </label>
+          <div class="field">
+            <span class="field__label">Tabagismo</span>
+            <div class="field__radios">
+              <label class="field__radio">
+                <input type="radio" formControlName="tabagismo" [value]="true" />
+                <span>Sim</span>
+              </label>
+              <label class="field__radio">
+                <input type="radio" formControlName="tabagismo" [value]="false" />
+                <span>Não</span>
+              </label>
+            </div>
+          </div>
 
-          <label class="field field--checkbox">
-            <input type="checkbox" formControlName="consumoAlcool" />
-            <span>Consumo de álcool</span>
-          </label>
+          <div class="field">
+            <span class="field__label">Consumo de álcool</span>
+            <div class="field__radios">
+              <label class="field__radio">
+                <input type="radio" formControlName="consumoAlcool" [value]="true" />
+                <span>Sim</span>
+              </label>
+              <label class="field__radio">
+                <input type="radio" formControlName="consumoAlcool" [value]="false" />
+                <span>Não</span>
+              </label>
+            </div>
+          </div>
 
           @if (errorMessage()) {
             <p class="wizard__error">{{ errorMessage() }}</p>
@@ -160,7 +213,9 @@
 
       @case ('sucesso') {
         <div class="wizard__sucesso">
-          <span class="wizard__sucesso-icon">✓</span>
+          <span class="wizard__sucesso-icon">
+            <app-icon name="check" />
+          </span>
           <h1 class="wizard__title">Consulta realizada com sucesso!</h1>
           <a class="wizard__submit wizard__submit--link" [routerLink]="['/consultas', consultaId]">Visualizar</a>
         </div>

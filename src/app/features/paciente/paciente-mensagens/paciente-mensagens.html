@@ -1,32 +1,35 @@
-<section class="mensagens">
+<section class="caixa-entrada">
   @if (loading()) {
-    <p class="mensagens__state">Carregando...</p>
-  } @else if (mensagens().length === 0) {
-    <p class="mensagens__state">Nenhuma mensagem ainda.</p>
+    <p class="caixa-entrada__state">Carregando...</p>
+  } @else if (errorMessage()) {
+    <p class="caixa-entrada__state caixa-entrada__state--error">{{ errorMessage() }}</p>
+  } @else if (conversas().length === 0) {
+    <p class="caixa-entrada__state">Nenhuma mensagem ainda.</p>
   } @else {
-    <ul class="mensagens__list">
-      @for (mensagem of mensagens(); track mensagem.id) {
-        <li class="mensagem" [class.mensagem--minha]="mensagem.autor === 'PACIENTE'">
-          <p class="mensagem__conteudo">{{ mensagem.conteudo }}</p>
-          <span class="mensagem__data">{{ mensagem.dataEnvio | date: 'dd/MM HH:mm' }}</span>
+    <ul class="caixa-entrada__items">
+      @for (conversa of conversas(); track conversa.profissionalId) {
+        <li>
+          <a class="conversa-card" [routerLink]="['/paciente/mensagens', conversa.profissionalId]">
+            <span class="conversa-card__avatar">{{ iniciais(conversa.profissionalNome) }}</span>
+            <span class="conversa-card__info">
+              <span class="conversa-card__nome">{{ conversa.profissionalNome }}</span>
+              <span class="conversa-card__preview">
+                @if (conversa.ultimaMensagem) {
+                  @if (conversa.ultimoAutor === 'PACIENTE') {
+                    <span class="conversa-card__prefix">Você:</span>
+                  }
+                  {{ conversa.ultimaMensagem }}
+                } @else {
+                  Nenhuma mensagem ainda, comece a conversar
+                }
+              </span>
+            </span>
+            @if (conversa.dataUltimaMensagem) {
+              <span class="conversa-card__data">{{ conversa.dataUltimaMensagem | date: 'dd/MM HH:mm' }}</span>
+            }
+          </a>
         </li>
       }
     </ul>
   }
-
-  @if (errorMessage()) {
-    <p class="mensagens__error">{{ errorMessage() }}</p>
-  }
-
-  <form class="mensagens__form" (submit)="enviar($event)">
-    <textarea
-      class="mensagens__input"
-      rows="2"
-      placeholder="Escreva uma mensagem..."
-      [formControl]="novaMensagemControl"
-    ></textarea>
-    <button class="mensagens__submit" type="submit" [disabled]="sending()">
-      {{ sending() ? '...' : 'Enviar' }}
-    </button>
-  </form>
 </section>

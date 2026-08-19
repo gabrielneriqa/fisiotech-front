@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { Consulta, StatusConsulta, TipoConsulta } from '../../../core/consultas/consulta.model';
 import { ConsultaService } from '../../../core/consultas/consulta.service';
+import { Icon } from '../../../core/ui/icon/icon';
 
 type WizardStep = 'quadro-clinico' | 'habitos-vida' | 'exame-fisico' | 'diagnostico' | 'sucesso';
 
@@ -11,7 +12,7 @@ const ORDEM_PASSOS: WizardStep[] = ['quadro-clinico', 'habitos-vida', 'exame-fis
 
 @Component({
   selector: 'app-consulta-wizard',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, Icon],
   templateUrl: './consulta-wizard.html',
   styleUrl: './consulta-wizard.scss',
 })
@@ -56,6 +57,42 @@ export class ConsultaWizard implements OnInit {
     planoTratamento: [''],
     objetivosTratamento: [''],
   });
+
+  protected readonly opcoesHistoricoSaude = ['Hipertensão', 'Diabetes', 'Asma'];
+  protected readonly outrasAtivo = signal(false);
+
+  protected chipHistoricoSaudeAtivo(opcao: string): boolean {
+    return this.termosHistoricoSaude().includes(opcao);
+  }
+
+  protected toggleChipHistoricoSaude(opcao: string): void {
+    const termos = this.termosHistoricoSaude();
+    const idx = termos.indexOf(opcao);
+    if (idx >= 0) {
+      termos.splice(idx, 1);
+    } else {
+      termos.push(opcao);
+    }
+    this.quadroClinicoForm.controls.historicoSaude.setValue(termos.join(', '));
+  }
+
+  protected toggleOutras(): void {
+    this.outrasAtivo.update((v) => !v);
+  }
+
+  protected onOutrasChange(event: Event): void {
+    const valor = (event.target as HTMLInputElement).value.trim();
+    const termosFixos = this.termosHistoricoSaude().filter((t) => this.opcoesHistoricoSaude.includes(t));
+    const partes = valor ? [...termosFixos, valor] : termosFixos;
+    this.quadroClinicoForm.controls.historicoSaude.setValue(partes.join(', '));
+  }
+
+  private termosHistoricoSaude(): string[] {
+    return this.quadroClinicoForm.controls.historicoSaude.value
+      .split(',')
+      .map((v) => v.trim())
+      .filter(Boolean);
+  }
 
   protected consultaId!: number;
   private base!: { dataHora: string; tipo: TipoConsulta; status: StatusConsulta; convenio: string | null; valor: number | null };

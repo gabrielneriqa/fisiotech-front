@@ -129,6 +129,47 @@
     color: var(--color-danger);
     font-size: 0.85rem;
   }
+
+  &__acoes {
+    display: flex;
+    gap: 10px;
+  }
+
+  &__action--secundaria {
+    background: var(--color-border);
+    color: var(--color-text);
+  }
+
+  &__action--perigo {
+    background: var(--color-danger);
+  }
+
+  &__slots {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+    gap: 8px;
+    margin: 8px 0;
+  }
+}
+
+.slot {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 10px 4px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-weight: 600;
+  cursor: pointer;
+
+  &:not(:disabled):hover {
+    border-color: var(--color-primary);
+  }
+
+  &--indisponivel {
+    opacity: 0.4;
+    text-decoration: line-through;
+    cursor: default;
+  }
 }
 
 .field {

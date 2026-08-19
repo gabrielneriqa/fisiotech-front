@@ -14,7 +14,8 @@ export type IconName =
   | 'user-plus'
   | 'menu'
   | 'lock'
-  | 'calendar-plus';
+  | 'calendar-plus'
+  | 'check';
 
 @Component({
   selector: 'app-icon',
@@ -118,6 +119,11 @@ export type IconName =
           <line x1="16" y1="3" x2="16" y2="7" />
           <line x1="12" y1="14" x2="12" y2="19" />
           <line x1="9.5" y1="16.5" x2="14.5" y2="16.5" />
+        </svg>
+      }
+      @case ('check') {
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="5 13 10 18 19 7" />
         </svg>
       }
     }
