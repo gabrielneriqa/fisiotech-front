@@ -1,6 +1,15 @@
 import { Component, input } from '@angular/core';
 
-export type IconName = 'home' | 'users' | 'calendar' | 'chat' | 'user' | 'briefcase' | 'trash' | 'plus';
+export type IconName =
+  | 'home'
+  | 'users'
+  | 'calendar'
+  | 'chat'
+  | 'user'
+  | 'briefcase'
+  | 'trash'
+  | 'plus'
+  | 'arrow-left';
 
 @Component({
   selector: 'app-icon',
@@ -59,6 +68,12 @@ export type IconName = 'home' | 'users' | 'calendar' | 'chat' | 'user' | 'briefc
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="12" y1="5" x2="12" y2="19" />
           <line x1="5" y1="12" x2="19" y2="12" />
+        </svg>
+      }
+      @case ('arrow-left') {
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12" />
+          <polyline points="12 19 5 12 12 5" />
         </svg>
       }
     }

@@ -1,0 +1,78 @@
+<section class="paciente-form">
+  <a class="paciente-form__back" routerLink="/admin/pacientes">← Pacientes</a>
+
+  @if (loading()) {
+    <p class="paciente-form__state">Carregando...</p>
+  } @else {
+    @if (dataCriacao()) {
+      <p class="paciente-form__meta">Cadastrado em {{ dataCriacao() | date: 'dd/MM/yyyy' }}</p>
+    }
+
+    <form class="paciente-form__form" [formGroup]="form" (ngSubmit)="submit()">
+      <label class="field">
+        <span class="field__label">Nome</span>
+        <input
+          class="field__input"
+          type="text"
+          formControlName="nome"
+          [class.field__input--invalid]="mensagemErro(form.controls.nome)"
+        />
+        @if (mensagemErro(form.controls.nome); as erro) {
+          <span class="field__error">{{ erro }}</span>
+        }
+      </label>
+
+      <label class="field">
+        <span class="field__label">Email</span>
+        <input
+          class="field__input"
+          type="email"
+          formControlName="email"
+          [class.field__input--invalid]="mensagemErro(form.controls.email)"
+        />
+        @if (mensagemErro(form.controls.email); as erro) {
+          <span class="field__error">{{ erro }}</span>
+        }
+      </label>
+
+      <label class="field">
+        <span class="field__label">Nova senha (deixe em branco para manter a atual)</span>
+        <input
+          class="field__input"
+          type="password"
+          formControlName="senha"
+          autocomplete="new-password"
+          [class.field__input--invalid]="mensagemErro(form.controls.senha)"
+        />
+        @if (mensagemErro(form.controls.senha); as erro) {
+          <span class="field__error">{{ erro }}</span>
+        }
+      </label>
+
+      <label class="field">
+        <span class="field__label">Profissional responsável</span>
+        <select
+          class="field__input"
+          formControlName="profissionalId"
+          [class.field__input--invalid]="mensagemErro(form.controls.profissionalId)"
+        >
+          <option [ngValue]="null" disabled>Selecione um profissional</option>
+          @for (profissional of profissionais(); track profissional.id) {
+            <option [ngValue]="profissional.id">{{ profissional.nome }}</option>
+          }
+        </select>
+        @if (mensagemErro(form.controls.profissionalId); as erro) {
+          <span class="field__error">{{ erro }}</span>
+        }
+      </label>
+
+      @if (errorMessage()) {
+        <p class="paciente-form__error">{{ errorMessage() }}</p>
+      }
+
+      <button class="paciente-form__submit" type="submit" [disabled]="saving()">
+        {{ saving() ? 'Salvando...' : 'Salvar' }}
+      </button>
+    </form>
+  }
+</section>

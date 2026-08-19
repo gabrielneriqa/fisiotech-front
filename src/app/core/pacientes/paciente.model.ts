@@ -3,6 +3,7 @@ export interface Paciente {
   nome: string;
   email: string;
   profissionalId: number;
+  profissionalNome: string;
   dataCriacao: string;
 }
 
@@ -16,4 +17,11 @@ export interface PacienteUpdateRequest {
   nome: string;
   email: string;
   senha: string;
+}
+
+export interface PacienteAdminUpdateRequest {
+  nome: string;
+  email: string;
+  senha: string | null;
+  profissionalId: number;
 }

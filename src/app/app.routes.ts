@@ -29,46 +29,55 @@ export const routes: Routes = [
             path: 'pacientes',
             loadComponent: () =>
               import('./features/pacientes/paciente-list/paciente-list').then((m) => m.PacienteList),
+            data: { title: 'Pacientes', backTo: '/home' },
           },
           {
             path: 'pacientes/novo',
             loadComponent: () =>
               import('./features/pacientes/paciente-form/paciente-form').then((m) => m.PacienteForm),
+            data: { title: 'Novo Paciente' },
           },
           {
             path: 'pacientes/:id/mensagens',
             loadComponent: () =>
               import('./features/mensagens/mensagem-thread/mensagem-thread').then((m) => m.MensagemThread),
+            data: { title: 'Mensagens' },
           },
           {
             path: 'mensagens',
             loadComponent: () =>
               import('./features/mensagens/caixa-entrada/caixa-entrada').then((m) => m.CaixaEntrada),
+            data: { title: 'Mensagens', backTo: '/home' },
           },
           {
             path: 'pacientes/:id',
             loadComponent: () =>
               import('./features/pacientes/paciente-form/paciente-form').then((m) => m.PacienteForm),
+            data: { title: 'Editar Paciente' },
           },
           {
             path: 'consultas',
             loadComponent: () =>
               import('./features/consultas/consulta-list/consulta-list').then((m) => m.ConsultaList),
+            data: { title: 'Consultas', backTo: '/home' },
           },
           {
             path: 'consultas/novo',
             loadComponent: () =>
               import('./features/consultas/consulta-form/consulta-form').then((m) => m.ConsultaForm),
+            data: { title: 'Nova Consulta' },
           },
           {
             path: 'consultas/:id/wizard',
             loadComponent: () =>
               import('./features/consultas/consulta-wizard/consulta-wizard').then((m) => m.ConsultaWizard),
+            data: { title: 'Registro Clínico' },
           },
           {
             path: 'consultas/:id',
             loadComponent: () =>
               import('./features/consultas/consulta-detail/consulta-detail').then((m) => m.ConsultaDetail),
+            data: { title: 'Consulta' },
           },
         ],
       },
@@ -82,16 +91,29 @@ export const routes: Routes = [
             path: 'profissionais',
             loadComponent: () =>
               import('./features/admin/profissional-list/profissional-list').then((m) => m.ProfissionalList),
+            data: { title: 'Profissionais' },
           },
           {
             path: 'profissionais/novo',
             loadComponent: () =>
               import('./features/admin/profissional-form/profissional-form').then((m) => m.ProfissionalForm),
+            data: { title: 'Novo Profissional' },
           },
           {
             path: 'profissionais/:id',
             loadComponent: () =>
               import('./features/admin/profissional-form/profissional-form').then((m) => m.ProfissionalForm),
+            data: { title: 'Editar Profissional' },
+          },
+          {
+            path: 'pacientes',
+            loadComponent: () => import('./features/admin/paciente-list/paciente-list').then((m) => m.PacienteList),
+            data: { title: 'Pacientes' },
+          },
+          {
+            path: 'pacientes/:id',
+            loadComponent: () => import('./features/admin/paciente-form/paciente-form').then((m) => m.PacienteForm),
+            data: { title: 'Editar Paciente' },
           },
         ],
       },
@@ -112,6 +134,7 @@ export const routes: Routes = [
               import('./features/paciente/paciente-consulta-list/paciente-consulta-list').then(
                 (m) => m.PacienteConsultaList,
               ),
+            data: { title: 'Minhas Consultas' },
           },
           {
             path: 'consultas/:id',
@@ -119,16 +142,19 @@ export const routes: Routes = [
               import('./features/paciente/paciente-consulta-detail/paciente-consulta-detail').then(
                 (m) => m.PacienteConsultaDetail,
               ),
+            data: { title: 'Consulta' },
           },
           {
             path: 'mensagens',
             loadComponent: () =>
               import('./features/paciente/paciente-mensagens/paciente-mensagens').then((m) => m.PacienteMensagens),
+            data: { title: 'Mensagens' },
           },
           {
             path: 'perfil',
             loadComponent: () =>
               import('./features/paciente/paciente-perfil/paciente-perfil').then((m) => m.PacientePerfil),
+            data: { title: 'Meu Perfil' },
           },
         ],
       },

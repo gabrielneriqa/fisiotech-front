@@ -3,11 +3,10 @@
     <input
       class="paciente-list__search"
       type="search"
-      placeholder="Buscar por nome ou email"
+      placeholder="Buscar por nome, email ou profissional"
       [value]="filtro()"
       (input)="onFiltroChange($event)"
     />
-    <a class="paciente-list__new" routerLink="/pacientes/novo">+ Novo</a>
   </div>
 
   @if (loading()) {
@@ -20,20 +19,12 @@
     <ul class="paciente-list__items">
       @for (paciente of pacientesFiltrados(); track paciente.id) {
         <li>
-          <a class="paciente-card" [routerLink]="['/pacientes', paciente.id]">
+          <a class="paciente-card" [routerLink]="['/admin/pacientes', paciente.id]">
             <span class="paciente-card__avatar">{{ iniciais(paciente.nome) }}</span>
             <span class="paciente-card__info">
               <span class="paciente-card__nome">{{ paciente.nome }}</span>
-              <span class="paciente-card__email">{{ paciente.email }}</span>
+              <span class="paciente-card__detalhe">{{ paciente.email }} · {{ paciente.profissionalNome }}</span>
             </span>
-            <button
-              class="paciente-card__delete"
-              type="button"
-              (click)="excluir(paciente, $event)"
-              aria-label="Excluir paciente"
-            >
-              <app-icon name="trash" />
-            </button>
           </a>
         </li>
       }

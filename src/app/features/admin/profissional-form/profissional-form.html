@@ -1,8 +1,5 @@
 <section class="profissional-form">
   <a class="profissional-form__back" routerLink="/admin/profissionais">← Profissionais</a>
-  <h1 class="profissional-form__title">
-    {{ editando() ? 'Editar Profissional' : 'Cadastrar Profissional' }}
-  </h1>
 
   @if (loading()) {
     <p class="profissional-form__state">Carregando...</p>
@@ -14,27 +11,68 @@
     <form class="profissional-form__form" [formGroup]="form" (ngSubmit)="submit()">
       <label class="field">
         <span class="field__label">Nome</span>
-        <input class="field__input" type="text" formControlName="nome" />
+        <input
+          class="field__input"
+          type="text"
+          formControlName="nome"
+          [class.field__input--invalid]="mensagemErro(form.controls.nome)"
+        />
+        @if (mensagemErro(form.controls.nome); as erro) {
+          <span class="field__error">{{ erro }}</span>
+        }
       </label>
 
       <label class="field">
         <span class="field__label">Email</span>
-        <input class="field__input" type="email" formControlName="email" />
+        <input
+          class="field__input"
+          type="email"
+          formControlName="email"
+          [class.field__input--invalid]="mensagemErro(form.controls.email)"
+        />
+        @if (mensagemErro(form.controls.email); as erro) {
+          <span class="field__error">{{ erro }}</span>
+        }
       </label>
 
       <label class="field">
         <span class="field__label">{{ editando() ? 'Nova senha' : 'Senha' }}</span>
-        <input class="field__input" type="password" formControlName="senha" autocomplete="new-password" />
+        <input
+          class="field__input"
+          type="password"
+          formControlName="senha"
+          autocomplete="new-password"
+          [class.field__input--invalid]="mensagemErro(form.controls.senha)"
+        />
+        @if (mensagemErro(form.controls.senha); as erro) {
+          <span class="field__error">{{ erro }}</span>
+        }
       </label>
 
       <label class="field">
         <span class="field__label">Registro profissional (CREFITO)</span>
-        <input class="field__input" type="text" formControlName="registroProfissional" />
+        <input
+          class="field__input"
+          type="text"
+          formControlName="registroProfissional"
+          [class.field__input--invalid]="mensagemErro(form.controls.registroProfissional)"
+        />
+        @if (mensagemErro(form.controls.registroProfissional); as erro) {
+          <span class="field__error">{{ erro }}</span>
+        }
       </label>
 
       <label class="field">
         <span class="field__label">Especialidade</span>
-        <input class="field__input" type="text" formControlName="especialidade" />
+        <input
+          class="field__input"
+          type="text"
+          formControlName="especialidade"
+          [class.field__input--invalid]="mensagemErro(form.controls.especialidade)"
+        />
+        @if (mensagemErro(form.controls.especialidade); as erro) {
+          <span class="field__error">{{ erro }}</span>
+        }
       </label>
 
       @if (errorMessage()) {

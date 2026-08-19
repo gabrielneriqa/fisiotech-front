@@ -1,5 +1,7 @@
+import { toSignal } from '@angular/core/rxjs-interop';
 import { Component, computed, inject } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { filter, map } from 'rxjs';
 
 import { AuthService } from '../../core/auth/auth.service';
 import { Icon, IconName } from '../../core/ui/icon/icon';
@@ -11,7 +13,10 @@ interface NavItem {
 }
 
 const NAV_ITEMS_BY_ROLE: Record<string, NavItem[]> = {
-  ROLE_ADMIN: [{ path: '/admin/profissionais', icon: 'briefcase', label: 'Profissionais' }],
+  ROLE_ADMIN: [
+    { path: '/admin/profissionais', icon: 'briefcase', label: 'Profissionais' },
+    { path: '/admin/pacientes', icon: 'users', label: 'Pacientes' },
+  ],
   ROLE_PROFISSIONAL: [
     { path: '/home', icon: 'home', label: 'Home' },
     { path: '/pacientes', icon: 'users', label: 'Pacientes' },
@@ -42,8 +47,27 @@ export class Shell {
     () => NAV_ITEMS_BY_ROLE[this.currentUser()?.role ?? ''] ?? [],
   );
 
+  private readonly routeData = toSignal(
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+      map(() => this.deepestRouteData()),
+    ),
+    { initialValue: {} as Record<string, unknown> },
+  );
+
+  protected readonly pageTitle = computed(() => this.routeData()['title'] as string | undefined);
+  protected readonly backTo = computed(() => this.routeData()['backTo'] as string | undefined);
+
   protected logout(): void {
     this.authService.logout();
     this.router.navigateByUrl('/login');
+  }
+
+  private deepestRouteData(): Record<string, unknown> {
+    let current = this.router.routerState.root;
+    while (current.firstChild) {
+      current = current.firstChild;
+    }
+    return current.snapshot.data;
   }
 }

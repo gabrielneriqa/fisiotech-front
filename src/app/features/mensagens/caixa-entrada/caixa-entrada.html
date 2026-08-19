@@ -1,12 +1,10 @@
 <section class="caixa-entrada">
-  <h1 class="caixa-entrada__title">Mensagens</h1>
-
   @if (loading()) {
     <p class="caixa-entrada__state">Carregando...</p>
   } @else if (errorMessage()) {
     <p class="caixa-entrada__state caixa-entrada__state--error">{{ errorMessage() }}</p>
   } @else if (conversas().length === 0) {
-    <p class="caixa-entrada__state">Nenhuma conversa ainda.</p>
+    <p class="caixa-entrada__state">Nenhuma mensagem ainda.</p>
   } @else {
     <ul class="caixa-entrada__items">
       @for (conversa of conversas(); track conversa.pacienteId) {

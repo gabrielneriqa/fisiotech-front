@@ -1,8 +1,5 @@
 <section class="paciente-form">
   <a class="paciente-form__back" routerLink="/pacientes">← Meus Pacientes</a>
-  <h1 class="paciente-form__title">
-    {{ editando() ? 'Editar Paciente' : 'Cadastrar Paciente' }}
-  </h1>
 
   @if (loading()) {
     <p class="paciente-form__state">Carregando...</p>

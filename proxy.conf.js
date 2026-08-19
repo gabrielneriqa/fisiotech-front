@@ -51,6 +51,12 @@ const PROXY_CONFIG = {
     secure: false,
     changeOrigin: true,
   },
+  '/admin': {
+    target: 'http://localhost:8080',
+    secure: false,
+    changeOrigin: true,
+    bypass: bypassPageNavigation,
+  },
 };
 
 module.exports = PROXY_CONFIG;

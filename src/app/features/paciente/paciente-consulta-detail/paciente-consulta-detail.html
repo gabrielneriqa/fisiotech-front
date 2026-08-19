@@ -9,7 +9,6 @@
     @let c = consulta()!;
 
     <header class="consulta-detail__header">
-      <h1 class="consulta-detail__titulo">Consulta</h1>
       <span class="consulta-detail__status" [class]="'consulta-detail__status--' + c.status.toLowerCase()">
         {{ c.status }}
       </span>

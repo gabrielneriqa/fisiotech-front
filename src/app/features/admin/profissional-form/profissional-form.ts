@@ -3,6 +3,7 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
+import { mensagemErro } from '../../../core/forms/field-error';
 import { ProfissionalService } from '../../../core/profissionais/profissional.service';
 
 @Component({
@@ -32,6 +33,8 @@ export class ProfissionalForm implements OnInit {
   protected readonly dataCriacao = signal<string | null>(null);
 
   private profissionalId: number | null = null;
+
+  protected readonly mensagemErro = mensagemErro;
 
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('id');

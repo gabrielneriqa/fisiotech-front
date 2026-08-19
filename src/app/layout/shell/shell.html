@@ -1,11 +1,23 @@
 <div class="shell">
-  <header class="shell__header">
-    <div class="shell__greeting">
-      <p class="shell__greeting-label">Bem-vindo(a),</p>
-      <h1 class="shell__greeting-name">{{ currentUser()?.nome }}</h1>
-    </div>
-    <button class="shell__logout" type="button" (click)="logout()">Sair</button>
-  </header>
+  @if (pageTitle(); as title) {
+    <header class="shell__header shell__header--page">
+      @if (backTo(); as voltarPara) {
+        <a class="shell__back" [routerLink]="voltarPara" aria-label="Voltar">
+          <app-icon name="arrow-left" />
+        </a>
+      }
+      <h1 class="shell__page-title">{{ title }}</h1>
+      <button class="shell__logout" type="button" (click)="logout()">Sair</button>
+    </header>
+  } @else {
+    <header class="shell__header">
+      <div class="shell__greeting">
+        <p class="shell__greeting-label">Bem-vindo(a),</p>
+        <h1 class="shell__greeting-name">{{ currentUser()?.nome }}</h1>
+      </div>
+      <button class="shell__logout" type="button" (click)="logout()">Sair</button>
+    </header>
+  }
 
   <main class="shell__content">
     <router-outlet />

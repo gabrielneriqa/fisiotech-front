@@ -26,6 +26,34 @@
     margin-top: 2px;
   }
 
+  &__header--page {
+    align-items: center;
+  }
+
+  &__back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.55);
+    color: var(--color-primary-dark);
+    margin-right: 12px;
+    flex-shrink: 0;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.8);
+    }
+  }
+
+  &__page-title {
+    flex: 1;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-primary-dark);
+  }
+
   &__logout {
     border: none;
     background: rgba(255, 255, 255, 0.55);

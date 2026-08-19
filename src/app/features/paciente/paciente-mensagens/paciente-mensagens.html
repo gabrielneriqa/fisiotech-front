@@ -1,6 +1,4 @@
 <section class="mensagens">
-  <h1 class="mensagens__title">Mensagens</h1>
-
   @if (loading()) {
     <p class="mensagens__state">Carregando...</p>
   } @else if (mensagens().length === 0) {
