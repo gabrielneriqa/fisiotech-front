@@ -10,7 +10,7 @@
   </div>
 
   @if (loading()) {
-    <p class="paciente-list__state">Carregando...</p>
+    <app-skeleton variant="list" [count]="4" />
   } @else if (errorMessage()) {
     <p class="paciente-list__state paciente-list__state--error">{{ errorMessage() }}</p>
   } @else if (pacientesFiltrados().length === 0) {

@@ -37,7 +37,7 @@
   }
 
   @if (loading()) {
-    <p class="consulta-list__state">Carregando...</p>
+    <app-skeleton variant="list" [count]="4" />
   } @else if (errorMessage()) {
     <p class="consulta-list__state consulta-list__state--error">{{ errorMessage() }}</p>
   } @else if (consultas().length === 0) {

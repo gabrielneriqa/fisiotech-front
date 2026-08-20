@@ -1,6 +1,6 @@
 <section class="caixa-entrada">
   @if (loading()) {
-    <p class="caixa-entrada__state">Carregando...</p>
+    <app-skeleton variant="list" [count]="4" />
   } @else if (errorMessage()) {
     <p class="caixa-entrada__state caixa-entrada__state--error">{{ errorMessage() }}</p>
   } @else if (conversas().length === 0) {

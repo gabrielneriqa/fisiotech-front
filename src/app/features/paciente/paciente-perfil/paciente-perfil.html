@@ -1,6 +1,6 @@
 <section class="perfil">
   @if (loading()) {
-    <p class="perfil__state">Carregando...</p>
+    <app-skeleton variant="form" [count]="6" />
   } @else {
     @if (dataCriacao()) {
       <p class="perfil__meta">Cadastrado em {{ dataCriacao() | date: 'dd/MM/yyyy' }}</p>

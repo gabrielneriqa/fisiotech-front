@@ -5,10 +5,11 @@ import { Profissional } from '../../../core/profissionais/profissional.model';
 import { ProfissionalService } from '../../../core/profissionais/profissional.service';
 import { ConfirmDialogService } from '../../../core/ui/confirm-dialog/confirm-dialog.service';
 import { Icon } from '../../../core/ui/icon/icon';
+import { Skeleton } from '../../../core/ui/skeleton/skeleton';
 
 @Component({
   selector: 'app-profissional-list',
-  imports: [RouterLink, Icon],
+  imports: [RouterLink, Icon, Skeleton],
   templateUrl: './profissional-list.html',
   styleUrl: './profissional-list.scss',
 })

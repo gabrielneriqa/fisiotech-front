@@ -6,10 +6,11 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { mensagemErro } from '../../../core/forms/field-error';
 import { ProfissionalService } from '../../../core/profissionais/profissional.service';
 import { ConfirmDialogService } from '../../../core/ui/confirm-dialog/confirm-dialog.service';
+import { Skeleton } from '../../../core/ui/skeleton/skeleton';
 
 @Component({
   selector: 'app-profissional-form',
-  imports: [ReactiveFormsModule, RouterLink, DatePipe],
+  imports: [ReactiveFormsModule, RouterLink, DatePipe, Skeleton],
   templateUrl: './profissional-form.html',
   styleUrl: './profissional-form.scss',
 })

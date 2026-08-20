@@ -4,10 +4,11 @@ import { RouterLink } from '@angular/router';
 
 import { CaixaEntradaItem } from '../../../core/mensagens/mensagem.model';
 import { MensagemService } from '../../../core/mensagens/mensagem.service';
+import { Skeleton } from '../../../core/ui/skeleton/skeleton';
 
 @Component({
   selector: 'app-caixa-entrada',
-  imports: [RouterLink, DatePipe],
+  imports: [RouterLink, DatePipe, Skeleton],
   templateUrl: './caixa-entrada.html',
   styleUrl: './caixa-entrada.scss',
 })

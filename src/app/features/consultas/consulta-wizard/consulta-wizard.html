@@ -1,6 +1,6 @@
 <section class="wizard">
   @if (loading()) {
-    <p class="wizard__state">Carregando...</p>
+    <app-skeleton variant="form" [count]="4" />
   } @else {
     @if (step() !== 'sucesso') {
       <p class="wizard__meta">Consulta com {{ pacienteNome() }}</p>

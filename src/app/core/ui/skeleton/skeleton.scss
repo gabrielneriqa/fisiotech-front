@@ -1,0 +1,108 @@
+:host {
+  display: block;
+}
+
+.skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__row-lines {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__avatar {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &__bubble-row {
+    display: flex;
+    justify-content: flex-start;
+
+    &--right {
+      justify-content: flex-end;
+    }
+  }
+
+  &__bubble {
+    width: 60%;
+    height: 40px;
+    border-radius: var(--radius-md);
+  }
+
+  &__bar {
+    display: block;
+    border-radius: var(--radius-sm);
+    height: 14px;
+
+    &--40 {
+      width: 40%;
+    }
+
+    &--70 {
+      width: 70%;
+    }
+
+    &--label {
+      width: 30%;
+      height: 10px;
+    }
+
+    &--input {
+      width: 100%;
+      height: 40px;
+    }
+
+    &--line {
+      width: 100%;
+    }
+
+    &--line.skeleton__bar--short {
+      width: 60%;
+    }
+  }
+}
+
+.skeleton__avatar,
+.skeleton__bar,
+.skeleton__bubble {
+  background: linear-gradient(90deg, var(--color-border) 25%, var(--color-bg) 37%, var(--color-border) 63%);
+  background-size: 400% 100%;
+  animation: skeleton-shimmer 1.4s ease infinite;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton__avatar,
+  .skeleton__bar,
+  .skeleton__bubble {
+    animation: none;
+    background: var(--color-border);
+  }
+}

@@ -7,10 +7,11 @@ import { AvaliacaoService } from '../../../core/avaliacoes/avaliacao.service';
 import { Consulta } from '../../../core/consultas/consulta.model';
 import { ConsultaService } from '../../../core/consultas/consulta.service';
 import { ConfirmDialogService } from '../../../core/ui/confirm-dialog/confirm-dialog.service';
+import { Skeleton } from '../../../core/ui/skeleton/skeleton';
 
 @Component({
   selector: 'app-consulta-detail',
-  imports: [RouterLink, DatePipe, CurrencyPipe],
+  imports: [RouterLink, DatePipe, CurrencyPipe, Skeleton],
   templateUrl: './consulta-detail.html',
   styleUrl: './consulta-detail.scss',
 })

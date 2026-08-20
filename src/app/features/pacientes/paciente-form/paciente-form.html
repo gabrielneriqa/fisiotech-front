@@ -4,7 +4,7 @@
   </a>
 
   @if (loading()) {
-    <p class="paciente-form__state">Carregando...</p>
+    <app-skeleton variant="form" [count]="6" />
   } @else {
     @if (dataCriacao()) {
       <p class="paciente-form__meta">Paciente desde {{ dataCriacao() | date: 'dd/MM/yyyy' }}</p>

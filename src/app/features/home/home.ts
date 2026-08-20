@@ -4,10 +4,11 @@ import { RouterLink } from '@angular/router';
 import { Icon } from '../../core/ui/icon/icon';
 import { CaixaEntradaItem } from '../../core/mensagens/mensagem.model';
 import { MensagemService } from '../../core/mensagens/mensagem.service';
+import { Skeleton } from '../../core/ui/skeleton/skeleton';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, Icon],
+  imports: [RouterLink, Icon, Skeleton],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })

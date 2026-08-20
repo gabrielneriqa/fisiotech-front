@@ -8,10 +8,11 @@ import { ConsultaService } from '../../../core/consultas/consulta.service';
 import { PacienteService } from '../../../core/pacientes/paciente.service';
 import { ConfirmDialogService } from '../../../core/ui/confirm-dialog/confirm-dialog.service';
 import { Icon } from '../../../core/ui/icon/icon';
+import { Skeleton } from '../../../core/ui/skeleton/skeleton';
 
 @Component({
   selector: 'app-paciente-form',
-  imports: [ReactiveFormsModule, RouterLink, DatePipe, Icon],
+  imports: [ReactiveFormsModule, RouterLink, DatePipe, Icon, Skeleton],
   templateUrl: './paciente-form.html',
   styleUrl: './paciente-form.scss',
 })

@@ -7,10 +7,11 @@ import { mensagemErro } from '../../../core/forms/field-error';
 import { PacienteAdminService } from '../../../core/pacientes/paciente-admin.service';
 import { Profissional } from '../../../core/profissionais/profissional.model';
 import { ProfissionalService } from '../../../core/profissionais/profissional.service';
+import { Skeleton } from '../../../core/ui/skeleton/skeleton';
 
 @Component({
   selector: 'app-admin-paciente-form',
-  imports: [ReactiveFormsModule, RouterLink, DatePipe],
+  imports: [ReactiveFormsModule, RouterLink, DatePipe, Skeleton],
   templateUrl: './paciente-form.html',
   styleUrl: './paciente-form.scss',
 })

@@ -16,7 +16,7 @@
   <h2 class="home__section-title">Notificações recentes</h2>
 
   @if (loadingNotificacoes()) {
-    <p class="home__state">Carregando...</p>
+    <app-skeleton variant="list" [count]="3" />
   } @else if (notificacoes().length === 0) {
     <p class="home__state">Nenhuma notificação ainda.</p>
   } @else {
