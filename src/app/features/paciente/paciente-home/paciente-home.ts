@@ -2,11 +2,12 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
+import { Icon } from '../../../core/ui/icon/icon';
 import { MeService } from '../../../core/me/me.service';
 
 @Component({
   selector: 'app-paciente-home',
-  imports: [RouterLink, DatePipe],
+  imports: [RouterLink, DatePipe, Icon],
   templateUrl: './paciente-home.html',
   styleUrl: './paciente-home.scss',
 })

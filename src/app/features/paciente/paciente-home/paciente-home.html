@@ -6,19 +6,28 @@
     </div>
   }
 
-  <a class="home__card" routerLink="/paciente/consultas">
-    <div>
-      <p class="home__card-label">Minhas Consultas</p>
-      <p class="home__card-value">
-        @if (totalConsultas() !== null) {
-          {{ totalConsultas() }} consulta{{ totalConsultas() === 1 ? '' : 's' }}
-        } @else {
-          Ver consultas
-        }
-      </p>
-    </div>
-    <span class="home__card-arrow">→</span>
-  </a>
+  @if (totalConsultas() === 0) {
+    <a class="home__action" routerLink="/paciente/consultas/marcar">
+      <span class="home__action-label">Marcar sua primeira consulta</span>
+      <span class="home__action-decor">
+        <app-icon class="home__action-icon" name="calendar-plus" />
+      </span>
+    </a>
+  } @else {
+    <a class="home__card" routerLink="/paciente/consultas">
+      <div>
+        <p class="home__card-label">Minhas Consultas</p>
+        <p class="home__card-value">
+          @if (totalConsultas() !== null) {
+            {{ totalConsultas() }} consulta{{ totalConsultas() === 1 ? '' : 's' }}
+          } @else {
+            Ver consultas
+          }
+        </p>
+      </div>
+      <span class="home__card-arrow">→</span>
+    </a>
+  }
 
   <a class="home__card" routerLink="/paciente/mensagens">
     <div>
