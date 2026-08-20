@@ -110,6 +110,18 @@ export class ConsultaWizard implements OnInit {
     });
   }
 
+  protected etapaAlcancavel(etapa: WizardStep): boolean {
+    return ORDEM_PASSOS.indexOf(etapa) <= ORDEM_PASSOS.indexOf(this.step());
+  }
+
+  protected irParaEtapa(etapa: WizardStep): void {
+    if (ORDEM_PASSOS.indexOf(etapa) >= ORDEM_PASSOS.indexOf(this.step())) {
+      return;
+    }
+    this.errorMessage.set(null);
+    this.step.set(etapa);
+  }
+
   protected proximo(): void {
     const etapaAtual = this.step();
     this.saving.set(true);
@@ -176,6 +188,30 @@ export class ConsultaWizard implements OnInit {
       planoTratamento: consulta.diagnostico.planoTratamento ?? '',
       objetivosTratamento: consulta.diagnostico.objetivosTratamento ?? '',
     });
+    this.step.set(this.calcularEtapaParaRetomar(consulta));
     this.loading.set(false);
+  }
+
+  /**
+   * Cada etapa só e enviada ao backend quando o profissional avança a partir dela
+   * (proximo() manda so o form da etapa atual) - entao um campo != null e prova de
+   * que aquela etapa ja foi salva pelo menos uma vez, mesmo que tenha sido deixada
+   * em branco (nesse caso os campos de texto chegam como string vazia, nao null).
+   * Retomar significa reabrir na primeira etapa que ainda nao tem esse sinal.
+   */
+  private calcularEtapaParaRetomar(consulta: Consulta): WizardStep {
+    if (consulta.status === 'REALIZADA') {
+      return 'sucesso';
+    }
+    if (Object.values(consulta.exameFisico).some((v) => v !== null)) {
+      return 'diagnostico';
+    }
+    if (Object.values(consulta.habitosVida).some((v) => v !== null)) {
+      return 'exame-fisico';
+    }
+    if (Object.values(consulta.quadroClinico).some((v) => v !== null)) {
+      return 'habitos-vida';
+    }
+    return 'quadro-clinico';
   }
 }
