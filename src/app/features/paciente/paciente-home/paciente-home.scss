@@ -49,4 +49,45 @@
     font-size: 1.4rem;
     color: var(--color-primary);
   }
+
+  &__action {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+    height: 88px;
+    padding: 0 24px;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    color: var(--color-text-inverse);
+    font-weight: 700;
+    font-size: 1.05rem;
+    background: var(--color-primary);
+    box-shadow: var(--shadow-card);
+  }
+
+  &__action-label {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__action-decor {
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__action-icon {
+    font-size: 1.8rem;
+    margin-right: 28px;
+  }
 }
