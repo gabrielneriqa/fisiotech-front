@@ -6,6 +6,7 @@ import { Avaliacao } from '../../../core/avaliacoes/avaliacao.model';
 import { AvaliacaoService } from '../../../core/avaliacoes/avaliacao.service';
 import { Consulta } from '../../../core/consultas/consulta.model';
 import { ConsultaService } from '../../../core/consultas/consulta.service';
+import { ConfirmDialogService } from '../../../core/ui/confirm-dialog/confirm-dialog.service';
 
 @Component({
   selector: 'app-consulta-detail',
@@ -18,6 +19,7 @@ export class ConsultaDetail implements OnInit {
   private readonly router = inject(Router);
   private readonly consultaService = inject(ConsultaService);
   private readonly avaliacaoService = inject(AvaliacaoService);
+  private readonly confirmDialog = inject(ConfirmDialogService);
 
   protected readonly consulta = signal<Consulta | null>(null);
   protected readonly loading = signal(true);
@@ -32,8 +34,13 @@ export class ConsultaDetail implements OnInit {
     this.carregar();
   }
 
-  protected excluir(): void {
-    if (!confirm('Excluir esta consulta? Essa ação não pode ser desfeita.')) {
+  protected async excluir(): Promise<void> {
+    const confirmado = await this.confirmDialog.confirm({
+      titulo: 'Excluir consulta',
+      mensagem: 'Excluir esta consulta? Essa ação não pode ser desfeita.',
+      confirmarLabel: 'Excluir',
+    });
+    if (!confirmado) {
       return;
     }
 

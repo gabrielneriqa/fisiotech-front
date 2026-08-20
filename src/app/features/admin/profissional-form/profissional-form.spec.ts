@@ -3,6 +3,7 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, provideRouter, Router } from '@angular/router';
 
+import { ConfirmDialogService } from '../../../core/ui/confirm-dialog/confirm-dialog.service';
 import { ProfissionalForm } from './profissional-form';
 
 describe('ProfissionalForm', () => {
@@ -10,6 +11,7 @@ describe('ProfissionalForm', () => {
   let component: ProfissionalForm;
   let httpMock: HttpTestingController;
   let router: Router;
+  let confirmDialog: ConfirmDialogService;
 
   async function criarComponente(idDaRota: string | null) {
     await TestBed.configureTestingModule({
@@ -29,6 +31,7 @@ describe('ProfissionalForm', () => {
     component = fixture.componentInstance;
     httpMock = TestBed.inject(HttpTestingController);
     router = TestBed.inject(Router);
+    confirmDialog = TestBed.inject(ConfirmDialogService);
     vi.spyOn(router, 'navigateByUrl').mockResolvedValue(true);
   }
 
@@ -165,6 +168,30 @@ describe('ProfissionalForm', () => {
       const req = httpMock.expectOne('/profissionais/1');
       expect(req.request.body.senha).toBe('novaSenha123');
       req.flush(null);
+    });
+
+    it('não deve excluir quando o usuário cancela no diálogo de confirmação', async () => {
+      carregarProfissionalExistente();
+
+      const excluirPromise = (component as any).excluir();
+      confirmDialog.responder(false);
+      await excluirPromise;
+
+      httpMock.expectNone('/profissionais/1');
+    });
+
+    it('deve excluir o profissional quando o usuário confirma no diálogo', async () => {
+      carregarProfissionalExistente();
+
+      const excluirPromise = (component as any).excluir();
+      confirmDialog.responder(true);
+      await excluirPromise;
+
+      const req = httpMock.expectOne('/profissionais/1');
+      expect(req.request.method).toBe('DELETE');
+      req.flush(null);
+
+      expect(router.navigateByUrl).toHaveBeenCalledWith('/admin/profissionais');
     });
   });
 });

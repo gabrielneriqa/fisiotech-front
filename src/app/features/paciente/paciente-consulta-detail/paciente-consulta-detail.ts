@@ -7,6 +7,7 @@ import { Avaliacao } from '../../../core/avaliacoes/avaliacao.model';
 import { Consulta } from '../../../core/consultas/consulta.model';
 import { DisponibilidadeResponse, SlotDisponibilidade } from '../../../core/consultas/consulta-booking.model';
 import { MeService } from '../../../core/me/me.service';
+import { ConfirmDialogService } from '../../../core/ui/confirm-dialog/confirm-dialog.service';
 
 @Component({
   selector: 'app-paciente-consulta-detail',
@@ -18,6 +19,7 @@ export class PacienteConsultaDetail implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly route = inject(ActivatedRoute);
   private readonly meService = inject(MeService);
+  private readonly confirmDialog = inject(ConfirmDialogService);
 
   protected readonly consulta = signal<Consulta | null>(null);
   protected readonly loading = signal(true);
@@ -80,8 +82,14 @@ export class PacienteConsultaDetail implements OnInit {
     });
   }
 
-  protected cancelar(): void {
-    if (!confirm('Cancelar esta consulta? Essa ação não pode ser desfeita.')) {
+  protected async cancelar(): Promise<void> {
+    const confirmado = await this.confirmDialog.confirm({
+      titulo: 'Cancelar consulta',
+      mensagem: 'Cancelar esta consulta? Essa ação não pode ser desfeita.',
+      cancelarLabel: 'Voltar',
+      confirmarLabel: 'Cancelar consulta',
+    });
+    if (!confirmado) {
       return;
     }
 

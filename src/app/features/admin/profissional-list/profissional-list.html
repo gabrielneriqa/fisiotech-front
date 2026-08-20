@@ -10,6 +10,10 @@
     <a class="profissional-list__new" routerLink="/admin/profissionais/novo">+ Novo</a>
   </div>
 
+  @if (deleteError()) {
+    <p class="profissional-list__state profissional-list__state--error">{{ deleteError() }}</p>
+  }
+
   @if (loading()) {
     <p class="profissional-list__state">Carregando...</p>
   } @else if (errorMessage()) {
