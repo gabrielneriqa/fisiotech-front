@@ -10,6 +10,10 @@
     <a class="paciente-list__new" routerLink="/pacientes/novo">+ Novo</a>
   </div>
 
+  @if (deleteError()) {
+    <p class="paciente-list__state paciente-list__state--error">{{ deleteError() }}</p>
+  }
+
   @if (loading()) {
     <p class="paciente-list__state">Carregando...</p>
   } @else if (errorMessage()) {

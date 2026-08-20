@@ -4,6 +4,7 @@ import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } fro
 import { filter, map } from 'rxjs';
 
 import { AuthService } from '../../core/auth/auth.service';
+import { ConfirmDialog } from '../../core/ui/confirm-dialog/confirm-dialog';
 import { Icon, IconName } from '../../core/ui/icon/icon';
 
 interface NavItem {
@@ -33,7 +34,7 @@ const NAV_ITEMS_BY_ROLE: Record<string, NavItem[]> = {
 
 @Component({
   selector: 'app-shell',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, Icon],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, Icon, ConfirmDialog],
   templateUrl: './shell.html',
   styleUrl: './shell.scss',
 })

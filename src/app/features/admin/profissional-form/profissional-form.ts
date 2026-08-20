@@ -5,6 +5,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { mensagemErro } from '../../../core/forms/field-error';
 import { ProfissionalService } from '../../../core/profissionais/profissional.service';
+import { ConfirmDialogService } from '../../../core/ui/confirm-dialog/confirm-dialog.service';
 
 @Component({
   selector: 'app-profissional-form',
@@ -17,6 +18,7 @@ export class ProfissionalForm implements OnInit {
   private readonly profissionalService = inject(ProfissionalService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly confirmDialog = inject(ConfirmDialogService);
 
   protected readonly form = this.fb.nonNullable.group({
     nome: ['', [Validators.required, Validators.maxLength(120)]],
@@ -127,12 +129,17 @@ export class ProfissionalForm implements OnInit {
     });
   }
 
-  protected excluir(): void {
+  protected async excluir(): Promise<void> {
     if (!this.profissionalId) {
       return;
     }
 
-    if (!confirm('Excluir este profissional? Essa ação não pode ser desfeita.')) {
+    const confirmado = await this.confirmDialog.confirm({
+      titulo: 'Excluir profissional',
+      mensagem: 'Excluir este profissional? Essa ação não pode ser desfeita.',
+      confirmarLabel: 'Excluir',
+    });
+    if (!confirmado) {
       return;
     }
 

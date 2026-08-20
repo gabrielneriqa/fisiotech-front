@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 
 import { Profissional } from '../../../core/profissionais/profissional.model';
 import { ProfissionalService } from '../../../core/profissionais/profissional.service';
+import { ConfirmDialogService } from '../../../core/ui/confirm-dialog/confirm-dialog.service';
 import { Icon } from '../../../core/ui/icon/icon';
 
 @Component({
@@ -13,10 +14,12 @@ import { Icon } from '../../../core/ui/icon/icon';
 })
 export class ProfissionalList implements OnInit {
   private readonly profissionalService = inject(ProfissionalService);
+  private readonly confirmDialog = inject(ConfirmDialogService);
 
   protected readonly profissionais = signal<Profissional[]>([]);
   protected readonly loading = signal(true);
   protected readonly errorMessage = signal<string | null>(null);
+  protected readonly deleteError = signal<string | null>(null);
   protected readonly filtro = signal('');
 
   protected readonly profissionaisFiltrados = computed(() => {
@@ -40,18 +43,24 @@ export class ProfissionalList implements OnInit {
     this.filtro.set((event.target as HTMLInputElement).value);
   }
 
-  protected excluir(profissional: Profissional, event: Event): void {
+  protected async excluir(profissional: Profissional, event: Event): Promise<void> {
     event.preventDefault();
     event.stopPropagation();
 
-    if (!confirm(`Excluir o profissional ${profissional.nome}? Essa ação não pode ser desfeita.`)) {
+    const confirmado = await this.confirmDialog.confirm({
+      titulo: 'Excluir profissional',
+      mensagem: `Excluir o profissional ${profissional.nome}? Essa ação não pode ser desfeita.`,
+      confirmarLabel: 'Excluir',
+    });
+    if (!confirmado) {
       return;
     }
 
+    this.deleteError.set(null);
     this.profissionalService.deletar(profissional.id).subscribe({
       next: () => this.profissionais.update((lista) => lista.filter((p) => p.id !== profissional.id)),
       error: () =>
-        alert('Não foi possível excluir. Pode ser que este profissional ainda tenha pacientes vinculados.'),
+        this.deleteError.set('Não foi possível excluir. Pode ser que este profissional ainda tenha pacientes vinculados.'),
     });
   }
 

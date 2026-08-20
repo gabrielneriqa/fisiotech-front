@@ -1,0 +1,21 @@
+@if (dialog.current(); as d) {
+  <div class="confirm-overlay" (click)="dialog.responder(false)" (keydown.escape)="dialog.responder(false)">
+    <div class="confirm-card" role="alertdialog" aria-modal="true" [attr.aria-label]="d.options.titulo" (click)="$event.stopPropagation()">
+      <h2 class="confirm-card__title">{{ d.options.titulo }}</h2>
+      <p class="confirm-card__message">{{ d.options.mensagem }}</p>
+      <div class="confirm-card__actions">
+        <button type="button" class="confirm-card__cancel" (click)="dialog.responder(false)">
+          {{ d.options.cancelarLabel ?? 'Cancelar' }}
+        </button>
+        <button
+          type="button"
+          class="confirm-card__confirm"
+          [class.confirm-card__confirm--destrutivo]="d.options.destrutivo !== false"
+          (click)="dialog.responder(true)"
+        >
+          {{ d.options.confirmarLabel ?? 'Confirmar' }}
+        </button>
+      </div>
+    </div>
+  </div>
+}

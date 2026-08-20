@@ -6,6 +6,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Consulta } from '../../../core/consultas/consulta.model';
 import { ConsultaService } from '../../../core/consultas/consulta.service';
 import { PacienteService } from '../../../core/pacientes/paciente.service';
+import { ConfirmDialogService } from '../../../core/ui/confirm-dialog/confirm-dialog.service';
 import { Icon } from '../../../core/ui/icon/icon';
 
 @Component({
@@ -20,6 +21,7 @@ export class PacienteForm implements OnInit {
   private readonly consultaService = inject(ConsultaService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly confirmDialog = inject(ConfirmDialogService);
 
   protected readonly form = this.fb.nonNullable.group({
     nome: ['', [Validators.required, Validators.maxLength(120)]],
@@ -127,12 +129,17 @@ export class PacienteForm implements OnInit {
     });
   }
 
-  protected excluir(): void {
+  protected async excluir(): Promise<void> {
     if (!this.pacienteId) {
       return;
     }
 
-    if (!confirm('Excluir este paciente? Essa ação não pode ser desfeita.')) {
+    const confirmado = await this.confirmDialog.confirm({
+      titulo: 'Excluir paciente',
+      mensagem: 'Excluir este paciente? Essa ação não pode ser desfeita.',
+      confirmarLabel: 'Excluir',
+    });
+    if (!confirmado) {
       return;
     }
 
