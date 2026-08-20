@@ -24,7 +24,7 @@ export class PacienteForm implements OnInit {
   protected readonly form = this.fb.nonNullable.group({
     nome: ['', [Validators.required, Validators.maxLength(120)]],
     email: ['', [Validators.required, Validators.email, Validators.maxLength(120)]],
-    senha: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
+    senha: ['', [Validators.minLength(8), Validators.maxLength(100)]],
     dataNascimento: [''],
     sexo: [''],
     profissao: [''],
@@ -46,6 +46,8 @@ export class PacienteForm implements OnInit {
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('id');
     if (!idParam) {
+      this.form.controls.senha.addValidators(Validators.required);
+      this.form.controls.senha.updateValueAndValidity();
       return;
     }
 
@@ -104,7 +106,7 @@ export class PacienteForm implements OnInit {
       ? this.pacienteService.atualizar(this.pacienteId, {
           nome: raw.nome,
           email: raw.email,
-          senha: raw.senha,
+          senha: raw.senha.trim() ? raw.senha : null,
           ...camposNovos,
         })
       : this.pacienteService.criar({ nome: raw.nome, email: raw.email, senha: raw.senha });

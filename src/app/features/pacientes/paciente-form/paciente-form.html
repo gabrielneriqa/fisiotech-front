@@ -34,7 +34,13 @@
 
       <label class="field">
         <span class="field__label">{{ editando() ? 'Nova senha' : 'Senha' }}</span>
-        <input class="field__input" type="password" formControlName="senha" autocomplete="new-password" />
+        <input
+          class="field__input"
+          type="password"
+          formControlName="senha"
+          autocomplete="new-password"
+          [placeholder]="editando() ? 'Deixe em branco para manter a senha atual' : ''"
+        />
       </label>
 
       <label class="field">

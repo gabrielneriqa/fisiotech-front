@@ -108,9 +108,8 @@ describe('ProfissionalForm', () => {
       await criarComponente('1');
     });
 
-    it('deve carregar os dados existentes do profissional ao entrar na tela', () => {
+    function carregarProfissionalExistente() {
       fixture.detectChanges();
-
       httpMock.expectOne('/profissionais/1').flush({
         id: 1,
         nome: 'Ana Souza',
@@ -125,37 +124,47 @@ describe('ProfissionalForm', () => {
         telefone: null,
         dataCriacao: '2026-08-20T09:00:00',
       });
+    }
+
+    it('deve carregar os dados existentes do profissional ao entrar na tela', () => {
+      carregarProfissionalExistente();
 
       expect((component as any).form.get('nome')!.value).toBe('Ana Souza');
       expect((component as any).form.get('conveniosAceitos')!.value).toBe('Unimed');
       expect((component as any).editando()).toBe(true);
     });
 
-    it('deve enviar PUT para o id da rota ao salvar em modo edição', () => {
-      fixture.detectChanges();
-      httpMock.expectOne('/profissionais/1').flush({
-        id: 1,
-        nome: 'Ana Souza',
-        email: 'ana@fisiotech.com',
-        registroProfissional: 'CREFITO-11111',
-        especialidade: 'Ortopedia',
-        valorConsultaParticular: 150,
-        conveniosAceitos: [],
-        foto: null,
-        dataNascimento: null,
-        sexo: null,
-        telefone: null,
-        dataCriacao: '2026-08-20T09:00:00',
-      });
+    it('não deve exigir senha para salvar uma edição (regressão do F-01)', () => {
+      carregarProfissionalExistente();
+
+      (component as any).submit();
+
+      expect((component as any).form.get('senha')!.valid).toBe(true);
+      httpMock.expectOne('/profissionais/1');
+    });
+
+    it('deve enviar senha null quando o campo é deixado em branco na edição', () => {
+      carregarProfissionalExistente();
+
+      (component as any).submit();
+
+      const req = httpMock.expectOne('/profissionais/1');
+      expect(req.request.method).toBe('PUT');
+      expect(req.request.body.senha).toBeNull();
+      req.flush(null);
+
+      expect(router.navigateByUrl).toHaveBeenCalledWith('/admin/profissionais');
+    });
+
+    it('deve enviar a nova senha quando o campo é preenchido na edição', () => {
+      carregarProfissionalExistente();
 
       (component as any).form.patchValue({ senha: 'novaSenha123' });
       (component as any).submit();
 
       const req = httpMock.expectOne('/profissionais/1');
-      expect(req.request.method).toBe('PUT');
+      expect(req.request.body.senha).toBe('novaSenha123');
       req.flush(null);
-
-      expect(router.navigateByUrl).toHaveBeenCalledWith('/admin/profissionais');
     });
   });
 });
