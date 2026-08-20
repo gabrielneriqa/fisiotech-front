@@ -25,25 +25,6 @@
       <h1 class="login__title">Entrar</h1>
       <p class="login__subtitle">Acesse sua conta</p>
 
-      <div class="login__papel">
-        <button
-          class="login__papel-option"
-          type="button"
-          [class.login__papel-option--active]="papelSelecionado() === 'ROLE_PROFISSIONAL'"
-          (click)="selecionarPapel('ROLE_PROFISSIONAL')"
-        >
-          Sou médico
-        </button>
-        <button
-          class="login__papel-option"
-          type="button"
-          [class.login__papel-option--active]="papelSelecionado() === 'ROLE_PACIENTE'"
-          (click)="selecionarPapel('ROLE_PACIENTE')"
-        >
-          Sou Paciente
-        </button>
-      </div>
-
       <form class="login__form" [formGroup]="form" (ngSubmit)="submit()">
         <label class="field">
           <span class="field__label">Email</span>
