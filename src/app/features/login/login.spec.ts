@@ -26,9 +26,8 @@ describe('Login', () => {
 
   afterEach(() => httpMock.verify());
 
-  it('deve iniciar na aba de login com o papel "médico" selecionado', () => {
+  it('deve iniciar na aba de login', () => {
     expect((component as any).aba()).toBe('login');
-    expect((component as any).papelSelecionado()).toBe('ROLE_PROFISSIONAL');
   });
 
   it('selecionarAba deve trocar a aba e limpar mensagens de erro', () => {
@@ -49,7 +48,7 @@ describe('Login', () => {
     expect((component as any).form.get('email')!.touched).toBe(true);
   });
 
-  it('deve logar e navegar para a home do papel quando as credenciais são válidas e o papel bate', () => {
+  it('deve logar e navegar para a home do profissional (papel resolvido pelo backend, sem toggle)', () => {
     (component as any).form.setValue({ email: 'ana@fisiotech.com', senha: 'senha123' });
 
     (component as any).submit();
@@ -62,22 +61,19 @@ describe('Login', () => {
     expect((component as any).errorMessage()).toBeNull();
   });
 
-  it('deve deslogar e mostrar erro quando o papel das credenciais não bate com o selecionado', () => {
-    (component as any).selecionarPapel('ROLE_PACIENTE');
-    (component as any).form.setValue({ email: 'ana@fisiotech.com', senha: 'senha123' });
+  it('deve logar e navegar para a home do paciente (papel resolvido pelo backend, sem toggle)', () => {
+    (component as any).form.setValue({ email: 'joao@paciente.com', senha: 'senha123' });
 
     (component as any).submit();
 
     httpMock
       .expectOne('/auth/me')
-      .flush({ id: 1, nome: 'Ana Souza', email: 'ana@fisiotech.com', role: 'ROLE_PROFISSIONAL' });
+      .flush({ id: 1, nome: 'Joao Silva', email: 'joao@paciente.com', role: 'ROLE_PACIENTE' });
 
-    expect(router.navigateByUrl).not.toHaveBeenCalled();
-    expect((component as any).errorMessage()).toBe('Essas credenciais não são de um paciente.');
+    expect(router.navigateByUrl).toHaveBeenCalledWith('/paciente/home');
   });
 
-  it('admin deve conseguir logar independente do papel selecionado na tela', () => {
-    (component as any).selecionarPapel('ROLE_PACIENTE');
+  it('deve logar e navegar para a home do admin', () => {
     (component as any).form.setValue({ email: 'admin@fisiotech.com', senha: '12345678' });
 
     (component as any).submit();

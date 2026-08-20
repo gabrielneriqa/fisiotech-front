@@ -8,7 +8,6 @@ import { homeRouteFor } from '../../core/auth/role-routes';
 import { PacienteService } from '../../core/pacientes/paciente.service';
 
 type Aba = 'login' | 'cadastro';
-type Papel = 'ROLE_PROFISSIONAL' | 'ROLE_PACIENTE';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +24,6 @@ export class Login {
   protected readonly mensagemErro = mensagemErro;
 
   protected readonly aba = signal<Aba>('login');
-  protected readonly papelSelecionado = signal<Papel>('ROLE_PROFISSIONAL');
 
   protected readonly form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
@@ -50,11 +48,6 @@ export class Login {
     this.cadastroErrorMessage.set(null);
   }
 
-  protected selecionarPapel(papel: Papel): void {
-    this.papelSelecionado.set(papel);
-    this.errorMessage.set(null);
-  }
-
   protected submit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -69,17 +62,6 @@ export class Login {
     this.authService.login(email, senha).subscribe({
       next: (usuario) => {
         this.loading.set(false);
-
-        if (usuario.role !== 'ROLE_ADMIN' && usuario.role !== this.papelSelecionado()) {
-          this.authService.logout();
-          this.errorMessage.set(
-            this.papelSelecionado() === 'ROLE_PACIENTE'
-              ? 'Essas credenciais não são de um paciente.'
-              : 'Essas credenciais não são de um médico.',
-          );
-          return;
-        }
-
         this.router.navigateByUrl(homeRouteFor(usuario.role));
       },
       error: (err: { status?: number }) => {
