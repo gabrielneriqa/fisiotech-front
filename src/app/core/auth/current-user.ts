@@ -4,3 +4,8 @@ export interface CurrentUser {
   email: string;
   role: string;
 }
+
+export interface AlterarSenhaRequest {
+  senhaAtual: string;
+  novaSenha: string;
+}

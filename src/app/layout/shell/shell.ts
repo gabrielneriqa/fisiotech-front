@@ -50,6 +50,17 @@ export class Shell {
 
   protected readonly isPaciente = computed(() => this.currentUser()?.role === 'ROLE_PACIENTE');
 
+  protected readonly senhaRoute = computed(() => {
+    switch (this.currentUser()?.role) {
+      case 'ROLE_PACIENTE':
+        return '/paciente/senha';
+      case 'ROLE_ADMIN':
+        return '/admin/senha';
+      default:
+        return '/senha';
+    }
+  });
+
   private readonly routeData = toSignal(
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd),

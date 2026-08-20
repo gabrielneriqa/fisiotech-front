@@ -6,7 +6,8 @@ import { environment } from '../../../environments/environment';
 import { Avaliacao, AvaliacaoCreateRequest } from '../avaliacoes/avaliacao.model';
 import { Consulta } from '../consultas/consulta.model';
 import { Mensagem, MinhaConversaItem } from '../mensagens/mensagem.model';
-import { AlterarSenhaRequest, MePerfilUpdateRequest, Paciente } from '../pacientes/paciente.model';
+import { AlterarSenhaRequest } from '../auth/current-user';
+import { MePerfilUpdateRequest, Paciente } from '../pacientes/paciente.model';
 import { ConsultaBookingRequest, DisponibilidadeResponse, ProfissionalBusca } from '../consultas/consulta-booking.model';
 
 @Injectable({ providedIn: 'root' })

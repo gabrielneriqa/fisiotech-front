@@ -1,0 +1,57 @@
+<section class="senha">
+  <form class="senha__form" [formGroup]="form" (ngSubmit)="submit()">
+    <label class="field">
+      <span class="field__label">Senha atual</span>
+      <input
+        class="field__input"
+        type="password"
+        formControlName="senhaAtual"
+        autocomplete="current-password"
+        [class.field__input--invalid]="mensagemErro(form.controls.senhaAtual)"
+      />
+      @if (mensagemErro(form.controls.senhaAtual); as erro) {
+        <span class="field__error">{{ erro }}</span>
+      }
+    </label>
+
+    <label class="field">
+      <span class="field__label">Nova senha</span>
+      <input
+        class="field__input"
+        type="password"
+        formControlName="novaSenha"
+        autocomplete="new-password"
+        [class.field__input--invalid]="mensagemErro(form.controls.novaSenha)"
+      />
+      @if (mensagemErro(form.controls.novaSenha); as erro) {
+        <span class="field__error">{{ erro }}</span>
+      }
+    </label>
+
+    <label class="field">
+      <span class="field__label">Confirmar nova senha</span>
+      <input
+        class="field__input"
+        type="password"
+        formControlName="confirmarNovaSenha"
+        autocomplete="new-password"
+        [class.field__input--invalid]="mensagemErroConfirmacao()"
+      />
+      @if (mensagemErroConfirmacao(); as erro) {
+        <span class="field__error">{{ erro }}</span>
+      }
+    </label>
+
+    @if (errorMessage()) {
+      <p class="senha__error">{{ errorMessage() }}</p>
+    }
+
+    @if (successMessage()) {
+      <p class="senha__success">{{ successMessage() }}</p>
+    }
+
+    <button class="senha__submit" type="submit" [disabled]="saving()">
+      {{ saving() ? 'Salvando...' : 'Alterar Senha' }}
+    </button>
+  </form>
+</section>

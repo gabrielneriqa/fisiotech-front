@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
+import { AlterarSenhaRequest } from '../auth/current-user';
 import { Profissional, ProfissionalCreateRequest, ProfissionalUpdateRequest } from './profissional.model';
 
 @Injectable({ providedIn: 'root' })
@@ -28,5 +29,9 @@ export class ProfissionalService {
 
   deletar(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  }
+
+  alterarPropriaSenha(request: AlterarSenhaRequest): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/me/senha`, request);
   }
 }

@@ -51,8 +51,3 @@ export interface MePerfilUpdateRequest {
   bairro: string | null;
   foto: string | null;
 }
-
-export interface AlterarSenhaRequest {
-  senhaAtual: string;
-  novaSenha: string;
-}
