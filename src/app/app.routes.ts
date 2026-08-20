@@ -79,6 +79,12 @@ export const routes: Routes = [
               import('./features/consultas/consulta-detail/consulta-detail').then((m) => m.ConsultaDetail),
             data: { title: 'Consulta' },
           },
+          {
+            path: 'senha',
+            loadComponent: () =>
+              import('./features/profissional-senha/profissional-senha').then((m) => m.ProfissionalSenha),
+            data: { title: 'Alterar Senha', backTo: '/home' },
+          },
         ],
       },
 
@@ -114,6 +120,11 @@ export const routes: Routes = [
             path: 'pacientes/:id',
             loadComponent: () => import('./features/admin/paciente-form/paciente-form').then((m) => m.PacienteForm),
             data: { title: 'Editar Paciente' },
+          },
+          {
+            path: 'senha',
+            loadComponent: () => import('./features/admin/admin-senha/admin-senha').then((m) => m.AdminSenha),
+            data: { title: 'Alterar Senha', backTo: '/admin/profissionais' },
           },
         ],
       },
