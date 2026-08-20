@@ -5,10 +5,11 @@ import { Paciente } from '../../../core/pacientes/paciente.model';
 import { PacienteService } from '../../../core/pacientes/paciente.service';
 import { ConfirmDialogService } from '../../../core/ui/confirm-dialog/confirm-dialog.service';
 import { Icon } from '../../../core/ui/icon/icon';
+import { Skeleton } from '../../../core/ui/skeleton/skeleton';
 
 @Component({
   selector: 'app-paciente-list',
-  imports: [RouterLink, Icon],
+  imports: [RouterLink, Icon, Skeleton],
   templateUrl: './paciente-list.html',
   styleUrl: './paciente-list.scss',
 })

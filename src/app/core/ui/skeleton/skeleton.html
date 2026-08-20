@@ -1,0 +1,35 @@
+<div class="skeleton" role="status" aria-label="Carregando">
+  @switch (variant()) {
+    @case ('list') {
+      @for (item of items(); track item) {
+        <div class="skeleton__row">
+          <span class="skeleton__avatar"></span>
+          <span class="skeleton__row-lines">
+            <span class="skeleton__bar skeleton__bar--40"></span>
+            <span class="skeleton__bar skeleton__bar--70"></span>
+          </span>
+        </div>
+      }
+    }
+    @case ('form') {
+      @for (item of items(); track item) {
+        <div class="skeleton__field">
+          <span class="skeleton__bar skeleton__bar--label"></span>
+          <span class="skeleton__bar skeleton__bar--input"></span>
+        </div>
+      }
+    }
+    @case ('thread') {
+      @for (item of items(); track item; let odd = $odd) {
+        <div class="skeleton__bubble-row" [class.skeleton__bubble-row--right]="odd">
+          <span class="skeleton__bubble"></span>
+        </div>
+      }
+    }
+    @default {
+      @for (item of items(); track item; let last = $last) {
+        <span class="skeleton__bar skeleton__bar--line" [class.skeleton__bar--short]="last"></span>
+      }
+    }
+  }
+</div>

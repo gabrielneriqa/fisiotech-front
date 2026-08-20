@@ -4,10 +4,11 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { mensagemErro } from '../../../core/forms/field-error';
 import { MeService } from '../../../core/me/me.service';
+import { Skeleton } from '../../../core/ui/skeleton/skeleton';
 
 @Component({
   selector: 'app-paciente-perfil',
-  imports: [ReactiveFormsModule, DatePipe],
+  imports: [ReactiveFormsModule, DatePipe, Skeleton],
   templateUrl: './paciente-perfil.html',
   styleUrl: './paciente-perfil.scss',
 })

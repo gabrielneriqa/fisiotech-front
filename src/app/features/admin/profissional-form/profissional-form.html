@@ -2,7 +2,7 @@
   <a class="profissional-form__back" routerLink="/admin/profissionais">← Profissionais</a>
 
   @if (loading()) {
-    <p class="profissional-form__state">Carregando...</p>
+    <app-skeleton variant="form" [count]="6" />
   } @else {
     @if (dataCriacao()) {
       <p class="profissional-form__meta">Cadastrado em {{ dataCriacao() | date: 'dd/MM/yyyy' }}</p>

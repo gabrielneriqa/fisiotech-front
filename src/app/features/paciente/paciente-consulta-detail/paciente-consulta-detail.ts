@@ -8,10 +8,11 @@ import { Consulta } from '../../../core/consultas/consulta.model';
 import { DisponibilidadeResponse, SlotDisponibilidade } from '../../../core/consultas/consulta-booking.model';
 import { MeService } from '../../../core/me/me.service';
 import { ConfirmDialogService } from '../../../core/ui/confirm-dialog/confirm-dialog.service';
+import { Skeleton } from '../../../core/ui/skeleton/skeleton';
 
 @Component({
   selector: 'app-paciente-consulta-detail',
-  imports: [RouterLink, ReactiveFormsModule, FormsModule, DatePipe, CurrencyPipe],
+  imports: [RouterLink, ReactiveFormsModule, FormsModule, DatePipe, CurrencyPipe, Skeleton],
   templateUrl: './paciente-consulta-detail.html',
   styleUrl: './paciente-consulta-detail.scss',
 })

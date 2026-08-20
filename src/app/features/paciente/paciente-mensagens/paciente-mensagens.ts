@@ -4,10 +4,11 @@ import { RouterLink } from '@angular/router';
 
 import { MinhaConversaItem } from '../../../core/mensagens/mensagem.model';
 import { MeService } from '../../../core/me/me.service';
+import { Skeleton } from '../../../core/ui/skeleton/skeleton';
 
 @Component({
   selector: 'app-paciente-mensagens',
-  imports: [RouterLink, DatePipe],
+  imports: [RouterLink, DatePipe, Skeleton],
   templateUrl: './paciente-mensagens.html',
   styleUrl: './paciente-mensagens.scss',
 })

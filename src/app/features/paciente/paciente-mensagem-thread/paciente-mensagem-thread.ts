@@ -5,10 +5,11 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { Mensagem } from '../../../core/mensagens/mensagem.model';
 import { MeService } from '../../../core/me/me.service';
+import { Skeleton } from '../../../core/ui/skeleton/skeleton';
 
 @Component({
   selector: 'app-paciente-mensagem-thread',
-  imports: [DatePipe, ReactiveFormsModule, RouterLink],
+  imports: [DatePipe, ReactiveFormsModule, RouterLink, Skeleton],
   templateUrl: './paciente-mensagem-thread.html',
   styleUrl: './paciente-mensagem-thread.scss',
 })

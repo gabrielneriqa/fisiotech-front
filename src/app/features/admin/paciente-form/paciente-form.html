@@ -2,7 +2,7 @@
   <a class="paciente-form__back" routerLink="/admin/pacientes">← Pacientes</a>
 
   @if (loading()) {
-    <p class="paciente-form__state">Carregando...</p>
+    <app-skeleton variant="form" [count]="4" />
   } @else {
     @if (dataCriacao()) {
       <p class="paciente-form__meta">Cadastrado em {{ dataCriacao() | date: 'dd/MM/yyyy' }}</p>

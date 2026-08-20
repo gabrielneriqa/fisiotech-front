@@ -3,7 +3,7 @@
   <h1 class="mensagens__title">Mensagens {{ profissionalNome() ? 'com ' + profissionalNome() : '' }}</h1>
 
   @if (loading()) {
-    <p class="mensagens__state">Carregando...</p>
+    <app-skeleton variant="thread" [count]="5" />
   } @else if (mensagens().length === 0) {
     <p class="mensagens__state">Nenhuma mensagem ainda.</p>
   } @else {

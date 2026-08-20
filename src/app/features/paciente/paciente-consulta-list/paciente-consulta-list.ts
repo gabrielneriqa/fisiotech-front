@@ -5,10 +5,11 @@ import { RouterLink } from '@angular/router';
 import { Consulta } from '../../../core/consultas/consulta.model';
 import { MeService } from '../../../core/me/me.service';
 import { Icon } from '../../../core/ui/icon/icon';
+import { Skeleton } from '../../../core/ui/skeleton/skeleton';
 
 @Component({
   selector: 'app-paciente-consulta-list',
-  imports: [RouterLink, DatePipe, Icon],
+  imports: [RouterLink, DatePipe, Icon, Skeleton],
   templateUrl: './paciente-consulta-list.html',
   styleUrl: './paciente-consulta-list.scss',
 })

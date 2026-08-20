@@ -3,10 +3,11 @@ import { RouterLink } from '@angular/router';
 
 import { Paciente } from '../../../core/pacientes/paciente.model';
 import { PacienteAdminService } from '../../../core/pacientes/paciente-admin.service';
+import { Skeleton } from '../../../core/ui/skeleton/skeleton';
 
 @Component({
   selector: 'app-admin-paciente-list',
-  imports: [RouterLink],
+  imports: [RouterLink, Skeleton],
   templateUrl: './paciente-list.html',
   styleUrl: './paciente-list.scss',
 })

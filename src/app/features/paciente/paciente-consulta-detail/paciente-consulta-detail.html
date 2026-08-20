@@ -2,7 +2,7 @@
   <a class="consulta-detail__back" routerLink="/paciente/consultas">← Minhas Consultas</a>
 
   @if (loading()) {
-    <p class="consulta-detail__state">Carregando...</p>
+    <app-skeleton variant="lines" [count]="5" />
   } @else if (!consulta()) {
     <p class="consulta-detail__state consulta-detail__state--error">{{ errorMessage() }}</p>
   } @else {

@@ -4,12 +4,13 @@ import { RouterLink } from '@angular/router';
 
 import { Consulta } from '../../../core/consultas/consulta.model';
 import { ConsultaService } from '../../../core/consultas/consulta.service';
+import { Skeleton } from '../../../core/ui/skeleton/skeleton';
 
 type Filtro = 'todas' | 'agendadas' | 'canceladas' | 'remarcadas';
 
 @Component({
   selector: 'app-consulta-list',
-  imports: [RouterLink, DatePipe],
+  imports: [RouterLink, DatePipe, Skeleton],
   templateUrl: './consulta-list.html',
   styleUrl: './consulta-list.scss',
 })

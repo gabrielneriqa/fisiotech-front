@@ -15,7 +15,7 @@
   }
 
   @if (loading()) {
-    <p class="profissional-list__state">Carregando...</p>
+    <app-skeleton variant="list" [count]="4" />
   } @else if (errorMessage()) {
     <p class="profissional-list__state profissional-list__state--error">{{ errorMessage() }}</p>
   } @else if (profissionaisFiltrados().length === 0) {

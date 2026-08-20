@@ -6,10 +6,11 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Mensagem } from '../../../core/mensagens/mensagem.model';
 import { MensagemService } from '../../../core/mensagens/mensagem.service';
 import { PacienteService } from '../../../core/pacientes/paciente.service';
+import { Skeleton } from '../../../core/ui/skeleton/skeleton';
 
 @Component({
   selector: 'app-mensagem-thread',
-  imports: [RouterLink, DatePipe, ReactiveFormsModule],
+  imports: [RouterLink, DatePipe, ReactiveFormsModule, Skeleton],
   templateUrl: './mensagem-thread.html',
   styleUrl: './mensagem-thread.scss',
 })

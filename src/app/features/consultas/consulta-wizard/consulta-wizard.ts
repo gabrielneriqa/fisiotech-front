@@ -5,6 +5,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Consulta, StatusConsulta, TipoConsulta } from '../../../core/consultas/consulta.model';
 import { ConsultaService } from '../../../core/consultas/consulta.service';
 import { Icon } from '../../../core/ui/icon/icon';
+import { Skeleton } from '../../../core/ui/skeleton/skeleton';
 
 type WizardStep = 'quadro-clinico' | 'habitos-vida' | 'exame-fisico' | 'diagnostico' | 'sucesso';
 
@@ -12,7 +13,7 @@ const ORDEM_PASSOS: WizardStep[] = ['quadro-clinico', 'habitos-vida', 'exame-fis
 
 @Component({
   selector: 'app-consulta-wizard',
-  imports: [ReactiveFormsModule, RouterLink, Icon],
+  imports: [ReactiveFormsModule, RouterLink, Icon, Skeleton],
   templateUrl: './consulta-wizard.html',
   styleUrl: './consulta-wizard.scss',
 })
