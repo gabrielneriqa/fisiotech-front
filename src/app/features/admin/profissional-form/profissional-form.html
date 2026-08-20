@@ -42,6 +42,7 @@
           type="password"
           formControlName="senha"
           autocomplete="new-password"
+          [placeholder]="editando() ? 'Deixe em branco para manter a senha atual' : ''"
           [class.field__input--invalid]="mensagemErro(form.controls.senha)"
         />
         @if (mensagemErro(form.controls.senha); as erro) {

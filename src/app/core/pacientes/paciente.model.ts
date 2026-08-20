@@ -23,7 +23,7 @@ export interface PacienteCreateRequest {
 export interface PacienteUpdateRequest {
   nome: string;
   email: string;
-  senha: string;
+  senha: string | null;
   dataNascimento: string | null;
   sexo: string | null;
   profissao: string | null;

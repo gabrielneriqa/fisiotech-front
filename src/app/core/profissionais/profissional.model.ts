@@ -30,7 +30,7 @@ export interface ProfissionalCreateRequest {
 export interface ProfissionalUpdateRequest {
   nome: string;
   email: string;
-  senha: string;
+  senha: string | null;
   registroProfissional: string;
   especialidade: string;
   valorConsultaParticular: number | null;

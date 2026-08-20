@@ -21,7 +21,7 @@ export class ProfissionalForm implements OnInit {
   protected readonly form = this.fb.nonNullable.group({
     nome: ['', [Validators.required, Validators.maxLength(120)]],
     email: ['', [Validators.required, Validators.email, Validators.maxLength(120)]],
-    senha: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
+    senha: ['', [Validators.minLength(8), Validators.maxLength(100)]],
     registroProfissional: ['', [Validators.required, Validators.maxLength(20)]],
     especialidade: ['', [Validators.required, Validators.maxLength(120)]],
     valorConsultaParticular: [null as number | null],
@@ -45,6 +45,8 @@ export class ProfissionalForm implements OnInit {
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('id');
     if (!idParam) {
+      this.form.controls.senha.addValidators(Validators.required);
+      this.form.controls.senha.updateValueAndValidity();
       return;
     }
 
@@ -103,7 +105,10 @@ export class ProfissionalForm implements OnInit {
       telefone: raw.telefone || null,
     };
     const request$ = this.profissionalId
-      ? this.profissionalService.atualizar(this.profissionalId, request)
+      ? this.profissionalService.atualizar(this.profissionalId, {
+          ...request,
+          senha: raw.senha.trim() ? raw.senha : null,
+        })
       : this.profissionalService.criar(request);
 
     request$.subscribe({
