@@ -6,10 +6,38 @@
       <p class="wizard__meta">Consulta com {{ pacienteNome() }}</p>
 
       <div class="wizard__steps">
-        <span class="wizard__step-dot" [class.wizard__step-dot--active]="step() === 'quadro-clinico'"></span>
-        <span class="wizard__step-dot" [class.wizard__step-dot--active]="step() === 'habitos-vida'"></span>
-        <span class="wizard__step-dot" [class.wizard__step-dot--active]="step() === 'exame-fisico'"></span>
-        <span class="wizard__step-dot" [class.wizard__step-dot--active]="step() === 'diagnostico'"></span>
+        <button
+          type="button"
+          class="wizard__step-dot"
+          [class.wizard__step-dot--active]="step() === 'quadro-clinico'"
+          [disabled]="!etapaAlcancavel('quadro-clinico')"
+          aria-label="Voltar para Quadro Clínico"
+          (click)="irParaEtapa('quadro-clinico')"
+        ></button>
+        <button
+          type="button"
+          class="wizard__step-dot"
+          [class.wizard__step-dot--active]="step() === 'habitos-vida'"
+          [disabled]="!etapaAlcancavel('habitos-vida')"
+          aria-label="Voltar para Hábitos de Vida"
+          (click)="irParaEtapa('habitos-vida')"
+        ></button>
+        <button
+          type="button"
+          class="wizard__step-dot"
+          [class.wizard__step-dot--active]="step() === 'exame-fisico'"
+          [disabled]="!etapaAlcancavel('exame-fisico')"
+          aria-label="Voltar para Exame Físico"
+          (click)="irParaEtapa('exame-fisico')"
+        ></button>
+        <button
+          type="button"
+          class="wizard__step-dot"
+          [class.wizard__step-dot--active]="step() === 'diagnostico'"
+          [disabled]="!etapaAlcancavel('diagnostico')"
+          aria-label="Voltar para Diagnóstico"
+          (click)="irParaEtapa('diagnostico')"
+        ></button>
       </div>
     }
 

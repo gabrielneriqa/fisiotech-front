@@ -22,11 +22,29 @@
   &__step-dot {
     width: 8px;
     height: 8px;
+    padding: 6px;
+    border: none;
     border-radius: 50%;
     background: var(--color-border);
+    background-clip: content-box;
+    cursor: default;
 
     &--active {
       background: var(--color-primary);
+      background-clip: content-box;
+    }
+
+    &:not(:disabled) {
+      cursor: pointer;
+    }
+
+    &:not(:disabled):hover {
+      background: var(--color-primary-dark);
+      background-clip: content-box;
+    }
+
+    &:disabled {
+      opacity: 0.6;
     }
   }
 
