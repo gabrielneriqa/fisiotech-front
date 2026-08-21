@@ -1,17 +1,32 @@
+import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import { TipoConsulta } from '../../../core/consultas/consulta.model';
 import { DisponibilidadeResponse, ProfissionalBusca, SlotDisponibilidade } from '../../../core/consultas/consulta-booking.model';
 import { MeService } from '../../../core/me/me.service';
+import { Icon } from '../../../core/ui/icon/icon';
 
-type Etapa = 'profissional' | 'data' | 'horario' | 'pagamento';
+type Etapa = 'profissional' | 'agendamento';
 type FormaPagamento = 'particular' | 'convenio';
+
+interface DiaStrip {
+  iso: string;
+  dow: string;
+  dia: number;
+}
+
+function paraIsoLocal(data: Date): string {
+  const ano = data.getFullYear();
+  const mes = String(data.getMonth() + 1).padStart(2, '0');
+  const dia = String(data.getDate()).padStart(2, '0');
+  return `${ano}-${mes}-${dia}`;
+}
 
 @Component({
   selector: 'app-consulta-booking',
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink, DatePipe, CurrencyPipe, Icon],
   templateUrl: './consulta-booking.html',
   styleUrl: './consulta-booking.scss',
 })
@@ -27,7 +42,7 @@ export class ConsultaBooking {
   protected readonly buscandoProfissionais = signal(false);
   protected readonly profissionalSelecionado = signal<ProfissionalBusca | null>(null);
 
-  protected readonly hoje = new Date().toISOString().slice(0, 10);
+  protected readonly hoje = paraIsoLocal(new Date());
   protected readonly dataSelecionada = signal(this.hoje);
   protected readonly disponibilidade = signal<DisponibilidadeResponse | null>(null);
   protected readonly carregandoDisponibilidade = signal(false);
@@ -43,6 +58,20 @@ export class ConsultaBooking {
 
   protected readonly valorParticular = computed(() => this.profissionalSelecionado()?.valorConsultaParticular ?? null);
   protected readonly conveniosDisponiveis = computed(() => this.profissionalSelecionado()?.conveniosAceitos ?? []);
+
+  protected readonly diasStrip = computed<DiaStrip[]>(() => {
+    const dias: DiaStrip[] = [];
+    for (let i = 0; i < 7; i++) {
+      const data = new Date();
+      data.setDate(data.getDate() + i);
+      dias.push({
+        iso: paraIsoLocal(data),
+        dow: data.toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '').toUpperCase(),
+        dia: data.getDate(),
+      });
+    }
+    return dias;
+  });
 
   constructor() {
     this.buscarProfissionais();
@@ -66,12 +95,13 @@ export class ConsultaBooking {
     this.profissionalSelecionado.set(profissional);
     this.formaPagamento.set('particular');
     this.convenioSelecionado.set(null);
-    this.etapa.set('data');
+    this.dataSelecionada.set(this.hoje);
+    this.etapa.set('agendamento');
     this.carregarDisponibilidade();
   }
 
-  protected onDataChange(data: string): void {
-    this.dataSelecionada.set(data);
+  protected selecionarDia(iso: string): void {
+    this.dataSelecionada.set(iso);
     this.horarioSelecionado.set(null);
     this.carregarDisponibilidade();
   }
@@ -87,7 +117,6 @@ export class ConsultaBooking {
       next: (resposta) => {
         this.disponibilidade.set(resposta);
         this.carregandoDisponibilidade.set(false);
-        this.etapa.set('horario');
       },
       error: () => {
         this.disponibilidade.set(null);
@@ -101,7 +130,6 @@ export class ConsultaBooking {
       return;
     }
     this.horarioSelecionado.set(slot.horario);
-    this.etapa.set('pagamento');
   }
 
   protected selecionarFormaPagamento(forma: FormaPagamento): void {
@@ -152,16 +180,11 @@ export class ConsultaBooking {
           if (err.status === 409) {
             this.errorMessage.set('Este horário não está mais disponível. Escolha outro.');
             this.horarioSelecionado.set(null);
-            this.etapa.set('horario');
             this.carregarDisponibilidade();
           } else {
             this.errorMessage.set('Não foi possível marcar a consulta. Tente novamente.');
           }
         },
       });
-  }
-
-  protected voltarPara(etapa: Etapa): void {
-    this.etapa.set(etapa);
   }
 }

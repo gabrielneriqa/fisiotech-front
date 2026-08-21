@@ -3,7 +3,7 @@ import { RouterLink } from '@angular/router';
 
 import { Paciente } from '../../../core/pacientes/paciente.model';
 import { PacienteService } from '../../../core/pacientes/paciente.service';
-import { ConfirmDialogService } from '../../../core/ui/confirm-dialog/confirm-dialog.service';
+import { avatarTint } from '../../../core/ui/avatar-color';
 import { Icon } from '../../../core/ui/icon/icon';
 import { Skeleton } from '../../../core/ui/skeleton/skeleton';
 
@@ -15,12 +15,12 @@ import { Skeleton } from '../../../core/ui/skeleton/skeleton';
 })
 export class PacienteList implements OnInit {
   private readonly pacienteService = inject(PacienteService);
-  private readonly confirmDialog = inject(ConfirmDialogService);
+
+  protected readonly avatarTint = avatarTint;
 
   protected readonly pacientes = signal<Paciente[]>([]);
   protected readonly loading = signal(true);
   protected readonly errorMessage = signal<string | null>(null);
-  protected readonly deleteError = signal<string | null>(null);
   protected readonly filtro = signal('');
 
   protected readonly pacientesFiltrados = computed(() => {
@@ -40,26 +40,6 @@ export class PacienteList implements OnInit {
 
   protected onFiltroChange(event: Event): void {
     this.filtro.set((event.target as HTMLInputElement).value);
-  }
-
-  protected async excluir(paciente: Paciente, event: Event): Promise<void> {
-    event.preventDefault();
-    event.stopPropagation();
-
-    const confirmado = await this.confirmDialog.confirm({
-      titulo: 'Excluir paciente',
-      mensagem: `Excluir o paciente ${paciente.nome}? Essa ação não pode ser desfeita.`,
-      confirmarLabel: 'Excluir',
-    });
-    if (!confirmado) {
-      return;
-    }
-
-    this.deleteError.set(null);
-    this.pacienteService.deletar(paciente.id).subscribe({
-      next: () => this.pacientes.update((lista) => lista.filter((p) => p.id !== paciente.id)),
-      error: () => this.deleteError.set('Não foi possível excluir o paciente.'),
-    });
   }
 
   protected iniciais(nome: string): string {

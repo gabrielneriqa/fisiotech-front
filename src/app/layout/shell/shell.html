@@ -1,5 +1,5 @@
 <div class="shell">
-  @if (pageTitle(); as title) {
+  @if (!hideHeader() && pageTitle(); as title) {
     <header class="shell__header shell__header--page">
       <button class="shell__menu-toggle" type="button" (click)="abrirSidebar()" aria-label="Abrir menu">
         <app-icon name="menu" />
@@ -12,31 +12,22 @@
       <h1 class="shell__page-title">{{ title }}</h1>
       <button class="shell__logout" type="button" (click)="logout()">Sair</button>
     </header>
-  } @else {
-    <header class="shell__header">
-      <button class="shell__menu-toggle" type="button" (click)="abrirSidebar()" aria-label="Abrir menu">
-        <app-icon name="menu" />
-      </button>
-      <div class="shell__greeting">
-        <p class="shell__greeting-label">Bem-vindo(a),</p>
-        <h1 class="shell__greeting-name">{{ currentUser()?.nome }}</h1>
-      </div>
-      <span class="shell__avatar">{{ iniciais(currentUser()?.nome) }}</span>
-    </header>
   }
 
-  <main class="shell__content">
+  <main class="shell__content" [class.shell__content--flush]="hideHeader()">
     <router-outlet />
   </main>
 
-  <nav class="shell__nav">
-    @for (item of navItems(); track item.path) {
-      <a class="shell__nav-item" [routerLink]="item.path" routerLinkActive="shell__nav-item--active">
-        <app-icon class="shell__nav-icon" [name]="item.icon" />
-        <span>{{ item.label }}</span>
-      </a>
-    }
-  </nav>
+  @if (!hideNav()) {
+    <nav class="shell__nav">
+      @for (item of navItems(); track item.path) {
+        <a class="shell__nav-item" [routerLink]="item.path" routerLinkActive="shell__nav-item--active">
+          <app-icon class="shell__nav-icon" [name]="item.icon" />
+          <span>{{ item.label }}</span>
+        </a>
+      }
+    </nav>
+  }
 
   @if (sidebarAberta()) {
     <div class="shell__overlay" (click)="fecharSidebar()"></div>

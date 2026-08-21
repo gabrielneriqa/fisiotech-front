@@ -1,39 +1,78 @@
 <section class="home">
-  <a class="home__action home__action--consulta" routerLink="/consultas/novo">
-    <span class="home__action-label">Iniciar consulta</span>
-    <span class="home__action-decor">
-      <app-icon class="home__action-icon" name="clipboard" />
+  <header class="home__greeting">
+    <div>
+      <p class="home__greeting-label">Bem-vindo(a),</p>
+      <h1 class="home__greeting-name">{{ currentUser()?.nome }}</h1>
+    </div>
+    <span class="home__avatar" [class]="'avatar-tint--' + avatarTint(currentUser()?.nome ?? '')">
+      {{ iniciais(currentUser()?.nome ?? '') }}
     </span>
-  </a>
+  </header>
 
-  <a class="home__action home__action--paciente" routerLink="/pacientes/novo">
-    <span class="home__action-label">Cadastrar Paciente</span>
-    <span class="home__action-decor">
-      <app-icon class="home__action-icon" name="user-plus" />
-    </span>
-  </a>
-
-  <h2 class="home__section-title">Notificações recentes</h2>
-
-  @if (loadingNotificacoes()) {
-    <app-skeleton variant="list" [count]="3" />
-  } @else if (notificacoes().length === 0) {
-    <p class="home__state">Nenhuma notificação ainda.</p>
+  @if (!loadingConsultas()) {
+    @if (proximaConsulta(); as consulta) {
+      <div class="hero">
+        <div class="hero__top">
+          <span class="hero__eyebrow">Próxima consulta</span>
+          <span class="hero__badge">{{ countdown(consulta) }}</span>
+        </div>
+        <p class="hero__time">{{ consulta.dataHora | date: 'HH:mm' }}</p>
+        <p class="hero__nome">{{ consulta.pacienteNome }}</p>
+        <p class="hero__sub">{{ subtitulo(consulta) }}</p>
+        <div class="hero__actions">
+          <a class="hero__primary" [routerLink]="['/consultas', consulta.id, 'wizard']">Iniciar consulta</a>
+          <a class="hero__secondary" [routerLink]="['/consultas', consulta.id]">Prontuário</a>
+        </div>
+      </div>
+    } @else {
+      <div class="hero hero--vazio">
+        <span class="hero__eyebrow">Próxima consulta</span>
+        <p class="hero__vazio-texto">Nenhuma consulta futura agendada.</p>
+      </div>
+    }
   } @else {
-    <ul class="home__notificacoes">
-      @for (n of notificacoes(); track n.pacienteId) {
+    <app-skeleton variant="lines" [count]="4" />
+  }
+
+  <div class="stats">
+    <div class="stats__card">
+      <span class="icon-tile icon-tile--blue">
+        <app-icon name="users" />
+      </span>
+      <p class="stats__value">{{ totalPacientes() }}</p>
+      <p class="stats__label">pacientes ativos</p>
+    </div>
+    <div class="stats__card">
+      <span class="icon-tile icon-tile--green">
+        <app-icon name="calendar" />
+      </span>
+      <p class="stats__value">{{ consultasHoje().length }}</p>
+      <p class="stats__label">sessões hoje</p>
+    </div>
+  </div>
+
+  <div class="home__section-header">
+    <h2 class="home__section-title">Agenda de hoje</h2>
+    <a class="home__section-link" routerLink="/consultas">ver tudo</a>
+  </div>
+
+  @if (loadingConsultas()) {
+    <app-skeleton variant="list" [count]="3" />
+  } @else if (agendaHoje().length === 0) {
+    <p class="home__state">Nenhuma outra consulta hoje.</p>
+  } @else {
+    <ul class="home__agenda">
+      @for (c of agendaHoje(); track c.id) {
         <li>
-          <a class="notificacao-card" [routerLink]="['/pacientes', n.pacienteId, 'mensagens']">
-            <span class="notificacao-card__avatar">{{ iniciais(n.pacienteNome) }}</span>
-            <span class="notificacao-card__info">
-              <span class="notificacao-card__nome">{{ n.pacienteNome }}</span>
-              <span class="notificacao-card__desc">
-                @if (n.ultimoAutor === 'PROFISSIONAL') {
-                  <span class="notificacao-card__prefix">Você:</span>
-                }
-                {{ n.ultimaMensagem }}
-              </span>
+          <a class="agenda-row" [routerLink]="['/consultas', c.id]">
+            <span class="agenda-row__avatar" [class]="'avatar-tint--' + avatarTint(c.pacienteNome)">
+              {{ iniciais(c.pacienteNome) }}
             </span>
+            <span class="agenda-row__info">
+              <span class="agenda-row__nome">{{ c.pacienteNome }}</span>
+              <span class="agenda-row__sub">{{ c.dataHora | date: 'HH:mm' }} · {{ c.tipo === 'ONLINE' ? 'Online' : 'Presencial' }}</span>
+            </span>
+            <app-icon name="chevron-right" class="agenda-row__chevron" />
           </a>
         </li>
       }

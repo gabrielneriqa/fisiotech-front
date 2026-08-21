@@ -1,6 +1,20 @@
 <section class="mensagens">
-  <a class="mensagens__back" routerLink="/pacientes">← Meus Pacientes</a>
-  <h1 class="mensagens__title">Mensagens {{ pacienteNome() ? 'com ' + pacienteNome() : '' }}</h1>
+  <header class="mensagens__header">
+    <a class="mensagens__back" routerLink="/pacientes" aria-label="Voltar">
+      <app-icon name="chevron-left" />
+    </a>
+    @if (pacienteNome()) {
+      <span class="mensagens__avatar" [class]="'avatar-tint--' + avatarTint(pacienteNome())">
+        {{ iniciais(pacienteNome()) }}
+      </span>
+    }
+    <div class="mensagens__info">
+      <h1 class="mensagens__title">{{ pacienteNome() }}</h1>
+      @if (pacienteEmail()) {
+        <p class="mensagens__subtitle">{{ pacienteEmail() }}</p>
+      }
+    </div>
+  </header>
 
   @if (loading()) {
     <app-skeleton variant="thread" [count]="5" />

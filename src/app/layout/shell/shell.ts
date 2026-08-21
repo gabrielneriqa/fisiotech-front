@@ -71,6 +71,8 @@ export class Shell {
 
   protected readonly pageTitle = computed(() => this.routeData()['title'] as string | undefined);
   protected readonly backTo = computed(() => this.routeData()['backTo'] as string | undefined);
+  protected readonly hideHeader = computed(() => Boolean(this.routeData()['hideHeader']));
+  protected readonly hideNav = computed(() => Boolean(this.routeData()['hideNav']));
 
   protected readonly sidebarAberta = signal(false);
 

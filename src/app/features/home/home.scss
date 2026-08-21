@@ -3,58 +3,55 @@
   flex-direction: column;
   gap: 16px;
 
-  &__action {
-    position: relative;
+  &__greeting {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    overflow: hidden;
-    height: 88px;
-    padding: 0 24px;
-    border-radius: var(--radius-md);
-    text-decoration: none;
-    color: var(--color-text-inverse);
-    font-weight: 700;
-    font-size: 1.05rem;
-    box-shadow: var(--shadow-card);
-
-    &--consulta {
-      background: var(--color-primary);
-    }
-
-    &--paciente {
-      background: var(--color-accent);
-    }
+    justify-content: space-between;
   }
 
-  &__action-label {
-    position: relative;
-    z-index: 1;
+  &__greeting-label {
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
   }
 
-  &__action-decor {
-    position: absolute;
-    right: -20px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 96px;
-    height: 96px;
+  &__greeting-name {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+    margin-top: 2px;
+  }
+
+  &__avatar {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.18);
     display: flex;
     align-items: center;
     justify-content: center;
+    font-weight: 700;
+    font-size: 0.95rem;
   }
 
-  &__action-icon {
-    font-size: 1.8rem;
-    margin-right: 28px;
+  &__section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 8px;
   }
 
   &__section-title {
     font-size: 1.1rem;
     font-weight: 700;
-    margin-top: 8px;
+    color: var(--color-text);
+  }
+
+  &__section-link {
+    color: var(--color-primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
   }
 
   &__state {
@@ -63,34 +60,149 @@
     padding: 24px 0;
   }
 
-  &__notificacoes {
+  &__agenda {
     list-style: none;
     margin: 0;
     padding: 0;
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+  }
+}
+
+.hero {
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  background: var(--color-surface);
+  padding: 20px;
+
+  &--vazio {
+    color: var(--color-text-secondary);
+  }
+
+  &__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__eyebrow {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-tertiary);
+  }
+
+  &__badge {
+    background: var(--tint-orange-bg);
+    color: var(--tint-orange-fg);
+    font-weight: 700;
+    font-size: 0.8rem;
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+  }
+
+  &__time {
+    font-size: 2.4rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+    margin-top: 8px;
+  }
+
+  &__nome {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--color-text);
+    margin-top: 4px;
+  }
+
+  &__sub {
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    margin-top: 2px;
+  }
+
+  &__vazio-texto {
+    margin-top: 8px;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  &__primary,
+  &__secondary {
+    flex: 1;
+    text-align: center;
+    padding: 13px;
+    border-radius: var(--radius-pill);
+    font-weight: 700;
+    font-size: 0.92rem;
+    text-decoration: none;
+  }
+
+  &__primary {
+    background: var(--color-primary);
+    color: var(--color-text-inverse);
+  }
+
+  &__secondary {
+    background: var(--color-bg);
+    color: var(--color-text);
+  }
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+
+  &__card {
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    padding: 16px;
     display: flex;
     flex-direction: column;
     gap: 10px;
   }
+
+  &__value {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--color-text);
+  }
+
+  &__label {
+    color: var(--color-text-secondary);
+    font-size: 0.85rem;
+    margin-top: -6px;
+  }
 }
 
-.notificacao-card {
+.agenda-row {
   display: flex;
   align-items: center;
   gap: 12px;
-  background: var(--color-surface);
-  border-radius: var(--radius-md);
-  padding: 12px 14px;
+  padding: 14px;
   text-decoration: none;
   color: var(--color-text);
-  box-shadow: var(--shadow-card);
+  border-bottom: 1px solid var(--color-divider);
+
+  li:last-child & {
+    border-bottom: none;
+  }
 
   &__avatar {
     flex-shrink: 0;
     width: 40px;
     height: 40px;
-    border-radius: 50%;
-    background: var(--color-primary);
-    color: var(--color-text-inverse);
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -107,22 +219,18 @@
 
   &__nome {
     font-weight: 600;
-    color: var(--color-primary-dark);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
-  &__desc {
+  &__sub {
     font-size: 0.82rem;
     color: var(--color-text-secondary);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
 
-  &__prefix {
-    font-weight: 600;
-    color: var(--color-text);
+  &__chevron {
+    color: var(--color-text-tertiary);
+    flex-shrink: 0;
   }
 }

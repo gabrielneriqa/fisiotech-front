@@ -1,5 +1,8 @@
 <section class="consulta-detail">
-  <a class="consulta-detail__back" routerLink="/consultas">← Consultas</a>
+  <a class="consulta-detail__back" routerLink="/consultas">
+    <app-icon name="chevron-left" />
+    Consultas
+  </a>
 
   @if (loading()) {
     <app-skeleton variant="lines" [count]="5" />
@@ -11,20 +14,29 @@
     <header class="consulta-detail__header">
       <h1 class="consulta-detail__paciente">{{ c.pacienteNome }}</h1>
       <span class="consulta-detail__status" [class]="'consulta-detail__status--' + c.status.toLowerCase()">
-        {{ c.status }}
+        {{ statusLabel(c.status) }}
       </span>
     </header>
 
     <div class="consulta-detail__meta">
-      <span>📅 {{ c.dataHora | date: 'dd/MM/yyyy' }}</span>
-      <span>🕘 {{ c.dataHora | date: 'HH:mm' }}</span>
-      <span>{{ c.tipo === 'ONLINE' ? '💻 Online' : '📍 Presencial' }}</span>
-      @if (c.convenio) {
-        <span>{{ c.convenio }}</span>
-      }
-      @if (c.valor !== null) {
-        <span>{{ c.valor | currency: 'BRL' }}</span>
-      }
+      <div class="consulta-detail__meta-item">
+        <span class="consulta-detail__meta-label">Data</span>
+        <span class="consulta-detail__meta-value">{{ c.dataHora | date: 'dd/MM · HH:mm' }}</span>
+      </div>
+      <div class="consulta-detail__meta-item">
+        <span class="consulta-detail__meta-label">Modalidade</span>
+        <span class="consulta-detail__meta-value">{{ c.tipo === 'ONLINE' ? 'Online' : 'Presencial' }}</span>
+      </div>
+      <div class="consulta-detail__meta-item">
+        <span class="consulta-detail__meta-label">Convênio</span>
+        <span class="consulta-detail__meta-value">{{ c.convenio ?? 'Particular' }}</span>
+      </div>
+      <div class="consulta-detail__meta-item">
+        <span class="consulta-detail__meta-label">Valor</span>
+        <span class="consulta-detail__meta-value consulta-detail__meta-value--destaque">
+          {{ c.valor !== null ? (c.valor | currency: 'BRL') : '—' }}
+        </span>
+      </div>
     </div>
 
     @if (c.status !== 'REALIZADA') {

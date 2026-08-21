@@ -4,10 +4,13 @@
   gap: 16px;
 
   &__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
     color: var(--color-primary);
     text-decoration: none;
     font-size: 0.9rem;
-    font-weight: 600;
+    font-weight: 700;
   }
 
   &__state {
@@ -27,46 +30,59 @@
   }
 
   &__paciente {
-    font-size: 1.3rem;
-    font-weight: 700;
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
   }
 
   &__status {
     flex-shrink: 0;
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 4px 10px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 5px 12px;
     border-radius: var(--radius-pill);
-    background: var(--color-border);
-    color: var(--color-text-secondary);
-
-    &--agendada {
-      background: rgba(139, 144, 240, 0.15);
-      color: var(--color-accent-dark);
-    }
+    background: var(--status-agendada-bg);
+    color: var(--status-agendada-fg);
 
     &--confirmada {
-      background: rgba(31, 182, 196, 0.15);
-      color: var(--color-primary-dark);
-    }
-
-    &--realizada {
-      background: rgba(47, 191, 113, 0.15);
-      color: var(--color-success);
+      background: var(--status-confirmada-bg);
+      color: var(--status-confirmada-fg);
     }
 
     &--cancelada {
-      background: rgba(225, 92, 92, 0.15);
-      color: var(--color-danger);
+      background: var(--status-cancelada-bg);
+      color: var(--status-cancelada-fg);
     }
   }
 
   &__meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 16px;
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    padding: 18px 20px;
+  }
+
+  &__meta-item {
     display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    font-size: 0.85rem;
-    color: var(--color-text-secondary);
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__meta-label {
+    font-size: 0.78rem;
+    color: var(--color-text-tertiary);
+  }
+
+  &__meta-value {
+    font-weight: 700;
+    color: var(--color-text);
+
+    &--destaque {
+      color: var(--color-primary-dark);
+    }
   }
 
   &__action {

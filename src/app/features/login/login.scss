@@ -15,13 +15,17 @@
     padding: 32px 28px;
   }
 
-  &__brand {
-    color: var(--color-primary);
-    font-weight: 700;
-    font-size: 0.95rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    margin-bottom: 8px;
+  &__logo {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: var(--gradient-hero);
+    color: var(--color-text-inverse);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
   }
 
   &__tabs {
@@ -52,7 +56,8 @@
 
   &__title {
     font-size: 1.6rem;
-    font-weight: 700;
+    font-weight: 800;
+    letter-spacing: -0.02em;
     color: var(--color-text);
   }
 
