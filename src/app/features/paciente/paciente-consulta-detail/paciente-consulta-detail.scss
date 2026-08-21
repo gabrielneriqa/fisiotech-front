@@ -34,30 +34,20 @@
   &__status {
     flex-shrink: 0;
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 700;
     padding: 4px 10px;
     border-radius: var(--radius-pill);
-    background: var(--color-border);
-    color: var(--color-text-secondary);
-
-    &--agendada {
-      background: rgba(139, 144, 240, 0.15);
-      color: var(--color-accent-dark);
-    }
+    background: var(--status-agendada-bg);
+    color: var(--status-agendada-fg);
 
     &--confirmada {
-      background: rgba(31, 182, 196, 0.15);
-      color: var(--color-primary-dark);
-    }
-
-    &--realizada {
-      background: rgba(47, 191, 113, 0.15);
-      color: var(--color-success);
+      background: var(--status-confirmada-bg);
+      color: var(--status-confirmada-fg);
     }
 
     &--cancelada {
-      background: rgba(225, 92, 92, 0.15);
-      color: var(--color-danger);
+      background: var(--status-cancelada-bg);
+      color: var(--status-cancelada-fg);
     }
   }
 

@@ -1,8 +1,23 @@
 <section class="home">
-  @if (proximaConsulta()) {
-    <div class="home__highlight">
-      <p class="home__highlight-label">Próxima consulta</p>
-      <p class="home__highlight-value">{{ proximaConsulta() | date: "dd/MM/yyyy 'às' HH:mm" }}</p>
+  <header class="home__greeting">
+    <div>
+      <p class="home__greeting-label">Bem-vindo(a),</p>
+      <h1 class="home__greeting-name">{{ currentUser()?.nome }}</h1>
+    </div>
+    <span class="home__avatar" [class]="'avatar-tint--' + avatarTint(currentUser()?.nome ?? '')">
+      {{ iniciais(currentUser()?.nome) }}
+    </span>
+  </header>
+
+  @if (proximaConsulta(); as consulta) {
+    <div class="hero">
+      <span class="hero__eyebrow">Sua próxima consulta</span>
+      <p class="hero__data">
+        <span class="hero__dia">{{ consulta.dataHora | date: 'dd' }}</span>
+        <span class="hero__mes-hora">{{ consulta.dataHora | date: 'MMM' }} · {{ consulta.dataHora | date: 'HH:mm' }}</span>
+      </p>
+      <p class="hero__sub">{{ consulta.profissionalNome }} · {{ tipoLabel(consulta) }}</p>
+      <a class="hero__action" [routerLink]="['/paciente/consultas', consulta.id]">Remarcar</a>
     </div>
   }
 
@@ -14,34 +29,53 @@
       </span>
     </a>
   } @else {
-    <a class="home__card" routerLink="/paciente/consultas">
-      <div>
-        <p class="home__card-label">Minhas Consultas</p>
-        <p class="home__card-value">
-          @if (totalConsultas() !== null) {
-            {{ totalConsultas() }} consulta{{ totalConsultas() === 1 ? '' : 's' }}
+    <ul class="home__quick-list">
+      <li>
+        <a class="quick-row" routerLink="/paciente/consultas">
+          <span class="icon-tile icon-tile--green">
+            <app-icon name="credit-card" />
+          </span>
+          <span class="quick-row__info">
+            <span class="quick-row__title">Minhas consultas</span>
+            <span class="quick-row__sub">
+              @if (totalConsultas() !== null) {
+                {{ totalConsultas() }} consulta{{ totalConsultas() === 1 ? '' : 's' }} · {{ totalAgendadas() }} agendada{{ totalAgendadas() === 1 ? '' : 's' }}
+              } @else {
+                Ver consultas
+              }
+            </span>
+          </span>
+          <app-icon name="chevron-right" class="quick-row__chevron" />
+        </a>
+      </li>
+      <li>
+        <a class="quick-row" routerLink="/paciente/mensagens">
+          <span class="icon-tile icon-tile--orange">
+            <app-icon name="chat" />
+          </span>
+          <span class="quick-row__info">
+            <span class="quick-row__title">Mensagens</span>
+            <span class="quick-row__sub">Ver conversas</span>
+          </span>
+          @if (mensagensNaoLidas()) {
+            <span class="quick-row__dot" aria-label="Mensagens não lidas"></span>
           } @else {
-            Ver consultas
+            <app-icon name="chevron-right" class="quick-row__chevron" />
           }
-        </p>
-      </div>
-      <span class="home__card-arrow">→</span>
-    </a>
+        </a>
+      </li>
+      <li>
+        <a class="quick-row" routerLink="/paciente/perfil">
+          <span class="icon-tile icon-tile--purple">
+            <app-icon name="user" />
+          </span>
+          <span class="quick-row__info">
+            <span class="quick-row__title">Meu perfil</span>
+            <span class="quick-row__sub">Editar meus dados</span>
+          </span>
+          <app-icon name="chevron-right" class="quick-row__chevron" />
+        </a>
+      </li>
+    </ul>
   }
-
-  <a class="home__card" routerLink="/paciente/mensagens">
-    <div>
-      <p class="home__card-label">Mensagens</p>
-      <p class="home__card-value">Ver conversas</p>
-    </div>
-    <span class="home__card-arrow">→</span>
-  </a>
-
-  <a class="home__card" routerLink="/paciente/perfil">
-    <div>
-      <p class="home__card-label">Meu Perfil</p>
-      <p class="home__card-value">Editar meus dados</p>
-    </div>
-    <span class="home__card-arrow">→</span>
-  </a>
 </section>

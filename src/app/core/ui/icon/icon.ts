@@ -15,7 +15,13 @@ export type IconName =
   | 'menu'
   | 'lock'
   | 'calendar-plus'
-  | 'check';
+  | 'check'
+  | 'search'
+  | 'chevron-left'
+  | 'chevron-right'
+  | 'x'
+  | 'heart'
+  | 'credit-card';
 
 @Component({
   selector: 'app-icon',
@@ -124,6 +130,39 @@ export type IconName =
       @case ('check') {
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="5 13 10 18 19 7" />
+        </svg>
+      }
+      @case ('search') {
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="7" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+      }
+      @case ('chevron-left') {
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 6 9 12 15 18" />
+        </svg>
+      }
+      @case ('chevron-right') {
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 6 15 12 9 18" />
+        </svg>
+      }
+      @case ('x') {
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      }
+      @case ('heart') {
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 21s-7.5-4.9-10-9.3C.4 8.3 2 4.5 5.6 4a4.9 4.9 0 0 1 6.4 2.3A4.9 4.9 0 0 1 18.4 4c3.6.5 5.2 4.3 3.6 7.7C19.5 16.1 12 21 12 21Z" />
+        </svg>
+      }
+      @case ('credit-card') {
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="5" width="20" height="14" rx="2" />
+          <line x1="2" y1="10" x2="22" y2="10" />
         </svg>
       }
     }

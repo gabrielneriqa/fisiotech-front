@@ -3,9 +3,30 @@
   flex-direction: column;
   gap: 16px;
 
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
   &__title {
-    font-size: 1.3rem;
-    font-weight: 700;
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+  }
+
+  &__new {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    background: var(--color-primary);
+    color: var(--color-text-inverse);
+    border-radius: 14px;
+    text-decoration: none;
   }
 
   &__state {
@@ -18,13 +39,27 @@
     }
   }
 
+  &__grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  &__grupo-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--color-text-tertiary);
+  }
+
   &__items {
     list-style: none;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
   }
 
   &__filtros {
@@ -56,22 +91,39 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  background: var(--color-surface);
-  border-radius: var(--radius-md);
-  padding: 14px 16px;
+  padding: 14px 16px 14px 12px;
   text-decoration: none;
   color: var(--color-text);
-  box-shadow: var(--shadow-card);
+  border-bottom: 1px solid var(--color-divider);
+  border-left: 3px solid var(--status-agendada-fg);
+
+  li:last-child & {
+    border-bottom: none;
+  }
+
+  &--confirmada {
+    border-left-color: var(--status-confirmada-fg);
+  }
+
+  &--cancelada {
+    border-left-color: var(--status-cancelada-fg);
+  }
 
   &__info {
     display: flex;
     flex-direction: column;
     gap: 2px;
     min-width: 0;
+    padding-left: 8px;
   }
 
   &__paciente {
     font-weight: 600;
+
+    &--cancelada {
+      text-decoration: line-through;
+      color: var(--color-text-secondary);
+    }
   }
 
   &__data {
@@ -81,31 +133,21 @@
 
   &__status {
     flex-shrink: 0;
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 4px 10px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 5px 12px;
     border-radius: var(--radius-pill);
-    background: var(--color-border);
-    color: var(--color-text-secondary);
-
-    &--agendada {
-      background: rgba(139, 144, 240, 0.15);
-      color: var(--color-accent-dark);
-    }
+    background: var(--status-agendada-bg);
+    color: var(--status-agendada-fg);
 
     &--confirmada {
-      background: rgba(31, 182, 196, 0.15);
-      color: var(--color-primary-dark);
-    }
-
-    &--realizada {
-      background: rgba(47, 191, 113, 0.15);
-      color: var(--color-success);
+      background: var(--status-confirmada-bg);
+      color: var(--status-confirmada-fg);
     }
 
     &--cancelada {
-      background: rgba(225, 92, 92, 0.15);
-      color: var(--color-danger);
+      background: var(--status-cancelada-bg);
+      color: var(--status-cancelada-fg);
     }
   }
 }

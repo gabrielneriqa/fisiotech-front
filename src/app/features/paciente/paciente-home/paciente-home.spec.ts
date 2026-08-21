@@ -24,6 +24,7 @@ describe('PacienteHome', () => {
   it('mostra o CTA de marcar a primeira consulta quando o paciente não tem nenhuma (regressão do F-04)', () => {
     fixture.detectChanges();
     httpMock.expectOne('/me/consultas').flush([]);
+    httpMock.expectOne('/me/mensagens/caixa-entrada').flush([]);
     fixture.detectChanges();
 
     const cta = fixture.nativeElement.querySelector('.home__action');
@@ -40,6 +41,7 @@ describe('PacienteHome', () => {
     httpMock.expectOne('/me/consultas').flush([
       { id: 1, dataHora: '2026-08-25T10:00:00', status: 'AGENDADA' },
     ] as any);
+    httpMock.expectOne('/me/mensagens/caixa-entrada').flush([]);
     fixture.detectChanges();
 
     const cta = fixture.nativeElement.querySelector('.home__action');

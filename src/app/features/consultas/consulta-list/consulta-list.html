@@ -1,4 +1,11 @@
 <section class="consulta-list">
+  <div class="consulta-list__header">
+    <h1 class="consulta-list__title">Consultas</h1>
+    <a class="consulta-list__new" routerLink="/consultas/novo" aria-label="Nova consulta">
+      <app-icon name="plus" />
+    </a>
+  </div>
+
   @if (!loading() && !errorMessage() && consultas().length > 0) {
     <div class="consulta-list__filtros">
       <button
@@ -47,22 +54,39 @@
   } @else if (consultasFiltradas().length === 0) {
     <p class="consulta-list__state">Nenhuma consulta neste filtro.</p>
   } @else {
-    <ul class="consulta-list__items">
-      @for (consulta of consultasFiltradas(); track consulta.id) {
-        <li>
-          <a class="consulta-card" [routerLink]="['/consultas', consulta.id]">
-            <div class="consulta-card__info">
-              <span class="consulta-card__paciente">{{ consulta.pacienteNome }}</span>
-              <span class="consulta-card__data">
-                {{ consulta.dataHora | date: 'dd/MM/yyyy HH:mm' }} · {{ tipoLabel(consulta.tipo) }}
-              </span>
-            </div>
-            <span class="consulta-card__status" [class]="'consulta-card__status--' + consulta.status.toLowerCase()">
-              {{ statusLabel(consulta.status) }}
-            </span>
-          </a>
-        </li>
-      }
-    </ul>
+    @for (grupo of grupos(); track grupo.data) {
+      <div class="consulta-list__grupo">
+        <p class="consulta-list__grupo-label">{{ grupo.label }}</p>
+        <ul class="consulta-list__items">
+          @for (consulta of grupo.consultas; track consulta.id) {
+            <li>
+              <a
+                class="consulta-card"
+                [class]="'consulta-card--' + consulta.status.toLowerCase()"
+                [routerLink]="['/consultas', consulta.id]"
+              >
+                <div class="consulta-card__info">
+                  <span
+                    class="consulta-card__paciente"
+                    [class.consulta-card__paciente--cancelada]="consulta.status === 'CANCELADA'"
+                  >
+                    {{ consulta.pacienteNome }}
+                  </span>
+                  <span class="consulta-card__data">
+                    {{ consulta.dataHora | date: 'HH:mm' }} · {{ tipoLabel(consulta.tipo) }}
+                    @if (consulta.convenio) {
+                      · {{ consulta.convenio }}
+                    }
+                  </span>
+                </div>
+                <span class="consulta-card__status" [class]="'consulta-card__status--' + consulta.status.toLowerCase()">
+                  {{ statusLabel(consulta.status) }}
+                </span>
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+    }
   }
 </section>

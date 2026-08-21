@@ -6,11 +6,13 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Mensagem } from '../../../core/mensagens/mensagem.model';
 import { MensagemService } from '../../../core/mensagens/mensagem.service';
 import { PacienteService } from '../../../core/pacientes/paciente.service';
+import { avatarTint } from '../../../core/ui/avatar-color';
+import { Icon } from '../../../core/ui/icon/icon';
 import { Skeleton } from '../../../core/ui/skeleton/skeleton';
 
 @Component({
   selector: 'app-mensagem-thread',
-  imports: [RouterLink, DatePipe, ReactiveFormsModule, Skeleton],
+  imports: [RouterLink, DatePipe, ReactiveFormsModule, Icon, Skeleton],
   templateUrl: './mensagem-thread.html',
   styleUrl: './mensagem-thread.scss',
 })
@@ -24,6 +26,8 @@ export class MensagemThread implements OnInit {
   protected readonly sending = signal(false);
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly pacienteNome = signal('');
+  protected readonly pacienteEmail = signal('');
+  protected readonly avatarTint = avatarTint;
 
   protected readonly novaMensagemControl = new FormControl('', {
     nonNullable: true,
@@ -36,7 +40,10 @@ export class MensagemThread implements OnInit {
     this.pacienteId = Number(this.route.snapshot.paramMap.get('id'));
 
     this.pacienteService.buscarPorId(this.pacienteId).subscribe({
-      next: (paciente) => this.pacienteNome.set(paciente.nome),
+      next: (paciente) => {
+        this.pacienteNome.set(paciente.nome);
+        this.pacienteEmail.set(paciente.email);
+      },
       error: () => this.errorMessage.set('Paciente não encontrado.'),
     });
 
@@ -67,6 +74,15 @@ export class MensagemThread implements OnInit {
           this.errorMessage.set('Não foi possível enviar a mensagem.');
         },
       });
+  }
+
+  protected iniciais(nome: string): string {
+    return nome
+      .trim()
+      .split(/\s+/)
+      .slice(0, 2)
+      .map((parte) => parte[0]?.toUpperCase() ?? '')
+      .join('');
   }
 
   private carregar(): void {

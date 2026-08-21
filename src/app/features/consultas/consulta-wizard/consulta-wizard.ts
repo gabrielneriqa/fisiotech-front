@@ -110,16 +110,23 @@ export class ConsultaWizard implements OnInit {
     });
   }
 
-  protected etapaAlcancavel(etapa: WizardStep): boolean {
-    return ORDEM_PASSOS.indexOf(etapa) <= ORDEM_PASSOS.indexOf(this.step());
-  }
-
   protected irParaEtapa(etapa: WizardStep): void {
     if (ORDEM_PASSOS.indexOf(etapa) >= ORDEM_PASSOS.indexOf(this.step())) {
       return;
     }
     this.errorMessage.set(null);
     this.step.set(etapa);
+  }
+
+  protected stepNumber(): number {
+    return ORDEM_PASSOS.indexOf(this.step()) + 1;
+  }
+
+  protected voltar(): void {
+    const idx = ORDEM_PASSOS.indexOf(this.step());
+    if (idx > 0) {
+      this.irParaEtapa(ORDEM_PASSOS[idx - 1]);
+    }
   }
 
   protected proximo(): void {

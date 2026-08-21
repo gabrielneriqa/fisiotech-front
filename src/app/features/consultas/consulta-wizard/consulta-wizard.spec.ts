@@ -124,7 +124,7 @@ describe('ConsultaWizard', () => {
     });
   });
 
-  describe('navegação "voltar" pelos pontos indicadores', () => {
+  describe('navegação "voltar"', () => {
     beforeEach(async () => {
       await criarComponente();
       httpMock.expectOne('/consultas/1').flush(
@@ -136,11 +136,13 @@ describe('ConsultaWizard', () => {
       // retomou em 'exame-fisico'
     });
 
-    it('etapas já alcançadas ficam navegáveis, etapas futuras não', () => {
-      expect((component as any).etapaAlcancavel('quadro-clinico')).toBe(true);
-      expect((component as any).etapaAlcancavel('habitos-vida')).toBe(true);
-      expect((component as any).etapaAlcancavel('exame-fisico')).toBe(true);
-      expect((component as any).etapaAlcancavel('diagnostico')).toBe(false);
+    it('stepNumber reflete a posição da etapa atual (1 a 4)', () => {
+      expect((component as any).stepNumber()).toBe(3);
+    });
+
+    it('voltar() move uma etapa para trás', () => {
+      (component as any).voltar();
+      expect((component as any).step()).toBe('habitos-vida');
     });
 
     it('irParaEtapa move para uma etapa anterior já alcançada', () => {

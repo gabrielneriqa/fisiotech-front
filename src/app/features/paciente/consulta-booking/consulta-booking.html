@@ -1,11 +1,23 @@
 <section class="booking">
+  <a class="booking__back" routerLink="/paciente/consultas">
+    <app-icon name="chevron-left" />
+    Voltar
+  </a>
+
+  @if (etapa() === 'profissional') {
+    <h1 class="booking__title">Marcar consulta</h1>
+  } @else {
+    <h1 class="booking__title">Marcar consulta</h1>
+    <p class="booking__subtitle">
+      com {{ profissionalSelecionado()?.nome }} · {{ profissionalSelecionado()?.especialidade }}
+    </p>
+  }
+
   @if (errorMessage()) {
     <p class="booking__error">{{ errorMessage() }}</p>
   }
 
   @if (etapa() === 'profissional') {
-    <h2 class="booking__step-title">Escolha o profissional</h2>
-
     <div class="booking__busca">
       <input
         class="booking__busca-input"
@@ -44,23 +56,22 @@
     }
   }
 
-  @if (etapa() === 'data' || etapa() === 'horario' || etapa() === 'pagamento') {
-    <p class="booking__meta">Profissional: {{ profissionalSelecionado()?.nome }}</p>
+  @if (etapa() === 'agendamento') {
+    <div class="booking__dias">
+      @for (dia of diasStrip(); track dia.iso) {
+        <button
+          class="dia-pill"
+          [class.dia-pill--ativo]="dataSelecionada() === dia.iso"
+          type="button"
+          (click)="selecionarDia(dia.iso)"
+        >
+          <span class="dia-pill__dow">{{ dia.dow }}</span>
+          <span class="dia-pill__num">{{ dia.dia }}</span>
+        </button>
+      }
+    </div>
 
-    <label class="field">
-      <span class="field__label">Data</span>
-      <input
-        class="field__input"
-        type="date"
-        [min]="hoje"
-        [ngModel]="dataSelecionada()"
-        (ngModelChange)="onDataChange($event)"
-      />
-    </label>
-  }
-
-  @if (etapa() === 'horario') {
-    <h2 class="booking__step-title">Escolha o horário</h2>
+    <h2 class="booking__step-title">Horários livres</h2>
 
     @if (carregandoDisponibilidade()) {
       <p class="booking__state">Carregando horários...</p>
@@ -80,12 +91,8 @@
         }
       </div>
     }
-  }
 
-  @if (etapa() === 'pagamento') {
     <h2 class="booking__step-title">Pagamento e tipo</h2>
-
-    <p class="booking__meta">Horário: {{ horarioSelecionado()?.slice(0, 5) }}</p>
 
     <div class="booking__papel">
       <button
@@ -108,7 +115,10 @@
 
     @if (formaPagamento() === 'particular') {
       @if (valorParticular() !== null) {
-        <p class="booking__valor">Valor: R$ {{ valorParticular()?.toFixed(2) }}</p>
+        <div class="booking__valor-card">
+          <span>Valor da sessão</span>
+          <strong>{{ valorParticular() | currency: 'BRL' }}</strong>
+        </div>
       } @else {
         <p class="booking__state">Este profissional ainda não definiu um valor particular.</p>
       }
@@ -140,14 +150,20 @@
       </select>
     </label>
 
-    <button
-      class="booking__confirmar"
-      type="button"
-      [disabled]="formaPagamento() === 'convenio' && !convenioSelecionado()"
-      (click)="abrirConfirmacao()"
-    >
-      Confirmar Consulta
-    </button>
+    <div class="booking__footer">
+      <button
+        class="booking__confirmar"
+        type="button"
+        [disabled]="!horarioSelecionado() || (formaPagamento() === 'convenio' && !convenioSelecionado())"
+        (click)="abrirConfirmacao()"
+      >
+        @if (horarioSelecionado()) {
+          Confirmar {{ dataSelecionada() | date: 'dd MMM' }}, {{ horarioSelecionado()?.slice(0, 5) }}
+        } @else {
+          Escolha um horário
+        }
+      </button>
+    </div>
   }
 
   @if (mostrarConfirmacao()) {

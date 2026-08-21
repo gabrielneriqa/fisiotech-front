@@ -3,42 +3,21 @@
     <app-skeleton variant="form" [count]="4" />
   } @else {
     @if (step() !== 'sucesso') {
-      <p class="wizard__meta">Consulta com {{ pacienteNome() }}</p>
-
-      <div class="wizard__steps">
-        <button
-          type="button"
-          class="wizard__step-dot"
-          [class.wizard__step-dot--active]="step() === 'quadro-clinico'"
-          [disabled]="!etapaAlcancavel('quadro-clinico')"
-          aria-label="Voltar para Quadro Clínico"
-          (click)="irParaEtapa('quadro-clinico')"
-        ></button>
-        <button
-          type="button"
-          class="wizard__step-dot"
-          [class.wizard__step-dot--active]="step() === 'habitos-vida'"
-          [disabled]="!etapaAlcancavel('habitos-vida')"
-          aria-label="Voltar para Hábitos de Vida"
-          (click)="irParaEtapa('habitos-vida')"
-        ></button>
-        <button
-          type="button"
-          class="wizard__step-dot"
-          [class.wizard__step-dot--active]="step() === 'exame-fisico'"
-          [disabled]="!etapaAlcancavel('exame-fisico')"
-          aria-label="Voltar para Exame Físico"
-          (click)="irParaEtapa('exame-fisico')"
-        ></button>
-        <button
-          type="button"
-          class="wizard__step-dot"
-          [class.wizard__step-dot--active]="step() === 'diagnostico'"
-          [disabled]="!etapaAlcancavel('diagnostico')"
-          aria-label="Voltar para Diagnóstico"
-          (click)="irParaEtapa('diagnostico')"
-        ></button>
+      <div class="wizard__topbar">
+        <a class="wizard__exit" [routerLink]="['/consultas', consultaId]">
+          <app-icon name="x" />
+          Sair
+        </a>
+        <span class="wizard__step-label">Passo {{ stepNumber() }} de 4</span>
       </div>
+
+      <div class="wizard__progress">
+        @for (i of [0, 1, 2, 3]; track i) {
+          <span class="wizard__progress-bar" [class.wizard__progress-bar--filled]="i < stepNumber()"></span>
+        }
+      </div>
+
+      <p class="wizard__meta">{{ pacienteNome() }}</p>
     }
 
     @switch (step()) {
@@ -126,9 +105,14 @@
             <p class="wizard__error">{{ errorMessage() }}</p>
           }
 
-          <button class="wizard__submit" type="submit" [disabled]="saving()">
-            {{ saving() ? 'Salvando...' : 'Próximo' }}
-          </button>
+          <div class="wizard__footer">
+            @if (step() !== 'quadro-clinico') {
+              <button class="wizard__voltar" type="button" (click)="voltar()">Voltar</button>
+            }
+            <button class="wizard__submit" type="submit" [disabled]="saving()">
+              {{ saving() ? 'Salvando...' : 'Próximo' }}
+            </button>
+          </div>
         </form>
       }
 
@@ -177,9 +161,14 @@
             <p class="wizard__error">{{ errorMessage() }}</p>
           }
 
-          <button class="wizard__submit" type="submit" [disabled]="saving()">
-            {{ saving() ? 'Salvando...' : 'Próximo' }}
-          </button>
+          <div class="wizard__footer">
+            @if (step() !== 'quadro-clinico') {
+              <button class="wizard__voltar" type="button" (click)="voltar()">Voltar</button>
+            }
+            <button class="wizard__submit" type="submit" [disabled]="saving()">
+              {{ saving() ? 'Salvando...' : 'Próximo' }}
+            </button>
+          </div>
         </form>
       }
 
@@ -210,9 +199,14 @@
             <p class="wizard__error">{{ errorMessage() }}</p>
           }
 
-          <button class="wizard__submit" type="submit" [disabled]="saving()">
-            {{ saving() ? 'Salvando...' : 'Próximo' }}
-          </button>
+          <div class="wizard__footer">
+            @if (step() !== 'quadro-clinico') {
+              <button class="wizard__voltar" type="button" (click)="voltar()">Voltar</button>
+            }
+            <button class="wizard__submit" type="submit" [disabled]="saving()">
+              {{ saving() ? 'Salvando...' : 'Próximo' }}
+            </button>
+          </div>
         </form>
       }
 
@@ -233,9 +227,14 @@
             <p class="wizard__error">{{ errorMessage() }}</p>
           }
 
-          <button class="wizard__submit" type="submit" [disabled]="saving()">
-            {{ saving() ? 'Salvando...' : 'Próximo' }}
-          </button>
+          <div class="wizard__footer">
+            @if (step() !== 'quadro-clinico') {
+              <button class="wizard__voltar" type="button" (click)="voltar()">Voltar</button>
+            }
+            <button class="wizard__submit" type="submit" [disabled]="saving()">
+              {{ saving() ? 'Salvando...' : 'Próximo' }}
+            </button>
+          </div>
         </form>
       }
 

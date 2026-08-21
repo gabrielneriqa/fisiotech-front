@@ -1,5 +1,13 @@
 <section class="paciente-list">
-  <div class="paciente-list__toolbar">
+  <div class="paciente-list__header">
+    <h1 class="paciente-list__title">Pacientes</h1>
+    <a class="paciente-list__new" routerLink="/pacientes/novo" aria-label="Novo paciente">
+      <app-icon name="plus" />
+    </a>
+  </div>
+
+  <div class="paciente-list__search-wrap">
+    <app-icon name="search" class="paciente-list__search-icon" />
     <input
       class="paciente-list__search"
       type="search"
@@ -7,12 +15,7 @@
       [value]="filtro()"
       (input)="onFiltroChange($event)"
     />
-    <a class="paciente-list__new" routerLink="/pacientes/novo">+ Novo</a>
   </div>
-
-  @if (deleteError()) {
-    <p class="paciente-list__state paciente-list__state--error">{{ deleteError() }}</p>
-  }
 
   @if (loading()) {
     <app-skeleton variant="list" [count]="4" />
@@ -25,19 +28,14 @@
       @for (paciente of pacientesFiltrados(); track paciente.id) {
         <li>
           <a class="paciente-card" [routerLink]="['/pacientes', paciente.id]">
-            <span class="paciente-card__avatar">{{ iniciais(paciente.nome) }}</span>
+            <span class="paciente-card__avatar" [class]="'avatar-tint--' + avatarTint(paciente.nome)">
+              {{ iniciais(paciente.nome) }}
+            </span>
             <span class="paciente-card__info">
               <span class="paciente-card__nome">{{ paciente.nome }}</span>
               <span class="paciente-card__email">{{ paciente.email }}</span>
             </span>
-            <button
-              class="paciente-card__delete"
-              type="button"
-              (click)="excluir(paciente, $event)"
-              aria-label="Excluir paciente"
-            >
-              <app-icon name="trash" />
-            </button>
+            <app-icon name="chevron-right" class="paciente-card__chevron" />
           </a>
         </li>
       }

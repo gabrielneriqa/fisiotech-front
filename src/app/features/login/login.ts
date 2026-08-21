@@ -6,12 +6,13 @@ import { mensagemErro } from '../../core/forms/field-error';
 import { AuthService } from '../../core/auth/auth.service';
 import { homeRouteFor } from '../../core/auth/role-routes';
 import { PacienteService } from '../../core/pacientes/paciente.service';
+import { Icon } from '../../core/ui/icon/icon';
 
 type Aba = 'login' | 'cadastro';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, Icon],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })

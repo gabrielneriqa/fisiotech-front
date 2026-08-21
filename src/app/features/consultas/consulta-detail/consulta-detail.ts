@@ -7,11 +7,12 @@ import { AvaliacaoService } from '../../../core/avaliacoes/avaliacao.service';
 import { Consulta } from '../../../core/consultas/consulta.model';
 import { ConsultaService } from '../../../core/consultas/consulta.service';
 import { ConfirmDialogService } from '../../../core/ui/confirm-dialog/confirm-dialog.service';
+import { Icon } from '../../../core/ui/icon/icon';
 import { Skeleton } from '../../../core/ui/skeleton/skeleton';
 
 @Component({
   selector: 'app-consulta-detail',
-  imports: [RouterLink, DatePipe, CurrencyPipe, Skeleton],
+  imports: [RouterLink, DatePipe, CurrencyPipe, Icon, Skeleton],
   templateUrl: './consulta-detail.html',
   styleUrl: './consulta-detail.scss',
 })
@@ -29,6 +30,16 @@ export class ConsultaDetail implements OnInit {
   protected readonly avaliacaoBuscada = signal(false);
 
   private consultaId!: number;
+
+  protected statusLabel(status: string): string {
+    const labels: Record<string, string> = {
+      AGENDADA: 'Agendada',
+      CONFIRMADA: 'Confirmada',
+      REALIZADA: 'Realizada',
+      CANCELADA: 'Cancelada',
+    };
+    return labels[status] ?? status;
+  }
 
   ngOnInit(): void {
     this.consultaId = Number(this.route.snapshot.paramMap.get('id'));

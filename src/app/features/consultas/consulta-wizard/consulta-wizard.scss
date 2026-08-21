@@ -2,10 +2,49 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  padding-bottom: 88px;
 
   &__state {
     color: var(--color-text-secondary);
     padding: 24px 0;
+  }
+
+  &__topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__exit {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--color-text-secondary);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+  }
+
+  &__step-label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--color-text-tertiary);
+  }
+
+  &__progress {
+    display: flex;
+    gap: 6px;
+  }
+
+  &__progress-bar {
+    flex: 1;
+    height: 4px;
+    border-radius: var(--radius-pill);
+    background: var(--color-border);
+
+    &--filled {
+      background: var(--color-primary);
+    }
   }
 
   &__meta {
@@ -13,44 +52,10 @@
     font-size: 0.85rem;
   }
 
-  &__steps {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 4px;
-  }
-
-  &__step-dot {
-    width: 8px;
-    height: 8px;
-    padding: 6px;
-    border: none;
-    border-radius: 50%;
-    background: var(--color-border);
-    background-clip: content-box;
-    cursor: default;
-
-    &--active {
-      background: var(--color-primary);
-      background-clip: content-box;
-    }
-
-    &:not(:disabled) {
-      cursor: pointer;
-    }
-
-    &:not(:disabled):hover {
-      background: var(--color-primary-dark);
-      background-clip: content-box;
-    }
-
-    &:disabled {
-      opacity: 0.6;
-    }
-  }
-
   &__title {
-    font-size: 1.3rem;
-    font-weight: 700;
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
   }
 
   &__form {
@@ -65,12 +70,35 @@
     margin: -4px 0 0;
   }
 
+  &__footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    gap: 10px;
+    padding: 14px 20px calc(14px + env(safe-area-inset-bottom));
+    background: var(--color-surface);
+    box-shadow: 0 -4px 20px rgba(20, 30, 40, 0.06);
+  }
+
+  &__voltar {
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--color-text);
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 14px 24px;
+    cursor: pointer;
+  }
+
   &__submit {
     border: none;
     border-radius: var(--radius-pill);
     background: var(--color-primary);
     color: var(--color-text-inverse);
-    font-weight: 600;
+    font-weight: 700;
     font-size: 1rem;
     padding: 14px;
     cursor: pointer;
@@ -89,6 +117,10 @@
     &--link {
       display: inline-block;
     }
+  }
+
+  &__footer &__submit {
+    flex: 1;
   }
 
   &__sucesso {

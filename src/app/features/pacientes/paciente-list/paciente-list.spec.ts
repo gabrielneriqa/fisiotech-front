@@ -3,14 +3,11 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
-import { ConfirmDialogService } from '../../../core/ui/confirm-dialog/confirm-dialog.service';
 import { PacienteList } from './paciente-list';
 
 describe('PacienteList', () => {
   let fixture: ComponentFixture<PacienteList>;
-  let component: PacienteList;
   let httpMock: HttpTestingController;
-  let confirmDialog: ConfirmDialogService;
 
   const paciente = {
     id: 1,
@@ -35,43 +32,20 @@ describe('PacienteList', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(PacienteList);
-    component = fixture.componentInstance;
     httpMock = TestBed.inject(HttpTestingController);
-    confirmDialog = TestBed.inject(ConfirmDialogService);
 
     fixture.detectChanges();
     httpMock.expectOne('/pacientes').flush([paciente]);
+    fixture.detectChanges();
   });
 
   afterEach(() => httpMock.verify());
 
-  it('não deve excluir quando o usuário cancela no diálogo de confirmação', async () => {
-    const excluirPromise = (component as any).excluir(paciente, new Event('click'));
-    confirmDialog.responder(false);
-    await excluirPromise;
+  it('mostra o paciente na lista com um link para o detalhe (a exclusão agora fica na tela de edição)', () => {
+    const link = fixture.nativeElement.querySelector('a[href="/pacientes/1"]');
 
-    httpMock.expectNone('/pacientes/1');
-  });
-
-  it('deve excluir o paciente quando o usuário confirma no diálogo', async () => {
-    const excluirPromise = (component as any).excluir(paciente, new Event('click'));
-    confirmDialog.responder(true);
-    await excluirPromise;
-
-    const req = httpMock.expectOne('/pacientes/1');
-    expect(req.request.method).toBe('DELETE');
-    req.flush(null);
-
-    expect((component as any).pacientes()).toEqual([]);
-  });
-
-  it('deve mostrar mensagem de erro (sem alert nativo) quando a exclusão falha', async () => {
-    const excluirPromise = (component as any).excluir(paciente, new Event('click'));
-    confirmDialog.responder(true);
-    await excluirPromise;
-
-    httpMock.expectOne('/pacientes/1').flush({}, { status: 500, statusText: 'Internal Server Error' });
-
-    expect((component as any).deleteError()).toBe('Não foi possível excluir o paciente.');
+    expect(link).toBeTruthy();
+    expect(link.textContent).toContain('Joao Silva');
+    expect(fixture.nativeElement.querySelector('.paciente-card__delete')).toBeFalsy();
   });
 });

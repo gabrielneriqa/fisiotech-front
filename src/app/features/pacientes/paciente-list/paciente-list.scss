@@ -3,42 +3,57 @@
   flex-direction: column;
   gap: 16px;
 
-  &__title {
-    font-size: 1.3rem;
-    font-weight: 700;
-  }
-
-  &__toolbar {
+  &__header {
     display: flex;
-    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
   }
 
-  &__search {
-    flex: 1;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-pill);
-    padding: 10px 16px;
-    font-size: 0.95rem;
-    background: var(--color-surface);
-
-    &:focus {
-      outline: none;
-      border-color: var(--color-primary);
-    }
+  &__title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
   }
 
   &__new {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
     background: var(--color-primary);
     color: var(--color-text-inverse);
-    font-weight: 600;
-    font-size: 0.9rem;
+    border-radius: 14px;
     text-decoration: none;
-    padding: 0 18px;
+  }
+
+  &__search-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  &__search-icon {
+    position: absolute;
+    left: 16px;
+    color: var(--color-text-tertiary);
+    pointer-events: none;
+  }
+
+  &__search {
+    width: 100%;
+    border: none;
     border-radius: var(--radius-pill);
-    white-space: nowrap;
+    padding: 12px 16px 12px 44px;
+    font-size: 0.95rem;
+    background: var(--color-surface);
+    box-shadow: var(--shadow-card);
+
+    &:focus {
+      outline: none;
+    }
   }
 
   &__state {
@@ -55,9 +70,10 @@
     list-style: none;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
   }
 }
 
@@ -65,20 +81,20 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  background: var(--color-surface);
-  border-radius: var(--radius-md);
-  padding: 12px 14px;
+  padding: 14px;
   text-decoration: none;
   color: var(--color-text);
-  box-shadow: var(--shadow-card);
+  border-bottom: 1px solid var(--color-divider);
+
+  li:last-child & {
+    border-bottom: none;
+  }
 
   &__avatar {
     flex-shrink: 0;
     width: 44px;
     height: 44px;
-    border-radius: 50%;
-    background: var(--color-primary);
-    color: var(--color-text-inverse);
+    border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -101,24 +117,15 @@
   }
 
   &__email {
-    font-size: 0.82rem;
+    font-size: 0.85rem;
     color: var(--color-text-secondary);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
-  &__delete {
+  &__chevron {
     flex-shrink: 0;
-    border: none;
-    background: transparent;
-    font-size: 1.1rem;
-    cursor: pointer;
-    padding: 6px;
-    border-radius: var(--radius-sm);
-
-    &:hover {
-      background: var(--color-bg);
-    }
+    color: var(--color-text-tertiary);
   }
 }
